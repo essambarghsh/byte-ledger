@@ -1,0 +1,102 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "back": "Back",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "confirm": "Confirm"
+  },
+  "navigation": {
+    "home": "Home",
+    "archive": "Archive",
+    "settings": "Settings",
+    "languageSwitch": "العربية"
+  },
+  "login": {
+    "title": "ByteLedger",
+    "subtitle": "Select Employee to Login",
+    "selectEmployee": "Select Employee"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "todaysSales": "Today's Sales",
+    "todayRevenue": "Today's Total",
+    "yesterdayRevenue": "Yesterday's Total",
+    "closeDay": "Close Day",
+    "addSale": "Add Sale",
+    "logout": "Logout"
+  },
+  "sales": {
+    "operationType": "Operation Type",
+    "customerName": "Customer Name",
+    "transactionStatus": "Transaction Status",
+    "productPrice": "Product Price",
+    "unpaidAmount": "Unpaid Amount",
+    "amountPaid": "Amount Paid",
+    "employee": "Employee",
+    "createdAt": "Created At",
+    "actions": "Actions",
+    "noSales": "No sales for today",
+    "total": "Total",
+    "saveRow": "Save Row"
+  },
+  "operationTypes": {
+    "product-sale": "Product Sale",
+    "package-renewal": "Package Renewal"
+  },
+  "transactionStatus": {
+    "paid": "Paid",
+    "partially-paid": "Partially Paid",
+    "not-paid": "Not Paid",
+    "refunded": "Refunded",
+    "voided": "Voided"
+  },
+  "paymentStatus": {
+    "paid": "Paid",
+    "partially-paid": "Partially Paid",
+    "not-paid": "Not Paid",
+    "refunded": "Refunded",
+    "voided": "Voided"
+  },
+  "archive": {
+    "title": "Sales Archive",
+    "selectDate": "Select Date",
+    "noDataForDate": "No data for this date",
+    "loadArchive": "Load Archive",
+    "date": "Date",
+    "totalRevenue": "Total Revenue",
+    "salesCount": "Sales Count",
+    "salesDetails": "Sales Details"
+  },
+  "forms": {
+    "required": "This field is required",
+    "invalidAmount": "Invalid amount",
+    "invalidPricing": "Unpaid amount cannot exceed product price",
+    "customerNamePlaceholder": "Enter customer name",
+    "productPricePlaceholder": "Enter product price",
+    "unpaidAmountPlaceholder": "Enter unpaid amount (optional)"
+  },
+  "settings": {
+    "title": "Settings",
+    "operationTypes": "Operation Types",
+    "addOperationType": "Add New Operation Type",
+    "operationTypeName": "Operation Type Name",
+    "operationTypeRequired": "Operation type name is required",
+    "confirmDeleteOperationType": "Are you sure you want to delete this operation type?",
+    "noOperationTypes": "No operation types defined"
+  },
+  "messages": {
+    "saleAdded": "Sale added successfully",
+    "saleUpdated": "Sale updated successfully",
+    "saleDeleted": "Sale deleted successfully",
+    "dayClosedSuccessfully": "Day closed successfully",
+    "settingsSaved": "Settings saved successfully",
+    "confirmCloseDay": "Are you sure you want to close the day? All sales will be archived.",
+    "confirmDeleteSale": "Are you sure you want to delete this sale?"
+  }
+}

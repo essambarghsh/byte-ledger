@@ -1,0 +1,104 @@
+{
+  "common": {
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "add": "إضافة",
+    "back": "رجوع",
+    "loading": "جاري التحميل...",
+    "error": "خطأ",
+    "success": "تم بنجاح",
+    "confirm": "تأكيد"
+  },
+  "navigation": {
+    "home": "الرئيسية",
+    "archive": "الأرشيف",
+    "settings": "الإعدادات",
+    "languageSwitch": "English"
+  },
+  "login": {
+    "title": "بايت ليدجر",
+    "subtitle": "اختر الموظف لتسجيل الدخول",
+    "selectEmployee": "اختر موظف"
+  },
+  "dashboard": {
+    "title": "لوحة التحكم",
+    "todaysSales": "مبيعات اليوم",
+    "todayRevenue": "إرادات اليوم",
+    "yesterdayRevenue": "إرادات اليوم السابق",
+    "closeDay": "إغلاق اليوم",
+    "addSale": "إضافة عملية بيع",
+    "logout": "تسجيل خروج"
+  },
+  "sales": {
+    "operationType": "نوع العملية",
+    "customerName": "اسم العميل",
+    "transactionStatus": "حالة المعاملة",
+    "productPrice": "سعر المنتج",
+    "unpaidAmount": "المبلغ المستحق",
+    "amountPaid": "المبلغ المدفوع",
+    "employee": "الموظف",
+    "createdAt": "تاريخ الإنشاء",
+    "actions": "الإجراءات",
+    "noSales": "لا توجد مبيعات لهذا اليوم",
+    "total": "الإجمالي",
+    "saveRow": "حفظ الصف"
+  },
+  "operationTypes": {
+    "product-sale": "بيع منتج",
+    "package-renewal": "تجديد باقة"
+  },
+  "transactionStatus": {
+    "paid": "مدفوع",
+    "partially-paid": "مدفوع جزئياً",
+    "not-paid": "غير مدفوع",
+    "refunded": "مسترد",
+    "voided": "ملغي"
+  },
+  "paymentStatus": {
+    "paid": "مدفوع",
+    "partially-paid": "مدفوع جزئياً",
+    "not-paid": "غير مدفوع",
+    "refunded": "مسترد",
+    "voided": "ملغي"
+  },
+  "archive": {
+    "title": "أرشيف المبيعات",
+    "selectDate": "اختر التاريخ",
+    "noDataForDate": "لا توجد بيانات لهذا التاريخ",
+    "loadArchive": "تحميل الأرشيف",
+    "date": "التاريخ",
+    "totalRevenue": "إرادات اليوم",
+    "salesCount": "عدد المبيعات",
+    "salesDetails": "تفاصيل المبيعات"
+  },
+  "forms": {
+    "required": "هذا الحقل مطلوب",
+    "invalidAmount": "المبلغ غير صحيح",
+    "invalidPricing": "المبلغ المستحق لا يمكن أن يتجاوز سعر المنتج",
+    "customerNamePlaceholder": "أدخل اسم العميل",
+    "productPricePlaceholder": "أدخل سعر المنتج",
+    "unpaidAmountPlaceholder": "أدخل المبلغ المستحق (اختياري)"
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "operationTypes": "أنواع العمليات",
+    "addOperationType": "إضافة نوع عملية جديد",
+    "operationTypeName": "اسم نوع العملية",
+    "nameEn": "الاسم بالإنجليزية",
+    "nameAr": "الاسم بالعربية",
+    "operationTypeRequired": "الاسم بالإنجليزية والعربية مطلوبان",
+    "confirmDeleteOperationType": "هل أنت متأكد من حذف نوع العملية؟",
+    "noOperationTypes": "لا توجد أنواع عمليات محددة"
+  },
+  "messages": {
+    "saleAdded": "تم إضافة العملية بنجاح",
+    "saleUpdated": "تم تحديث العملية بنجاح",
+    "saleDeleted": "تم حذف العملية بنجاح",
+    "dayClosedSuccessfully": "تم إغلاق اليوم بنجاح",
+    "settingsSaved": "تم حفظ الإعدادات بنجاح",
+    "confirmCloseDay": "هل أنت متأكد من إغلاق اليوم؟ سيتم أرشفة جميع المبيعات.",
+    "confirmDeleteSale": "هل أنت متأكد من حذف هذه العملية؟"
+  }
+}
