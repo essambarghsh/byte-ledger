@@ -2,7 +2,7 @@ import fs from 'fs/promises'
 import path from 'path'
 import { v4 as uuidv4 } from 'uuid'
 import { Employee, Invoice, Archive, ArchiveData, AppSettings } from '@/types'
-import { getCurrentDateTimeCairo, getDateStringCairo } from './date-utils'
+import { getCurrentDateTimeCairo, getDateStringCairo, isPastDate } from './date-utils'
 
 const DATA_DIR = path.join(process.cwd(), 'data')
 const ARCHIVES_DIR = path.join(DATA_DIR, 'archives')
@@ -241,4 +241,102 @@ export async function getSettings(): Promise<AppSettings> {
 export async function saveSettings(settings: AppSettings): Promise<void> {
   const filePath = path.join(DATA_DIR, 'settings.json')
   await writeJsonFile(filePath, settings)
+}
+
+// Automatic archiving functions
+export async function getUnarchivedInvoicesFromPastDates(): Promise<Invoice[]> {
+  const allInvoices = await getInvoices()
+  return allInvoices.filter(invoice => 
+    !invoice.isArchived && 
+    (invoice.status === 'paid' || invoice.status === 'canceled') &&
+    isPastDate(invoice.createdAt)
+  )
+}
+
+export async function autoArchivePastInvoices(): Promise<Archive[]> {
+  const pastInvoices = await getUnarchivedInvoicesFromPastDates()
+  const archives: Archive[] = []
+  
+  if (pastInvoices.length === 0) {
+    return archives
+  }
+  
+  // Group invoices by date
+  const invoicesByDate = new Map<string, Invoice[]>()
+  pastInvoices.forEach(invoice => {
+    const dateStr = getDateStringCairo(new Date(invoice.createdAt))
+    if (!invoicesByDate.has(dateStr)) {
+      invoicesByDate.set(dateStr, [])
+    }
+    invoicesByDate.get(dateStr)!.push(invoice)
+  })
+  
+  // Create archives for each date
+  for (const [dateStr, dateInvoices] of invoicesByDate) {
+    const paidInvoices = dateInvoices.filter(invoice => invoice.status === 'paid')
+    const totalSales = paidInvoices.reduce((sum, invoice) => sum + invoice.amount, 0)
+    
+    // For auto-archiving, we set supplied amount to 0 and carry forward the full amount
+    const archive = await createAutoArchive(
+      totalSales,
+      0, // suppliedAmount
+      'system', // employeeId for system auto-archive
+      dateInvoices,
+      dateStr
+    )
+    
+    archives.push(archive)
+  }
+  
+  // Mark all past invoices as archived
+  const allInvoices = await getInvoices()
+  const updatedInvoices = allInvoices.map(invoice => {
+    if (pastInvoices.some(pastInv => pastInv.id === invoice.id)) {
+      return { ...invoice, isArchived: true }
+    }
+    return invoice
+  })
+  
+  await saveInvoices(updatedInvoices)
+  
+  return archives
+}
+
+async function createAutoArchive(
+  totalSales: number,
+  suppliedAmount: number,
+  employeeId: string,
+  invoicesToArchive: Invoice[],
+  archiveDate: string
+): Promise<Archive> {
+  const now = getCurrentDateTimeCairo()
+  const archiveId = uuidv4()
+  const filename = `${archiveDate}-${archiveId}.json`
+  
+  const archive: Archive = {
+    id: archiveId,
+    date: archiveDate,
+    totalSales,
+    suppliedAmount,
+    openingAmountForNextDay: totalSales - suppliedAmount,
+    employeeIdWhoArchived: employeeId,
+    createdAt: now,
+    filename
+  }
+  
+  const archiveData: ArchiveData = {
+    ...archive,
+    invoices: invoicesToArchive
+  }
+  
+  // Save archive data file
+  const archiveFilePath = path.join(ARCHIVES_DIR, filename)
+  await writeJsonFile(archiveFilePath, archiveData)
+  
+  // Update archives index
+  const archives = await getArchives()
+  archives.push(archive)
+  await saveArchives(archives)
+  
+  return archive
 }

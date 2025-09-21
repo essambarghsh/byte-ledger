@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import { getSession } from '@/lib/session'
-import { getUnarchivedInvoices, getYesterdaySales, getTodaysOpeningBalance } from '@/lib/data-access'
+import { getUnarchivedInvoices, getYesterdaySales, getTodaysOpeningBalance, autoArchivePastInvoices } from '@/lib/data-access'
 import { Dashboard } from '@/components/dashboard'
 import { DashboardLayout } from '@/components/dashboard-layout'
 
@@ -10,6 +10,9 @@ export default async function DashboardPage() {
   if (!session) {
     redirect('/')
   }
+
+  // Auto-archive any invoices from past dates before loading dashboard data
+  await autoArchivePastInvoices()
 
   const [invoices, yesterdaySales, openingBalance] = await Promise.all([
     getUnarchivedInvoices(),

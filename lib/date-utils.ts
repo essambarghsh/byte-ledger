@@ -2,6 +2,21 @@ import { parseISO } from 'date-fns'
 
 export const CAIRO_TIMEZONE = 'Africa/Cairo'
 
+// Fake date system for testing
+let fakeCurrentDate: Date | null = null
+
+export function setFakeDate(date: Date | null): void {
+  fakeCurrentDate = date
+}
+
+export function getFakeDate(): Date | null {
+  return fakeCurrentDate
+}
+
+function getCurrentDate(): Date {
+  return fakeCurrentDate || new Date()
+}
+
 export function formatDateTimeCairo(date: Date | string): string {
   const dateObj = typeof date === 'string' ? parseISO(date) : date
   
@@ -59,27 +74,34 @@ export function formatTimeCairo(date: Date | string): string {
 }
 
 export function getCurrentDateTimeCairo(): string {
-  return new Date().toISOString()
+  return getCurrentDate().toISOString()
 }
 
-export function getDateStringCairo(date: Date = new Date()): string {
+export function getDateStringCairo(date?: Date): string {
+  const targetDate = date || getCurrentDate()
   return new Intl.DateTimeFormat('en-CA', {
     timeZone: CAIRO_TIMEZONE,
     year: 'numeric',
     month: '2-digit',
     day: '2-digit'
-  }).format(date)
+  }).format(targetDate)
 }
 
 export function isToday(date: Date | string): boolean {
   const dateObj = typeof date === 'string' ? parseISO(date) : date
-  const today = new Date()
+  const today = getCurrentDate()
   return getDateStringCairo(dateObj) === getDateStringCairo(today)
 }
 
 export function isYesterday(date: Date | string): boolean {
   const dateObj = typeof date === 'string' ? parseISO(date) : date
-  const yesterday = new Date()
+  const yesterday = getCurrentDate()
   yesterday.setDate(yesterday.getDate() - 1)
   return getDateStringCairo(dateObj) === getDateStringCairo(yesterday)
+}
+
+export function isPastDate(date: Date | string): boolean {
+  const dateObj = typeof date === 'string' ? parseISO(date) : date
+  const today = getCurrentDate()
+  return getDateStringCairo(dateObj) < getDateStringCairo(today)
 }

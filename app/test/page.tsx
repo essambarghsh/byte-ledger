@@ -1,21 +1,18 @@
 import { redirect } from 'next/navigation'
 import { getSession } from '@/lib/session'
-import { getArchives } from '@/lib/data-access'
-import { HistoryPage } from '@/components/history-page'
+import { TestToolsPage } from '@/components/test-tools-page'
 import { DashboardLayout } from '@/components/dashboard-layout'
 
-export default async function HistoryPageRoute() {
+export default async function TestToolsPageRoute() {
   const session = await getSession()
   
   if (!session) {
     redirect('/')
   }
 
-  const archives = await getArchives()
-
   return (
     <DashboardLayout session={session}>
-      <HistoryPage archives={archives} />
+      <TestToolsPage />
     </DashboardLayout>
   )
 }

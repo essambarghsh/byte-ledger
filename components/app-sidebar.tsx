@@ -29,6 +29,7 @@ import { cn } from '@/lib/utils'
 import { MageDashboard2Fill } from './icons/MageDashboard2Fill'
 import { MageDashboardBarFill } from './icons/MageDashboardBarFill'
 import { SolarSettingsBold } from './icons/SolarSettingsBold'
+import { TestTubeIcon } from './icons/TestTubeIcon'
 
 interface AppSidebarProps {
   session: SessionData

@@ -31,7 +31,6 @@ export function SettingsPage({
     isActive: true
   })
 
-
   const handleAddTransactionType = () => {
     setEditingTransactionType(null)
     setTransactionTypeForm({ name: '', isActive: true })
@@ -99,6 +98,7 @@ export function SettingsPage({
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">{t('settings.title', dict)}</h1>
       </div>
+
 
       {/* Employee Management Section */}
       <EmployeeManagement />
