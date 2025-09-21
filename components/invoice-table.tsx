@@ -167,7 +167,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
       transactionType: invoice.transactionType,
       customerName: invoice.customerName || '',
       amount: invoice.amount.toString(),
-      status: invoice.status === 'canceled' ? 'paid' : invoice.status
+      status: invoice.status as 'paid' | 'pending'
     })
   }
 
@@ -408,9 +408,8 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                         <Select
                           value={editInvoiceData.transactionType}
                           onValueChange={(value) => setEditInvoiceData(prev => ({ ...prev, transactionType: value }))}
-                          onClick={(e) => e.stopPropagation()}
                         >
-                          <SelectTrigger className="w-full">
+                          <SelectTrigger className="w-full" onClick={(e) => e.stopPropagation()}>
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
@@ -459,9 +458,8 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                         <Select
                           value={editInvoiceData.status}
                           onValueChange={(value: 'paid' | 'pending') => setEditInvoiceData(prev => ({ ...prev, status: value }))}
-                          onClick={(e) => e.stopPropagation()}
                         >
-                          <SelectTrigger className="w-full">
+                          <SelectTrigger className="w-full" onClick={(e) => e.stopPropagation()}>
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
