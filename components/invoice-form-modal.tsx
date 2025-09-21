@@ -22,6 +22,7 @@ interface InvoiceFormModalProps {
 interface InvoiceFormData {
   transactionType: string
   customerName: string
+  description: string
   amount: string
   status: 'paid' | 'pending'
 }
@@ -37,6 +38,7 @@ export function InvoiceFormModal({
   const [formData, setFormData] = useState<InvoiceFormData>({
     transactionType: '',
     customerName: '',
+    description: '',
     amount: '',
     status: 'paid'
   })
@@ -48,6 +50,7 @@ export function InvoiceFormModal({
       setFormData({
         transactionType: invoice.transactionType,
         customerName: invoice.customerName || '',
+        description: invoice.description || '',
         amount: invoice.amount.toString(),
         status: invoice.status === 'canceled' ? 'paid' : invoice.status
       })
@@ -55,6 +58,7 @@ export function InvoiceFormModal({
       setFormData({
         transactionType: transactionTypes.length > 0 ? transactionTypes[0].name : '',
         customerName: '',
+        description: '',
         amount: '',
         status: 'paid'
       })
@@ -83,6 +87,7 @@ export function InvoiceFormModal({
       const requestData = {
         transactionType: formData.transactionType,
         customerName: formData.customerName || null,
+        description: formData.description || null,
         amount,
         status: formData.status,
         ...(invoice ? {} : {
@@ -154,6 +159,18 @@ export function InvoiceFormModal({
               value={formData.customerName}
               onChange={(e) => setFormData(prev => ({ ...prev, customerName: e.target.value }))}
               placeholder="اسم العميل"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="description">
+              الوصف ({t('common.optional', dict)})
+            </Label>
+            <Input
+              id="description"
+              value={formData.description}
+              onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+              placeholder="وصف المعاملة"
             />
           </div>
 

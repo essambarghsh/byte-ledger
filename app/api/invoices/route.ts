@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
     
-    const { transactionType, customerName, amount, status, employeeId, employeeName, employeeAvatar } = body
+    const { transactionType, customerName, description, amount, status, employeeId, employeeName, employeeAvatar } = body
     
     if (!transactionType || !amount || !status || !employeeId || !employeeName) {
       return NextResponse.json(
@@ -40,6 +40,7 @@ export async function POST(request: NextRequest) {
     const newInvoice = await addInvoice({
       transactionType,
       customerName,
+      description,
       amount,
       status,
       employeeId,

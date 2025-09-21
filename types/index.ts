@@ -11,6 +11,7 @@ export interface Invoice {
   id: string
   transactionType: string
   customerName: string | null
+  description: string | null
   amount: number
   status: 'paid' | 'pending' | 'canceled'
   employeeId: string

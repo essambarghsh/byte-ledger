@@ -22,6 +22,7 @@ interface InvoiceTableProps {
 interface NewInvoiceFormData {
   transactionType: string
   customerName: string
+  description: string
   amount: string
   status: 'paid' | 'pending'
 }
@@ -29,6 +30,7 @@ interface NewInvoiceFormData {
 interface EditInvoiceFormData {
   transactionType: string
   customerName: string
+  description: string
   amount: string
   status: 'paid' | 'pending'
 }
@@ -41,6 +43,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
   const [newInvoiceData, setNewInvoiceData] = useState<NewInvoiceFormData>({
     transactionType: '',
     customerName: '',
+    description: '',
     amount: '',
     status: 'paid'
   })
@@ -49,6 +52,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
   const [editInvoiceData, setEditInvoiceData] = useState<EditInvoiceFormData>({
     transactionType: '',
     customerName: '',
+    description: '',
     amount: '',
     status: 'paid'
   })
@@ -124,6 +128,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
       const requestData = {
         transactionType: newInvoiceData.transactionType,
         customerName: newInvoiceData.customerName || null,
+        description: newInvoiceData.description || null,
         amount,
         status: newInvoiceData.status,
         employeeId: session.employeeId,
@@ -145,6 +150,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
         setNewInvoiceData({
           transactionType: transactionTypes.length > 0 ? transactionTypes[0].name : '',
           customerName: '',
+          description: '',
           amount: '',
           status: 'paid'
         })
@@ -167,6 +173,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
     setEditInvoiceData({
       transactionType: invoice.transactionType,
       customerName: invoice.customerName || '',
+      description: invoice.description || '',
       amount: invoice.amount.toString(),
       status: invoice.status as 'paid' | 'pending'
     })
@@ -189,6 +196,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
       const requestData = {
         transactionType: editInvoiceData.transactionType,
         customerName: editInvoiceData.customerName || null,
+        description: editInvoiceData.description || null,
         amount,
         status: editInvoiceData.status
       }
@@ -296,6 +304,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
               <TableHead className="text-right">{t('invoice.createdAt', dict)}</TableHead>
               <TableHead className="text-right">{t('invoice.transactionType', dict)}</TableHead>
               <TableHead className="text-right">{t('invoice.customerName', dict)}</TableHead>
+              <TableHead className="text-right">الوصف</TableHead>
               <TableHead className="text-right">{t('invoice.amount', dict)}</TableHead>
               <TableHead className="text-right">{t('invoice.status', dict)}</TableHead>
               <TableHead className="text-right">{t('invoice.employee', dict)}</TableHead>
@@ -332,6 +341,14 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                   value={newInvoiceData.customerName}
                   onChange={(e) => setNewInvoiceData(prev => ({ ...prev, customerName: e.target.value }))}
                   placeholder="اسم العميل (اختياري)"
+                  className="w-full"
+                />
+              </TableCell>
+              <TableCell className="text-right">
+                <Input
+                  value={newInvoiceData.description}
+                  onChange={(e) => setNewInvoiceData(prev => ({ ...prev, description: e.target.value }))}
+                  placeholder="وصف المعاملة (اختياري)"
                   className="w-full"
                 />
               </TableCell>
@@ -391,7 +408,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
 
             {invoices.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
+                <TableCell colSpan={8} className="text-center py-8 text-muted-foreground">
                   لا توجد فواتير
                 </TableCell>
               </TableRow>
@@ -442,6 +459,19 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                         />
                       ) : (
                         invoice.customerName || '-'
+                      )}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {isEditing ? (
+                        <Input
+                          value={editInvoiceData.description}
+                          onChange={(e) => setEditInvoiceData(prev => ({ ...prev, description: e.target.value }))}
+                          placeholder="وصف المعاملة (اختياري)"
+                          className="w-full"
+                          onClick={(e) => e.stopPropagation()}
+                        />
+                      ) : (
+                        invoice.description || '-'
                       )}
                     </TableCell>
                     <TableCell className="text-right font-medium">

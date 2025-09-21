@@ -208,6 +208,7 @@ export function ArchiveDetailPage({ archiveData }: ArchiveDetailPageProps) {
                   <TableHead className="text-right">رقم الفاتورة</TableHead>
                   <TableHead className="text-right">نوع المعاملة</TableHead>
                   <TableHead className="text-right">اسم العميل</TableHead>
+                  <TableHead className="text-right">الوصف</TableHead>
                   <TableHead className="text-right">المبلغ</TableHead>
                   <TableHead className="text-right">الحالة</TableHead>
                   <TableHead className="text-right">الموظف</TableHead>
@@ -217,7 +218,7 @@ export function ArchiveDetailPage({ archiveData }: ArchiveDetailPageProps) {
               <TableBody>
                 {archiveData.invoices.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
+                    <TableCell colSpan={8} className="text-center py-8 text-muted-foreground">
                       لا توجد فواتير في هذا الأرشيف
                     </TableCell>
                   </TableRow>
@@ -234,6 +235,9 @@ export function ArchiveDetailPage({ archiveData }: ArchiveDetailPageProps) {
                         </TableCell>
                         <TableCell className="text-right">
                           {invoice.customerName || 'غير محدد'}
+                        </TableCell>
+                        <TableCell className="text-right">
+                          {invoice.description || '-'}
                         </TableCell>
                         <TableCell className="text-right font-medium">
                           {invoice.amount.toLocaleString('en-US')} جنيه
