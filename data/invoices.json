@@ -1,6 +1,19 @@
 [
   {
     "transactionType": "بيع منتج",
+    "customerName": "محمد",
+    "amount": 500,
+    "status": "paid",
+    "employeeId": "emp-1",
+    "employeeName": "أحمد محمد",
+    "employeeAvatar": "/avatars/default-1.png",
+    "id": "fe830c38-6393-4fdc-a0ba-58a9efe49328",
+    "createdAt": "2025-09-21T01:14:40.964Z",
+    "updatedAt": "2025-09-21T01:14:40.964Z",
+    "isArchived": true
+  },
+  {
+    "transactionType": "بيع منتج",
     "customerName": null,
     "amount": 50,
     "status": "paid",

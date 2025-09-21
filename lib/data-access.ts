@@ -197,15 +197,27 @@ export async function getYesterdaySales(): Promise<number> {
   return 0
 }
 
-// Get opening balance for today (which is yesterday's closing balance)
+// Get opening balance for today
 export async function getTodaysOpeningBalance(): Promise<number> {
+  const today = getDateStringCairo()
   const yesterday = new Date()
   yesterday.setDate(yesterday.getDate() - 1)
   const yesterdayStr = getDateStringCairo(yesterday)
   
   const archives = await getArchives()
-  const yesterdayArchive = archives.find(archive => archive.date === yesterdayStr)
   
+  // First, check if there are any archives from today
+  const todayArchives = archives
+    .filter(archive => archive.date === today)
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+  
+  if (todayArchives.length > 0) {
+    // Use the most recent archive from today as the opening balance
+    return todayArchives[0].openingAmountForNextDay
+  }
+  
+  // If no archives from today, use yesterday's closing balance
+  const yesterdayArchive = archives.find(archive => archive.date === yesterdayStr)
   return yesterdayArchive?.openingAmountForNextDay || 0
 }
 

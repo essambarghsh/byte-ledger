@@ -18,5 +18,15 @@
     "employeeIdWhoArchived": "emp-1",
     "createdAt": "2025-09-21T00:55:35.754Z",
     "filename": "2025-09-21-0384d2b8-d60e-42b4-9b20-dd80f4dbeda8.json"
+  },
+  {
+    "id": "2cbec0ed-b4d2-48b8-b286-d63eefcd0f00",
+    "date": "2025-09-21",
+    "totalSales": 550,
+    "suppliedAmount": 300,
+    "openingAmountForNextDay": 250,
+    "employeeIdWhoArchived": "emp-1",
+    "createdAt": "2025-09-21T01:15:22.017Z",
+    "filename": "2025-09-21-2cbec0ed-b4d2-48b8-b286-d63eefcd0f00.json"
   }
 ]
