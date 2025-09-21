@@ -19,12 +19,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ar" dir="rtl">
+    <html lang="ar" dir="rtl" className='overflow-hidden'>
       <body
         className={`${notoKufiArabic.variable} antialiased`}
       >
         {children}
-        <Toaster />
+        <Toaster position="bottom-left" />
       </body>
     </html>
   );

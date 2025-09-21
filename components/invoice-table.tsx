@@ -168,7 +168,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
 
   const handleEditInvoice = (invoice: Invoice) => {
     if (invoice.status === 'canceled') return
-    
+
     setEditingInvoiceId(invoice.id)
     setEditInvoiceData({
       transactionType: invoice.transactionType,
@@ -229,6 +229,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
     setEditInvoiceData({
       transactionType: '',
       customerName: '',
+      description: '',
       amount: '',
       status: 'paid'
     })
@@ -290,32 +291,27 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
   const isAddButtonEnabled = newInvoiceData.transactionType && newInvoiceData.amount && !addingInvoice
 
   return (
-    <div className="space-y-4 p-6">
-      {/* Header */}
-      <div className="flex justify-between items-center">
-        <h3 className="text-lg font-medium">قائمة الفواتير</h3>
-      </div>
-
+    <>
       {/* Table */}
-      <div className="border rounded-lg">
+      <div className='border rounded-xl border-gray-300 overflow-hidden'>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="text-right">{t('invoice.createdAt', dict)}</TableHead>
-              <TableHead className="text-right">{t('invoice.transactionType', dict)}</TableHead>
-              <TableHead className="text-right">{t('invoice.customerName', dict)}</TableHead>
-              <TableHead className="text-right">الوصف</TableHead>
-              <TableHead className="text-right">{t('invoice.amount', dict)}</TableHead>
-              <TableHead className="text-right">{t('invoice.status', dict)}</TableHead>
-              <TableHead className="text-right">{t('invoice.employee', dict)}</TableHead>
-              <TableHead className="text-right">{t('invoice.actions', dict)}</TableHead>
+              <TableHead className="text-right h-14 px-4 text-sm font-bold">{t('invoice.createdAt', dict)}</TableHead>
+              <TableHead className="text-right h-14 px-4 text-sm font-bold">{t('invoice.transactionType', dict)}</TableHead>
+              <TableHead className="text-right h-14 px-4 text-sm font-bold">{t('invoice.customerName', dict)}</TableHead>
+              <TableHead className="text-right h-14 px-4 text-sm font-bold">{t('invoice.description', dict)}</TableHead>
+              <TableHead className="text-right h-14 px-4 text-sm font-bold">{t('invoice.amount', dict)}</TableHead>
+              <TableHead className="text-right h-14 px-4 text-sm font-bold">{t('invoice.status', dict)}</TableHead>
+              <TableHead className="text-right h-14 px-4 text-sm font-bold">{t('invoice.employee', dict)}</TableHead>
+              <TableHead className="text-right h-14 px-4 text-sm font-bold">{t('invoice.actions', dict)}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {/* New Invoice Row */}
             <TableRow className="bg-blue-50/30 border-blue-200">
-              <TableCell className="text-right">
-                <span className="text-sm text-muted-foreground">جديدة</span>
+              <TableCell className="text-right h-14 px-4 text-sm font-normal">
+                <span className="text-sm text-gray-600">{t('invoice.new', dict)}</span>
               </TableCell>
               <TableCell className="text-right">
                 <ClientOnly fallback={<div className="h-9 w-full rounded-md border border-input bg-transparent" />}>
@@ -324,7 +320,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                     onValueChange={(value) => setNewInvoiceData(prev => ({ ...prev, transactionType: value }))}
                   >
                     <SelectTrigger className="w-full">
-                      <SelectValue placeholder="اختر نوع المعاملة" />
+                      <SelectValue placeholder={t('invoice.transactionType', dict)} />
                     </SelectTrigger>
                     <SelectContent>
                       {transactionTypes.map((type) => (
@@ -340,7 +336,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                 <Input
                   value={newInvoiceData.customerName}
                   onChange={(e) => setNewInvoiceData(prev => ({ ...prev, customerName: e.target.value }))}
-                  placeholder="اسم العميل (اختياري)"
+                  placeholder={t('invoice.customerName', dict)}
                   className="w-full"
                 />
               </TableCell>
@@ -348,7 +344,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                 <Input
                   value={newInvoiceData.description}
                   onChange={(e) => setNewInvoiceData(prev => ({ ...prev, description: e.target.value }))}
-                  placeholder="وصف المعاملة (اختياري)"
+                  placeholder={t('invoice.description', dict)}
                   className="w-full"
                 />
               </TableCell>
@@ -359,7 +355,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                   min="0"
                   value={newInvoiceData.amount}
                   onChange={(e) => setNewInvoiceData(prev => ({ ...prev, amount: e.target.value }))}
-                  placeholder="المبلغ"
+                  placeholder={t('invoice.amount', dict)}
                   className="w-full"
                 />
               </TableCell>
@@ -380,7 +376,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                 </ClientOnly>
               </TableCell>
               <TableCell className="text-right">
-                <EmployeeAvatar 
+                <EmployeeAvatar
                   name={session.employeeName}
                   avatar={getCurrentEmployeeAvatar(session.employeeId, session.employeeAvatar)}
                   size="sm"
@@ -401,7 +397,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                   ) : (
                     <Check className="h-4 w-4" />
                   )}
-                  <span className="mr-2 rtl:mr-0 rtl:ml-2">إضافة فاتورة</span>
+                  <span className="mr-2 rtl:mr-0 rtl:ml-2">{t('invoice.addInvoice', dict)}</span>
                 </Button>
               </TableCell>
             </TableRow>
@@ -409,16 +405,16 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
             {invoices.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={8} className="text-center py-8 text-muted-foreground">
-                  لا توجد فواتير
+                  {t('invoice.noInvoices', dict)}
                 </TableCell>
               </TableRow>
             ) : (
               invoices.map((invoice) => {
                 const isEditing = editingInvoiceId === invoice.id
-                
+
                 return (
-                  <TableRow 
-                    key={invoice.id} 
+                  <TableRow
+                    key={invoice.id}
                     className={`${isEditing ? 'bg-yellow-50/30 border-yellow-200' : 'hover:bg-gray-50 cursor-pointer'}`}
                     onClick={() => !isEditing && handleEditInvoice(invoice)}
                   >
@@ -453,7 +449,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                         <Input
                           value={editInvoiceData.customerName}
                           onChange={(e) => setEditInvoiceData(prev => ({ ...prev, customerName: e.target.value }))}
-                          placeholder="اسم العميل (اختياري)"
+                          placeholder={t('invoice.customerName', dict)}
                           className="w-full"
                           onClick={(e) => e.stopPropagation()}
                         />
@@ -466,7 +462,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                         <Input
                           value={editInvoiceData.description}
                           onChange={(e) => setEditInvoiceData(prev => ({ ...prev, description: e.target.value }))}
-                          placeholder="وصف المعاملة (اختياري)"
+                          placeholder={t('invoice.description', dict)}
                           className="w-full"
                           onClick={(e) => e.stopPropagation()}
                         />
@@ -482,12 +478,12 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                           min="0"
                           value={editInvoiceData.amount}
                           onChange={(e) => setEditInvoiceData(prev => ({ ...prev, amount: e.target.value }))}
-                          placeholder="المبلغ"
+                          placeholder={t('invoice.amount', dict)}
                           className="w-full"
                           onClick={(e) => e.stopPropagation()}
                         />
                       ) : (
-                        `${invoice.amount.toLocaleString('en-US')} جنيه`
+                        `${invoice.amount.toLocaleString('en-US')} ${t('common.egp', dict)}`
                       )}
                     </TableCell>
                     <TableCell className="text-right">
@@ -511,7 +507,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                       )}
                     </TableCell>
                     <TableCell className="text-right">
-                      <EmployeeAvatar 
+                      <EmployeeAvatar
                         name={invoice.employeeName}
                         avatar={getCurrentEmployeeAvatar(invoice.employeeId, invoice.employeeAvatar)}
                         size="sm"
@@ -580,7 +576,6 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
           </TableBody>
         </Table>
       </div>
-
-    </div>
+    </>
   )
 }

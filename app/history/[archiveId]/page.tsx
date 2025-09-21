@@ -33,7 +33,7 @@ export default async function ArchiveDetailPageRoute({
   }
 
   return (
-    <DashboardLayout session={session}>
+    <DashboardLayout session={session} defaultOpen={false}>
       <ArchiveDetailPage archiveData={archiveData} />
     </DashboardLayout>
   )

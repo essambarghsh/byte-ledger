@@ -31,7 +31,11 @@
     "cancel": "إلغاء",
     "paid": "مدفوع",
     "pending": "معلق",
-    "canceled": "ملغي"
+    "canceled": "ملغي",
+    "description": "الوصف",
+    "addInvoice": "إضافة فاتورة",
+    "noInvoices": "لا توجد فواتير",
+    "new": "جديد"
   },
   "archive": {
     "title": "أرشفة البيانات",
@@ -92,6 +96,7 @@
     "optional": "اختياري",
     "required": "مطلوب",
     "am": "صباحاً",
-    "pm": "مساءً"
+    "pm": "مساءً",
+    "egp": "جنيه"
   }
 }

@@ -1,117 +1,36 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
-import { useState, useEffect, useCallback } from 'react'
-import { Button } from '@/components/ui/button'
-import { getDictionary, t } from '@/lib/i18n'
-import { SessionData, Employee } from '@/types'
-import { LogOut, Settings, History } from 'lucide-react'
-import { toast } from 'sonner'
-import { EmployeeAvatar } from '@/components/employee-avatar'
+import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar'
+import { AppSidebar } from '@/components/app-sidebar'
+import { SessionData } from '@/types'
+import { AppHeader } from './app-header'
+import { AppFooter } from './app-footer'
 
 interface DashboardLayoutProps {
   children: React.ReactNode
   session: SessionData
+  defaultOpen: boolean
 }
 
-export function DashboardLayout({ children, session }: DashboardLayoutProps) {
-  const router = useRouter()
-  const dict = getDictionary()
-  const [currentEmployee, setCurrentEmployee] = useState<Employee | null>(null)
-
-  const fetchCurrentEmployee = useCallback(async () => {
-    try {
-      const response = await fetch(`/api/employees/${session.employeeId}`)
-      if (response.ok) {
-        const employee = await response.json()
-        setCurrentEmployee(employee)
-      }
-    } catch (error) {
-      console.error('Failed to fetch current employee:', error)
-    }
-  }, [session.employeeId])
-
-  useEffect(() => {
-    fetchCurrentEmployee()
-  }, [fetchCurrentEmployee])
-
-  const handleLogout = async () => {
-    try {
-      const response = await fetch('/api/auth/logout', {
-        method: 'POST',
-      })
-
-      if (response.ok) {
-        toast.success('تم تسجيل الخروج بنجاح')
-        router.push('/')
-        router.refresh()
-      } else {
-        toast.error('خطأ في تسجيل الخروج')
-      }
-    } catch {
-      toast.error('خطأ في الاتصال بالخادم')
-    }
-  }
+export function DashboardLayout({ children, session, defaultOpen }: DashboardLayoutProps) {
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="container">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-4 rtl:space-x-reverse">
-              <h1 className="text-xl font-bold text-gray-900">
-                {t('app.name', dict)}
-              </h1>
-            </div>
-            
-            <div className="flex items-center space-x-4 rtl:space-x-reverse">
-              <EmployeeAvatar 
-                name={session.employeeName}
-                avatar={currentEmployee ? currentEmployee.avatar : session.employeeAvatar}
-                size="md"
-                showName={true}
-                nameClassName="text-sm font-medium text-gray-700"
-                updatedAt={currentEmployee?.updatedAt}
-              />
-              
-              <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => router.push('/history')}
-                >
-                  <History className="h-4 w-4 ml-2 rtl:ml-0 rtl:mr-2" />
-                  {t('history.title', dict)}
-                </Button>
-                
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => router.push('/settings')}
-                >
-                  <Settings className="h-4 w-4 ml-2 rtl:ml-0 rtl:mr-2" />
-                  {t('settings.title', dict)}
-                </Button>
-                
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleLogout}
-                >
-                  <LogOut className="h-4 w-4 ml-2 rtl:ml-0 rtl:mr-2" />
-                  {t('auth.logout', dict)}
-                </Button>
-              </div>
-            </div>
+      <SidebarProvider defaultOpen={defaultOpen}>
+      <AppSidebar session={session} />
+      <SidebarInset className='bg-transparent overflow-hidden'>
+        {/* Header */}
+        <AppHeader session={session} />
+
+        {/* Main Content */}
+        <div className='flex flex-1 flex-col h-16 max-h-[calc(100dvh-(4rem))] min-h-[calc(100dvh-(4rem))] overflow-y-auto overflow-x-hidden'>
+          <div className="container py-6 lg:py-14">
+            {children}
+          </div>
+          <div className="mt-auto">
+            <AppFooter />
           </div>
         </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="container py-8">
-        {children}
-      </main>
-    </div>
+      </SidebarInset>
+    </SidebarProvider>
   )
 }

@@ -14,7 +14,7 @@ export default async function SettingsPageRoute() {
   const settings = await getSettings()
 
   return (
-    <DashboardLayout session={session}>
+    <DashboardLayout session={session} defaultOpen={false}>
       <SettingsPage 
         settings={settings}
       />

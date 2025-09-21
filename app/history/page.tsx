@@ -14,7 +14,7 @@ export default async function HistoryPageRoute() {
   const archives = await getArchives()
 
   return (
-    <DashboardLayout session={session}>
+    <DashboardLayout session={session} defaultOpen={false}>
       <HistoryPage archives={archives} />
     </DashboardLayout>
   )
