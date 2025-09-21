@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -29,7 +29,7 @@ export function EmployeeManagement() {
       } else {
         toast.error('خطأ في تحميل قائمة الموظفين')
       }
-    } catch (error) {
+    } catch {
       toast.error('خطأ في الاتصال بالخادم')
     } finally {
       setLoading(false)
@@ -73,7 +73,7 @@ export function EmployeeManagement() {
         const data = await response.json()
         toast.error(data.error || 'خطأ في إضافة الموظف')
       }
-    } catch (error) {
+    } catch {
       toast.error('خطأ في الاتصال بالخادم')
     }
   }

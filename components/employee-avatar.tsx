@@ -1,6 +1,7 @@
 'use client'
 
 import { User } from 'lucide-react'
+import Image from 'next/image'
 
 interface EmployeeAvatarProps {
   name: string
@@ -57,9 +58,11 @@ export function EmployeeAvatar({
       <div className={`flex items-center space-x-2 rtl:space-x-reverse ${className}`}>
         <div className={`rounded-full overflow-hidden bg-primary/10 border border-border flex items-center justify-center ${sizeClass}`}>
           {avatarUrl ? (
-            <img
+            <Image
               src={avatarUrl}
               alt={`${name} avatar`}
+              width={48}
+              height={48}
               className="w-full h-full object-cover"
             />
           ) : (
@@ -74,9 +77,11 @@ export function EmployeeAvatar({
   return (
     <div className={`rounded-full overflow-hidden bg-primary/10 border border-border flex items-center justify-center ${sizeClass} ${className}`}>
       {avatarUrl ? (
-        <img
+        <Image
           src={avatarUrl}
           alt={`${name} avatar`}
+          width={48}
+          height={48}
           className="w-full h-full object-cover"
         />
       ) : (

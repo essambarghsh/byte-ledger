@@ -3,10 +3,10 @@ import { getArchiveData } from '@/lib/data-access'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { filename: string } }
+  { params }: { params: Promise<{ filename: string }> }
 ) {
   try {
-    const { filename } = params
+    const { filename } = await params
     const archiveData = await getArchiveData(decodeURIComponent(filename))
     
     if (!archiveData) {

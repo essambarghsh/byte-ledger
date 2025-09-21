@@ -1,5 +1,4 @@
-import { format, parseISO } from 'date-fns'
-import { ar } from 'date-fns/locale'
+import { parseISO } from 'date-fns'
 
 export const CAIRO_TIMEZONE = 'Africa/Cairo'
 

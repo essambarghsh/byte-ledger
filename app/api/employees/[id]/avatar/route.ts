@@ -29,10 +29,10 @@ function validateImageFile(file: File): { valid: boolean; error?: string } {
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const employeeId = params.id
+    const { id: employeeId } = await params
     
     if (!employeeId) {
       return NextResponse.json(
@@ -134,10 +134,10 @@ export async function POST(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const employeeId = params.id
+    const { id: employeeId } = await params
     
     if (!employeeId) {
       return NextResponse.json(

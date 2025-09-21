@@ -19,7 +19,7 @@ async function readJsonFile<T>(filePath: string, defaultValue: T): Promise<T> {
     await ensureDataDirs()
     const content = await fs.readFile(filePath, 'utf-8')
     return JSON.parse(content)
-  } catch (error) {
+  } catch {
     // If file doesn't exist, return default and create it
     await writeJsonFile(filePath, defaultValue)
     return defaultValue
@@ -170,7 +170,7 @@ export async function getArchiveData(filename: string): Promise<ArchiveData | nu
     const filePath = path.join(ARCHIVES_DIR, filename)
     const content = await fs.readFile(filePath, 'utf-8')
     return JSON.parse(content)
-  } catch (error) {
+  } catch {
     return null
   }
 }

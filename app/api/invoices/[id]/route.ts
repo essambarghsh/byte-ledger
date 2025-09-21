@@ -3,11 +3,11 @@ import { updateInvoice } from '@/lib/data-access'
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const body = await request.json()
-    const { id } = params
+    const { id } = await params
     
     const updatedInvoice = await updateInvoice(id, body)
     

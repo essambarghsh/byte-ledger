@@ -67,7 +67,7 @@ export function ArchiveModal({
         const error = await response.json()
         toast.error(error.error || 'حدث خطأ في الأرشفة')
       }
-    } catch (error) {
+    } catch {
       toast.error('خطأ في الاتصال بالخادم')
     } finally {
       setLoading(false)

@@ -3,7 +3,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { getDictionary } from '@/lib/i18n'
 import { formatDateCairo, formatDateTimeCairo } from '@/lib/date-utils'
 import { ArchiveData } from '@/types'
 import { ArrowLeft, FileText, Calendar, DollarSign, Package, TrendingUp } from 'lucide-react'
@@ -15,7 +14,6 @@ interface ArchiveDetailPageProps {
 }
 
 export function ArchiveDetailPage({ archiveData }: ArchiveDetailPageProps) {
-  const dict = getDictionary()
   const router = useRouter()
 
   // Calculate statistics from the archive data

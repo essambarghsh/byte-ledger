@@ -13,7 +13,7 @@ export async function getSession(): Promise<SessionData | null> {
     }
     
     return JSON.parse(sessionCookie.value) as SessionData
-  } catch (error) {
+  } catch {
     return null
   }
 }

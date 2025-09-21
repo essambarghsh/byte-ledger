@@ -1,13 +1,14 @@
 'use client'
 
 import { useState, useRef } from 'react'
+import Image from 'next/image'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Employee } from '@/types'
 import { toast } from 'sonner'
-import { Edit2, Save, X, Upload, User, Trash2 } from 'lucide-react'
+import { Edit2, Save, X, Upload, User } from 'lucide-react'
 
 interface EmployeeCardProps {
   employee: Employee
@@ -17,8 +18,7 @@ interface EmployeeCardProps {
 
 export function EmployeeCard({ 
   employee, 
-  onEmployeeUpdate, 
-  onEmployeeDelete 
+  onEmployeeUpdate
 }: EmployeeCardProps) {
   const [isEditing, setIsEditing] = useState(false)
   const [editName, setEditName] = useState(employee.name)
@@ -87,8 +87,7 @@ export function EmployeeCard({
         toast.error(data.error || 'خطأ في تحميل الصورة')
         setPreviewUrl(null)
       }
-    } catch (error) {
-      console.error('Upload error:', error)
+    } catch {
       toast.error('خطأ في الاتصال بالخادم')
       setPreviewUrl(null)
     } finally {
@@ -116,8 +115,7 @@ export function EmployeeCard({
       } else {
         toast.error(data.error || 'خطأ في حذف الصورة')
       }
-    } catch (error) {
-      console.error('Remove error:', error)
+    } catch {
       toast.error('خطأ في الاتصال بالخادم')
     } finally {
       setUploading(false)
@@ -161,7 +159,7 @@ export function EmployeeCard({
         const data = await response.json()
         toast.error(data.error || 'خطأ في تحديث الموظف')
       }
-    } catch (error) {
+    } catch {
       toast.error('خطأ في الاتصال بالخادم')
     } finally {
       setSaving(false)
@@ -189,7 +187,7 @@ export function EmployeeCard({
         const data = await response.json()
         toast.error(data.error || 'خطأ في تحديث حالة الموظف')
       }
-    } catch (error) {
+    } catch {
       toast.error('خطأ في الاتصال بالخادم')
     } finally {
       setSaving(false)
@@ -211,9 +209,11 @@ export function EmployeeCard({
             <div className="relative">
               <div className="w-16 h-16 rounded-full overflow-hidden bg-primary/10 border-2 border-border">
                 {avatarUrl ? (
-                  <img
+                  <Image
                     src={avatarUrl}
                     alt={`${employee.name} avatar`}
+                    width={64}
+                    height={64}
                     className="w-full h-full object-cover"
                   />
                 ) : (

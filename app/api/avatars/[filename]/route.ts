@@ -6,10 +6,10 @@ const AVATARS_DIR = path.join(process.cwd(), 'data/storage/buckets/avatars')
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { filename: string } }
+  { params }: { params: Promise<{ filename: string }> }
 ) {
   try {
-    const filename = params.filename
+    const { filename } = await params
     
     if (!filename) {
       return NextResponse.json(
@@ -69,7 +69,7 @@ export async function GET(
           'Last-Modified': stats.mtime.toUTCString(),
         },
       })
-    } catch (error) {
+    } catch {
       return NextResponse.json(
         { error: 'File not found' },
         { status: 404 }

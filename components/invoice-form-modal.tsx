@@ -107,7 +107,7 @@ export function InvoiceFormModal({
         const error = await response.json()
         toast.error(error.error || 'حدث خطأ')
       }
-    } catch (error) {
+    } catch {
       toast.error('خطأ في الاتصال بالخادم')
     } finally {
       setLoading(false)

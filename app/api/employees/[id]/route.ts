@@ -4,10 +4,10 @@ import { Employee } from '@/types'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const employeeId = params.id
+    const { id: employeeId } = await params
     
     if (!employeeId) {
       return NextResponse.json(
@@ -38,10 +38,10 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const employeeId = params.id
+    const { id: employeeId } = await params
     
     if (!employeeId) {
       return NextResponse.json(

@@ -6,101 +6,31 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { EmployeeManagement } from '@/components/employee-management'
 import { getDictionary, t } from '@/lib/i18n'
-import { Employee, AppSettings } from '@/types'
-import { Plus, Edit, Trash2, Users } from 'lucide-react'
+import { AppSettings } from '@/types'
+import { Plus, Edit } from 'lucide-react'
 import { toast } from 'sonner'
 
 interface SettingsPageProps {
-  employees: Employee[]
   settings: AppSettings
-  currentEmployeeId: string
 }
 
 export function SettingsPage({ 
-  employees: initialEmployees, 
-  settings: initialSettings,
-  currentEmployeeId 
+  settings: initialSettings
 }: SettingsPageProps) {
-  const [employees, setEmployees] = useState(initialEmployees)
   const [settings, setSettings] = useState(initialSettings)
-  const [showEmployeeModal, setShowEmployeeModal] = useState(false)
   const [showTransactionTypeModal, setShowTransactionTypeModal] = useState(false)
-  const [editingEmployee, setEditingEmployee] = useState<Employee | null>(null)
-  const [editingTransactionType, setEditingTransactionType] = useState<any>(null)
+  const [editingTransactionType, setEditingTransactionType] = useState<{ id: string; name: string; isActive: boolean } | null>(null)
   const [loading, setLoading] = useState(false)
   const dict = getDictionary()
-
-  const [employeeForm, setEmployeeForm] = useState({
-    name: '',
-    avatar: '',
-    isActive: true
-  })
 
   const [transactionTypeForm, setTransactionTypeForm] = useState({
     name: '',
     isActive: true
   })
 
-  const handleAddEmployee = () => {
-    setEditingEmployee(null)
-    setEmployeeForm({ name: '', avatar: '', isActive: true })
-    setShowEmployeeModal(true)
-  }
-
-  const handleEditEmployee = (employee: Employee) => {
-    setEditingEmployee(employee)
-    setEmployeeForm({
-      name: employee.name,
-      avatar: employee.avatar,
-      isActive: employee.isActive
-    })
-    setShowEmployeeModal(true)
-  }
-
-  const handleSubmitEmployee = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!employeeForm.name.trim()) {
-      toast.error('يرجى إدخال اسم الموظف')
-      return
-    }
-
-    setLoading(true)
-    try {
-      const url = editingEmployee 
-        ? `/api/employees/${editingEmployee.id}`
-        : '/api/employees'
-      const method = editingEmployee ? 'PATCH' : 'POST'
-
-      const response = await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(employeeForm),
-      })
-
-      if (response.ok) {
-        const updatedEmployee = await response.json()
-        if (editingEmployee) {
-          setEmployees(prev => prev.map(emp => 
-            emp.id === editingEmployee.id ? updatedEmployee : emp
-          ))
-          toast.success('تم تحديث الموظف')
-        } else {
-          setEmployees(prev => [...prev, updatedEmployee])
-          toast.success('تم إضافة الموظف')
-        }
-        setShowEmployeeModal(false)
-      } else {
-        toast.error('خطأ في حفظ الموظف')
-      }
-    } catch (error) {
-      toast.error('خطأ في الاتصال بالخادم')
-    } finally {
-      setLoading(false)
-    }
-  }
 
   const handleAddTransactionType = () => {
     setEditingTransactionType(null)
@@ -108,7 +38,7 @@ export function SettingsPage({
     setShowTransactionTypeModal(true)
   }
 
-  const handleEditTransactionType = (transactionType: any) => {
+  const handleEditTransactionType = (transactionType: { id: string; name: string; isActive: boolean }) => {
     setEditingTransactionType(transactionType)
     setTransactionTypeForm({
       name: transactionType.name,
@@ -157,7 +87,7 @@ export function SettingsPage({
       } else {
         toast.error('خطأ في حفظ نوع المعاملة')
       }
-    } catch (error) {
+    } catch {
       toast.error('خطأ في الاتصال بالخادم')
     } finally {
       setLoading(false)
@@ -224,59 +154,6 @@ export function SettingsPage({
         </CardContent>
       </Card>
 
-      {/* Employee Modal */}
-      <Dialog open={showEmployeeModal} onOpenChange={setShowEmployeeModal}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>
-              {editingEmployee ? t('settings.editEmployee', dict) : t('settings.addEmployee', dict)}
-            </DialogTitle>
-          </DialogHeader>
-          <form onSubmit={handleSubmitEmployee} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="employeeName">{t('settings.name', dict)} *</Label>
-              <Input
-                id="employeeName"
-                value={employeeForm.name}
-                onChange={(e) => setEmployeeForm(prev => ({ ...prev, name: e.target.value }))}
-                placeholder="اسم الموظف"
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="employeeAvatar">{t('settings.avatar', dict)}</Label>
-              <Input
-                id="employeeAvatar"
-                value={employeeForm.avatar}
-                onChange={(e) => setEmployeeForm(prev => ({ ...prev, avatar: e.target.value }))}
-                placeholder="مسار الصورة الشخصية"
-              />
-            </div>
-            <div className="flex items-center space-x-2 rtl:space-x-reverse">
-              <input
-                type="checkbox"
-                id="employeeActive"
-                checked={employeeForm.isActive}
-                onChange={(e) => setEmployeeForm(prev => ({ ...prev, isActive: e.target.checked }))}
-              />
-              <Label htmlFor="employeeActive">{t('settings.isActive', dict)}</Label>
-            </div>
-            <div className="flex justify-end space-x-2 rtl:space-x-reverse pt-4">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => setShowEmployeeModal(false)}
-                disabled={loading}
-              >
-                {t('common.cancel', dict)}
-              </Button>
-              <Button type="submit" disabled={loading}>
-                {loading ? t('common.loading', dict) : t('common.save', dict)}
-              </Button>
-            </div>
-          </form>
-        </DialogContent>
-      </Dialog>
 
       {/* Transaction Type Modal */}
       <Dialog open={showTransactionTypeModal} onOpenChange={setShowTransactionTypeModal}>

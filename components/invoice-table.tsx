@@ -8,7 +8,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { getDictionary, t } from '@/lib/i18n'
 import { formatDateTimeCairo } from '@/lib/date-utils'
 import { Invoice, SessionData, TransactionType, Employee } from '@/types'
-import { Edit, X, Plus, Check, Save, XCircle } from 'lucide-react'
+import { Edit, X, Check, Save, XCircle } from 'lucide-react'
 import { toast } from 'sonner'
 import { EmployeeAvatar } from '@/components/employee-avatar'
 
@@ -101,7 +101,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
         setInvoices(data)
         onInvoicesUpdate(data)
       }
-    } catch (error) {
+    } catch {
       toast.error('خطأ في تحميل الفواتير')
     }
   }
@@ -152,7 +152,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
         const error = await response.json()
         toast.error(error.error || 'حدث خطأ')
       }
-    } catch (error) {
+    } catch {
       toast.error('خطأ في الاتصال بالخادم')
     } finally {
       setAddingInvoice(false)
@@ -208,7 +208,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
         const error = await response.json()
         toast.error(error.error || 'حدث خطأ')
       }
-    } catch (error) {
+    } catch {
       toast.error('خطأ في الاتصال بالخادم')
     } finally {
       setSavingInvoice(false)
@@ -246,7 +246,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
       } else {
         toast.error('خطأ في إلغاء الفاتورة')
       }
-    } catch (error) {
+    } catch {
       toast.error('خطأ في الاتصال بالخادم')
     } finally {
       setLoading(false)

@@ -7,8 +7,8 @@ import { InvoiceTable } from '@/components/invoice-table'
 import { ArchiveModal } from '@/components/archive-modal'
 import { getDictionary, t } from '@/lib/i18n'
 import { Invoice, SessionData } from '@/types'
-import { isToday, isYesterday } from '@/lib/date-utils'
-import { Archive, Plus } from 'lucide-react'
+import { isToday } from '@/lib/date-utils'
+import { Archive } from 'lucide-react'
 
 interface DashboardProps {
   invoices: Invoice[]

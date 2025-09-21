@@ -29,7 +29,7 @@ export function EmployeeSelection() {
       } else {
         toast.error('خطأ في تحميل قائمة الموظفين')
       }
-    } catch (error) {
+    } catch {
       toast.error('خطأ في الاتصال بالخادم')
     } finally {
       setLoading(false)
@@ -60,7 +60,7 @@ export function EmployeeSelection() {
       } else {
         toast.error('خطأ في تسجيل الدخول')
       }
-    } catch (error) {
+    } catch {
       toast.error('خطأ في الاتصال بالخادم')
     } finally {
       setSelecting(false)

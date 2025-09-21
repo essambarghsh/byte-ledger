@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Button } from '@/components/ui/button'
 import { getDictionary, t } from '@/lib/i18n'
 import { SessionData, Employee } from '@/types'
@@ -19,11 +19,7 @@ export function DashboardLayout({ children, session }: DashboardLayoutProps) {
   const dict = getDictionary()
   const [currentEmployee, setCurrentEmployee] = useState<Employee | null>(null)
 
-  useEffect(() => {
-    fetchCurrentEmployee()
-  }, [session.employeeId])
-
-  const fetchCurrentEmployee = async () => {
+  const fetchCurrentEmployee = useCallback(async () => {
     try {
       const response = await fetch(`/api/employees/${session.employeeId}`)
       if (response.ok) {
@@ -33,7 +29,11 @@ export function DashboardLayout({ children, session }: DashboardLayoutProps) {
     } catch (error) {
       console.error('Failed to fetch current employee:', error)
     }
-  }
+  }, [session.employeeId])
+
+  useEffect(() => {
+    fetchCurrentEmployee()
+  }, [fetchCurrentEmployee])
 
   const handleLogout = async () => {
     try {
@@ -48,7 +48,7 @@ export function DashboardLayout({ children, session }: DashboardLayoutProps) {
       } else {
         toast.error('خطأ في تسجيل الخروج')
       }
-    } catch (error) {
+    } catch {
       toast.error('خطأ في الاتصال بالخادم')
     }
   }

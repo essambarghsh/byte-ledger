@@ -7,7 +7,7 @@ import { DashboardLayout } from '@/components/dashboard-layout'
 export default async function ArchiveDetailPageRoute({
   params
 }: {
-  params: { archiveId: string }
+  params: Promise<{ archiveId: string }>
 }) {
   const session = await getSession()
   
@@ -15,9 +15,11 @@ export default async function ArchiveDetailPageRoute({
     redirect('/')
   }
 
+  const { archiveId } = await params
+
   // Get all archives to find the one with matching ID
   const archives = await getArchives()
-  const archive = archives.find(a => a.id === params.archiveId)
+  const archive = archives.find(a => a.id === archiveId)
   
   if (!archive) {
     redirect('/history')
