@@ -1,0 +1,97 @@
+{
+  "app": {
+    "name": "ByteLedger",
+    "developer": "Essam Barghsh",
+    "developerWebsite": "https://www.ashwab.com"
+  },
+  "auth": {
+    "selectEmployee": "اختر الموظف",
+    "logout": "تسجيل الخروج",
+    "welcome": "مرحباً"
+  },
+  "dashboard": {
+    "title": "لوحة التحكم",
+    "salesToday": "مبيعات اليوم",
+    "salesYesterday": "مبيعات أمس",
+    "openingBalance": "الرصيد الافتتاحي",
+    "addInvoice": "إضافة فاتورة",
+    "archiveData": "أرشفة البيانات"
+  },
+  "invoice": {
+    "id": "رقم الفاتورة",
+    "transactionType": "نوع المعاملة",
+    "customerName": "اسم العميل",
+    "amount": "المبلغ",
+    "status": "الحالة",
+    "employee": "الموظف",
+    "createdAt": "تاريخ الإنشاء",
+    "updatedAt": "تاريخ التحديث",
+    "actions": "الإجراءات",
+    "edit": "تعديل",
+    "cancel": "إلغاء",
+    "paid": "مدفوع",
+    "pending": "معلق",
+    "canceled": "ملغي"
+  },
+  "archive": {
+    "title": "أرشفة البيانات",
+    "suppliedAmount": "المبلغ المسحوب",
+    "totalSales": "إجمالي المبيعات",
+    "openingBalance": "الرصيد الافتتاحي للغد",
+    "confirm": "تأكيد الأرشفة",
+    "cancel": "إلغاء",
+    "success": "تم أرشفة البيانات بنجاح",
+    "validation": {
+      "amountTooHigh": "المبلغ المسحوب لا يمكن أن يكون أكبر من إجمالي المبيعات"
+    }
+  },
+  "history": {
+    "title": "السجل والتقارير",
+    "archives": "الأرشيف",
+    "reports": "التقارير",
+    "totalSalesMonth": "إجمالي المبيعات - هذا الشهر",
+    "totalSalesYear": "إجمالي المبيعات - هذا العام",
+    "date": "التاريخ",
+    "filename": "اسم الملف"
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "employees": "إدارة الموظفين",
+    "transactionTypes": "أنواع المعاملات",
+    "general": "إعدادات عامة",
+    "addEmployee": "إضافة موظف",
+    "editEmployee": "تعديل موظف",
+    "name": "الاسم",
+    "avatar": "الصورة الشخصية",
+    "isActive": "نشط",
+    "save": "حفظ",
+    "delete": "حذف",
+    "addTransactionType": "إضافة نوع معاملة",
+    "editTransactionType": "تعديل نوع معاملة"
+  },
+  "search": {
+    "placeholder": "البحث في الفواتير...",
+    "filterByDate": "تصفية بالتاريخ",
+    "filterByEmployee": "تصفية بالموظف",
+    "filterByStatus": "تصفية بالحالة",
+    "from": "من",
+    "to": "إلى",
+    "all": "الكل"
+  },
+  "common": {
+    "loading": "جاري التحميل...",
+    "error": "خطأ",
+    "success": "نجح",
+    "confirm": "تأكيد",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "add": "إضافة",
+    "close": "إغلاق",
+    "optional": "اختياري",
+    "required": "مطلوب",
+    "am": "صباحاً",
+    "pm": "مساءً"
+  }
+}

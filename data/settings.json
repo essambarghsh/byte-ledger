@@ -1,0 +1,23 @@
+{
+  "transactionTypes": [
+    {
+      "id": "tx-1",
+      "name": "بيع منتج",
+      "isActive": true
+    },
+    {
+      "id": "tx-2",
+      "name": "تجديد اشتراك",
+      "isActive": true
+    },
+    {
+      "id": "tx-3",
+      "name": "غير محدد",
+      "isActive": true
+    }
+  ],
+  "timezone": "Africa/Cairo",
+  "archiveOptions": {
+    "storeSnapshots": true
+  }
+}

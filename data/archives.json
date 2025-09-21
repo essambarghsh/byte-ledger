@@ -1,0 +1,22 @@
+[
+  {
+    "id": "c673a634-9d8a-4f88-9231-f598ba693f73",
+    "date": "2025-09-21",
+    "totalSales": 450,
+    "suppliedAmount": 400,
+    "openingAmountForNextDay": 50,
+    "employeeIdWhoArchived": "emp-1",
+    "createdAt": "2025-09-21T00:21:01.105Z",
+    "filename": "2025-09-21-c673a634-9d8a-4f88-9231-f598ba693f73.json"
+  },
+  {
+    "id": "8a524dee-57dd-4d7f-85e4-b87cb9716e44",
+    "date": "2025-09-21",
+    "totalSales": 80,
+    "suppliedAmount": 50,
+    "openingAmountForNextDay": 30,
+    "employeeIdWhoArchived": "emp-1",
+    "createdAt": "2025-09-21T00:24:31.043Z",
+    "filename": "2025-09-21-8a524dee-57dd-4d7f-85e4-b87cb9716e44.json"
+  }
+]

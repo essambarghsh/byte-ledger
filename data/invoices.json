@@ -1,0 +1,40 @@
+[
+  {
+    "transactionType": "غير محدد",
+    "customerName": "يوسف",
+    "amount": 80,
+    "status": "paid",
+    "employeeId": "emp-1",
+    "employeeName": "أحمد محمد",
+    "employeeAvatar": "/avatars/default-1.png",
+    "id": "0c84f328-db9b-4530-b4ff-89f5a87488a9",
+    "createdAt": "2025-09-21T00:23:52.766Z",
+    "updatedAt": "2025-09-21T00:23:52.766Z",
+    "isArchived": true
+  },
+  {
+    "transactionType": "بيع منتج",
+    "customerName": "عصام",
+    "amount": 450,
+    "status": "paid",
+    "employeeId": "emp-1",
+    "employeeName": "أحمد محمد",
+    "employeeAvatar": "/avatars/default-1.png",
+    "id": "4f442d5a-f81c-456b-94ee-9bebb85317ae",
+    "createdAt": "2025-09-21T00:16:15.848Z",
+    "updatedAt": "2025-09-21T00:16:15.848Z",
+    "isArchived": true
+  },
+  {
+    "transactionType": "تجديد اشتراك",
+    "customerName": null,
+    "amount": 90,
+    "status": "canceled",
+    "employeeId": "emp-1",
+    "employeeName": "أحمد محمد",
+    "employeeAvatar": "/avatars/default-1.png",
+    "id": "501abc3e-3005-4c45-949e-4fc8236df807",
+    "createdAt": "2025-09-21T00:13:16.154Z",
+    "updatedAt": "2025-09-21T00:13:50.071Z"
+  }
+]

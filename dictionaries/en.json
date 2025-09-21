@@ -1,0 +1,20 @@
+{
+  "app": {
+    "name": "ByteLedger",
+    "developer": "Essam Barghsh",
+    "developerWebsite": "https://www.ashwab.com"
+  },
+  "auth": {
+    "selectEmployee": "Select Employee",
+    "logout": "Logout",
+    "welcome": "Welcome"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "salesToday": "Sales Today",
+    "salesYesterday": "Sales Yesterday",
+    "openingBalance": "Opening Balance",
+    "addInvoice": "Add Invoice",
+    "archiveData": "Archive Data"
+  }
+}

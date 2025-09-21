@@ -1,0 +1,18 @@
+[
+  {
+    "id": "emp-1",
+    "name": "أحمد محمد",
+    "avatar": "/avatars/default-1.png",
+    "isActive": true,
+    "createdAt": "2025-09-20T20:00:00.000Z",
+    "updatedAt": "2025-09-20T20:00:00.000Z"
+  },
+  {
+    "id": "emp-2",
+    "name": "فاطمة علي",
+    "avatar": "/avatars/default-2.png",
+    "isActive": true,
+    "createdAt": "2025-09-20T20:00:00.000Z",
+    "updatedAt": "2025-09-20T20:00:00.000Z"
+  }
+]
