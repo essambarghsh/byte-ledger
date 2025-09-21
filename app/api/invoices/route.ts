@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getInvoices, addInvoice } from '@/lib/data-access'
+import { getInvoices, getUnarchivedInvoices, addInvoice } from '@/lib/data-access'
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const invoices = await getInvoices()
+    const { searchParams } = new URL(request.url)
+    const includeArchived = searchParams.get('includeArchived') === 'true'
+    
+    const invoices = includeArchived ? await getInvoices() : await getUnarchivedInvoices()
     return NextResponse.json(invoices)
   } catch (error) {
     console.error('Error fetching invoices:', error)

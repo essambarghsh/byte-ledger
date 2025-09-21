@@ -18,7 +18,7 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { suppliedAmount, employeeId } = body
+    const { suppliedAmount, openingBalance = 0, employeeId } = body
     
     if (!employeeId) {
       return NextResponse.json(
@@ -34,18 +34,30 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    if (typeof openingBalance !== 'number' || openingBalance < 0) {
+      return NextResponse.json(
+        { error: 'Invalid opening balance' },
+        { status: 400 }
+      )
+    }
+
     // Get all invoices
     const allInvoices = await getInvoices()
     
-    // Find today's paid invoices that are not archived
+    // Find today's paid and canceled invoices that are not archived
     const todayInvoices = allInvoices.filter(invoice => 
-      invoice.status === 'paid' && 
+      (invoice.status === 'paid' || invoice.status === 'canceled') && 
       isToday(invoice.createdAt) && 
       !invoice.isArchived
     )
     
-    // Calculate total sales
-    const totalSales = todayInvoices.reduce((sum, invoice) => sum + invoice.amount, 0)
+    // Calculate actual sales from today's paid invoices
+    const actualSales = todayInvoices
+      .filter(invoice => invoice.status === 'paid')
+      .reduce((sum, invoice) => sum + invoice.amount, 0)
+    
+    // Total sales includes opening balance
+    const totalSales = actualSales + openingBalance
     
     if (suppliedAmount > totalSales) {
       return NextResponse.json(

@@ -76,6 +76,11 @@ export async function getInvoices(): Promise<Invoice[]> {
   return readJsonFile(filePath, [])
 }
 
+export async function getUnarchivedInvoices(): Promise<Invoice[]> {
+  const allInvoices = await getInvoices()
+  return allInvoices.filter(invoice => !invoice.isArchived)
+}
+
 export async function saveInvoices(invoices: Invoice[]): Promise<void> {
   const filePath = path.join(DATA_DIR, 'invoices.json')
   await writeJsonFile(filePath, invoices)
@@ -168,6 +173,40 @@ export async function getArchiveData(filename: string): Promise<ArchiveData | nu
   } catch (error) {
     return null
   }
+}
+
+// Get yesterday's sales from archives
+export async function getYesterdaySales(): Promise<number> {
+  const yesterday = new Date()
+  yesterday.setDate(yesterday.getDate() - 1)
+  const yesterdayStr = getDateStringCairo(yesterday)
+  
+  const archives = await getArchives()
+  const yesterdayArchive = archives.find(archive => archive.date === yesterdayStr)
+  
+  if (yesterdayArchive) {
+    const archiveData = await getArchiveData(yesterdayArchive.filename)
+    if (archiveData) {
+      // Calculate total sales from paid invoices in the archive
+      return archiveData.invoices
+        .filter(invoice => invoice.status === 'paid')
+        .reduce((sum, invoice) => sum + invoice.amount, 0)
+    }
+  }
+  
+  return 0
+}
+
+// Get opening balance for today (which is yesterday's closing balance)
+export async function getTodaysOpeningBalance(): Promise<number> {
+  const yesterday = new Date()
+  yesterday.setDate(yesterday.getDate() - 1)
+  const yesterdayStr = getDateStringCairo(yesterday)
+  
+  const archives = await getArchives()
+  const yesterdayArchive = archives.find(archive => archive.date === yesterdayStr)
+  
+  return yesterdayArchive?.openingAmountForNextDay || 0
 }
 
 // Settings functions

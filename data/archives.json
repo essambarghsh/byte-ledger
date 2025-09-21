@@ -1,22 +1,22 @@
 [
   {
-    "id": "c673a634-9d8a-4f88-9231-f598ba693f73",
-    "date": "2025-09-21",
-    "totalSales": 450,
-    "suppliedAmount": 400,
-    "openingAmountForNextDay": 50,
+    "id": "ff500701-589c-4a65-8874-09842f26904c",
+    "date": "2025-09-20",
+    "totalSales": 900,
+    "suppliedAmount": 800,
+    "openingAmountForNextDay": 100,
     "employeeIdWhoArchived": "emp-1",
-    "createdAt": "2025-09-21T00:21:01.105Z",
-    "filename": "2025-09-21-c673a634-9d8a-4f88-9231-f598ba693f73.json"
+    "createdAt": "2025-09-21T00:41:16.251Z",
+    "filename": "2025-09-20-ff500701-589c-4a65-8874-09842f26904c.json"
   },
   {
-    "id": "8a524dee-57dd-4d7f-85e4-b87cb9716e44",
+    "id": "0384d2b8-d60e-42b4-9b20-dd80f4dbeda8",
     "date": "2025-09-21",
-    "totalSales": 80,
-    "suppliedAmount": 50,
-    "openingAmountForNextDay": 30,
+    "totalSales": 150,
+    "suppliedAmount": 100,
+    "openingAmountForNextDay": 50,
     "employeeIdWhoArchived": "emp-1",
-    "createdAt": "2025-09-21T00:24:31.043Z",
-    "filename": "2025-09-21-8a524dee-57dd-4d7f-85e4-b87cb9716e44.json"
+    "createdAt": "2025-09-21T00:55:35.754Z",
+    "filename": "2025-09-21-0384d2b8-d60e-42b4-9b20-dd80f4dbeda8.json"
   }
 ]

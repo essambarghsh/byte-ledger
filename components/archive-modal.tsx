@@ -12,6 +12,7 @@ interface ArchiveModalProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   totalSales: number
+  openingBalance: number
   employeeId: string
   onComplete: () => void
 }
@@ -20,6 +21,7 @@ export function ArchiveModal({
   open,
   onOpenChange,
   totalSales,
+  openingBalance,
   employeeId,
   onComplete
 }: ArchiveModalProps) {
@@ -51,6 +53,7 @@ export function ArchiveModal({
         },
         body: JSON.stringify({
           suppliedAmount: amount,
+          openingBalance,
           employeeId
         }),
       })
@@ -86,6 +89,18 @@ export function ArchiveModal({
               <span className="font-medium">{t('archive.totalSales', dict)}:</span>
               <span>{totalSales.toLocaleString('ar-EG')} جنيه</span>
             </div>
+            {openingBalance > 0 && (
+              <>
+                <div className="flex justify-between text-sm text-gray-600">
+                  <span>المبيعات الفعلية اليوم:</span>
+                  <span>{(totalSales - openingBalance).toLocaleString('ar-EG')} جنيه</span>
+                </div>
+                <div className="flex justify-between text-sm text-gray-600">
+                  <span>الرصيد الافتتاحي:</span>
+                  <span>{openingBalance.toLocaleString('ar-EG')} جنيه</span>
+                </div>
+              </>
+            )}
           </div>
 
           <div className="space-y-2">

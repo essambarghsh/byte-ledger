@@ -13,9 +13,11 @@ import { Archive, Plus } from 'lucide-react'
 interface DashboardProps {
   invoices: Invoice[]
   session: SessionData
+  yesterdaySales: number
+  openingBalance: number
 }
 
-export function Dashboard({ invoices: initialInvoices, session }: DashboardProps) {
+export function Dashboard({ invoices: initialInvoices, session, yesterdaySales, openingBalance }: DashboardProps) {
   const [invoices, setInvoices] = useState(initialInvoices)
   const [showArchiveModal, setShowArchiveModal] = useState(false)
   const dict = getDictionary()
@@ -25,22 +27,25 @@ export function Dashboard({ invoices: initialInvoices, session }: DashboardProps
     const todayInvoices = invoices.filter(invoice => 
       invoice.status === 'paid' && isToday(invoice.createdAt) && !invoice.isArchived
     )
-    const yesterdayInvoices = invoices.filter(invoice => 
-      invoice.status === 'paid' && isYesterday(invoice.createdAt) && !invoice.isArchived
+    
+    // Check if there are any unarchived invoices from today (paid or canceled) for archiving
+    const todayUnarchivedInvoices = invoices.filter(invoice => 
+      (invoice.status === 'paid' || invoice.status === 'canceled') && 
+      isToday(invoice.createdAt) && 
+      !invoice.isArchived
     )
 
     const salesToday = todayInvoices.reduce((sum, invoice) => sum + invoice.amount, 0)
-    const salesYesterday = yesterdayInvoices.reduce((sum, invoice) => sum + invoice.amount, 0)
-    
-    // For now, opening balance is 0 - this would come from the last archive
-    const openingBalance = 0
+    // Add opening balance to today's total sales
+    const totalSalesToday = salesToday + openingBalance
 
     return {
-      salesToday,
-      salesYesterday,
-      openingBalance
+      salesToday: totalSalesToday,
+      salesYesterday: yesterdaySales,
+      openingBalance,
+      hasUnarchivedInvoicesToday: todayUnarchivedInvoices.length > 0
     }
-  }, [invoices])
+  }, [invoices, yesterdaySales, openingBalance])
 
   const handleInvoiceUpdate = (updatedInvoices: Invoice[]) => {
     setInvoices(updatedInvoices)
@@ -114,7 +119,7 @@ export function Dashboard({ invoices: initialInvoices, session }: DashboardProps
           <Button
             onClick={() => setShowArchiveModal(true)}
             variant="outline"
-            disabled={stats.salesToday === 0}
+            disabled={!stats.hasUnarchivedInvoicesToday}
           >
             <Archive className="h-4 w-4 ml-2 rtl:ml-0 rtl:mr-2" />
             {t('dashboard.archiveData', dict)}
@@ -138,6 +143,7 @@ export function Dashboard({ invoices: initialInvoices, session }: DashboardProps
         open={showArchiveModal}
         onOpenChange={setShowArchiveModal}
         totalSales={stats.salesToday}
+        openingBalance={openingBalance}
         employeeId={session.employeeId}
         onComplete={handleArchiveComplete}
       />

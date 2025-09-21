@@ -1,0 +1,24 @@
+{
+  "id": "0384d2b8-d60e-42b4-9b20-dd80f4dbeda8",
+  "date": "2025-09-21",
+  "totalSales": 150,
+  "suppliedAmount": 100,
+  "openingAmountForNextDay": 50,
+  "employeeIdWhoArchived": "emp-1",
+  "createdAt": "2025-09-21T00:55:35.754Z",
+  "filename": "2025-09-21-0384d2b8-d60e-42b4-9b20-dd80f4dbeda8.json",
+  "invoices": [
+    {
+      "transactionType": "بيع منتج",
+      "customerName": null,
+      "amount": 50,
+      "status": "paid",
+      "employeeId": "emp-1",
+      "employeeName": "أحمد محمد",
+      "employeeAvatar": "/avatars/default-1.png",
+      "id": "48884a91-4716-4247-997d-4e23266cbb71",
+      "createdAt": "2025-09-21T00:44:17.013Z",
+      "updatedAt": "2025-09-21T00:44:17.013Z"
+    }
+  ]
+}
