@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { ClientOnly } from '@/components/ui/client-only'
 import { getDictionary, t } from '@/lib/i18n'
 import { formatDateTimeCairo } from '@/lib/date-utils'
 import { Invoice, SessionData, TransactionType, Employee } from '@/types'
@@ -308,21 +309,23 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                 <span className="text-sm text-muted-foreground">جديدة</span>
               </TableCell>
               <TableCell className="text-right">
-                <Select
-                  value={newInvoiceData.transactionType}
-                  onValueChange={(value) => setNewInvoiceData(prev => ({ ...prev, transactionType: value }))}
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="اختر نوع المعاملة" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {transactionTypes.map((type) => (
-                      <SelectItem key={type.id} value={type.name}>
-                        {type.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <ClientOnly fallback={<div className="h-9 w-full rounded-md border border-input bg-transparent" />}>
+                  <Select
+                    value={newInvoiceData.transactionType}
+                    onValueChange={(value) => setNewInvoiceData(prev => ({ ...prev, transactionType: value }))}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="اختر نوع المعاملة" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {transactionTypes.map((type) => (
+                        <SelectItem key={type.id} value={type.name}>
+                          {type.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </ClientOnly>
               </TableCell>
               <TableCell className="text-right">
                 <Input
@@ -344,18 +347,20 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                 />
               </TableCell>
               <TableCell className="text-right">
-                <Select
-                  value={newInvoiceData.status}
-                  onValueChange={(value: 'paid' | 'pending') => setNewInvoiceData(prev => ({ ...prev, status: value }))}
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="paid">{t('invoice.paid', dict)}</SelectItem>
-                    <SelectItem value="pending">{t('invoice.pending', dict)}</SelectItem>
-                  </SelectContent>
-                </Select>
+                <ClientOnly fallback={<div className="h-9 w-full rounded-md border border-input bg-transparent" />}>
+                  <Select
+                    value={newInvoiceData.status}
+                    onValueChange={(value: 'paid' | 'pending') => setNewInvoiceData(prev => ({ ...prev, status: value }))}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="paid">{t('invoice.paid', dict)}</SelectItem>
+                      <SelectItem value="pending">{t('invoice.pending', dict)}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </ClientOnly>
               </TableCell>
               <TableCell className="text-right">
                 <EmployeeAvatar 
@@ -405,21 +410,23 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                     </TableCell>
                     <TableCell className="text-right">
                       {isEditing ? (
-                        <Select
-                          value={editInvoiceData.transactionType}
-                          onValueChange={(value) => setEditInvoiceData(prev => ({ ...prev, transactionType: value }))}
-                        >
-                          <SelectTrigger className="w-full" onClick={(e) => e.stopPropagation()}>
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {transactionTypes.map((type) => (
-                              <SelectItem key={type.id} value={type.name}>
-                                {type.name}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                        <ClientOnly fallback={<div className="h-9 w-full rounded-md border border-input bg-transparent" />}>
+                          <Select
+                            value={editInvoiceData.transactionType}
+                            onValueChange={(value) => setEditInvoiceData(prev => ({ ...prev, transactionType: value }))}
+                          >
+                            <SelectTrigger className="w-full" onClick={(e) => e.stopPropagation()}>
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {transactionTypes.map((type) => (
+                                <SelectItem key={type.id} value={type.name}>
+                                  {type.name}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </ClientOnly>
                       ) : (
                         invoice.transactionType
                       )}
@@ -455,18 +462,20 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                     </TableCell>
                     <TableCell className="text-right">
                       {isEditing ? (
-                        <Select
-                          value={editInvoiceData.status}
-                          onValueChange={(value: 'paid' | 'pending') => setEditInvoiceData(prev => ({ ...prev, status: value }))}
-                        >
-                          <SelectTrigger className="w-full" onClick={(e) => e.stopPropagation()}>
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="paid">{t('invoice.paid', dict)}</SelectItem>
-                            <SelectItem value="pending">{t('invoice.pending', dict)}</SelectItem>
-                          </SelectContent>
-                        </Select>
+                        <ClientOnly fallback={<div className="h-9 w-full rounded-md border border-input bg-transparent" />}>
+                          <Select
+                            value={editInvoiceData.status}
+                            onValueChange={(value: 'paid' | 'pending') => setEditInvoiceData(prev => ({ ...prev, status: value }))}
+                          >
+                            <SelectTrigger className="w-full" onClick={(e) => e.stopPropagation()}>
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="paid">{t('invoice.paid', dict)}</SelectItem>
+                              <SelectItem value="pending">{t('invoice.pending', dict)}</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </ClientOnly>
                       ) : (
                         getStatusBadge(invoice.status)
                       )}
