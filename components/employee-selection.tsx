@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { getDictionary, t } from '@/lib/i18n'
 import { Employee } from '@/types'
 import { toast } from 'sonner'
+import { EmployeeAvatar } from '@/components/employee-avatar'
 
 export function EmployeeSelection() {
   const [employees, setEmployees] = useState<Employee[]>([])
@@ -102,11 +103,12 @@ export function EmployeeSelection() {
               disabled={selecting}
             >
               <div className="flex items-center space-x-3 rtl:space-x-reverse">
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                  <span className="text-lg font-semibold">
-                    {employee.name.charAt(0)}
-                  </span>
-                </div>
+                <EmployeeAvatar 
+                  name={employee.name}
+                  avatar={employee.avatar}
+                  size="lg"
+                  updatedAt={employee.updatedAt}
+                />
                 <div className="text-right rtl:text-right">
                   <p className="font-medium">{employee.name}</p>
                   <p className="text-sm text-muted-foreground">موظف</p>

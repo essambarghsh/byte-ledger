@@ -7,9 +7,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { getDictionary, t } from '@/lib/i18n'
 import { formatDateTimeCairo } from '@/lib/date-utils'
-import { Invoice, SessionData, TransactionType } from '@/types'
+import { Invoice, SessionData, TransactionType, Employee } from '@/types'
 import { Edit, X, Plus, Check, Save, XCircle } from 'lucide-react'
 import { toast } from 'sonner'
+import { EmployeeAvatar } from '@/components/employee-avatar'
 
 interface InvoiceTableProps {
   invoices: Invoice[]
@@ -34,6 +35,7 @@ interface EditInvoiceFormData {
 export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpdate }: InvoiceTableProps) {
   const [invoices, setInvoices] = useState(initialInvoices)
   const [transactionTypes, setTransactionTypes] = useState<TransactionType[]>([])
+  const [employees, setEmployees] = useState<{ [key: string]: Employee }>({})
   const [loading, setLoading] = useState(false)
   const [newInvoiceData, setNewInvoiceData] = useState<NewInvoiceFormData>({
     transactionType: '',
@@ -54,6 +56,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
 
   useEffect(() => {
     fetchTransactionTypes()
+    fetchEmployees()
   }, [])
 
   useEffect(() => {
@@ -61,6 +64,22 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
       setNewInvoiceData(prev => ({ ...prev, transactionType: transactionTypes[0].name }))
     }
   }, [transactionTypes, newInvoiceData.transactionType])
+
+  const fetchEmployees = async () => {
+    try {
+      const response = await fetch('/api/employees')
+      if (response.ok) {
+        const employeeList = await response.json()
+        const employeeMap = employeeList.reduce((acc: { [key: string]: Employee }, emp: Employee) => {
+          acc[emp.id] = emp
+          return acc
+        }, {})
+        setEmployees(employeeMap)
+      }
+    } catch (error) {
+      console.error('Failed to fetch employees:', error)
+    }
+  }
 
   const fetchTransactionTypes = async () => {
     try {
@@ -234,6 +253,15 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
     }
   }
 
+  const getCurrentEmployeeAvatar = (employeeId: string, fallbackAvatar: string) => {
+    const currentEmployee = employees[employeeId]
+    return currentEmployee ? currentEmployee.avatar : fallbackAvatar
+  }
+
+  const getCurrentEmployeeUpdatedAt = (employeeId: string) => {
+    const currentEmployee = employees[employeeId]
+    return currentEmployee ? currentEmployee.updatedAt : undefined
+  }
 
   const getStatusBadge = (status: Invoice['status']) => {
     const statusConfig = {
@@ -330,14 +358,14 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                 </Select>
               </TableCell>
               <TableCell className="text-right">
-                <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                  <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
-                    <span className="text-xs font-semibold">
-                      {session.employeeName.charAt(0)}
-                    </span>
-                  </div>
-                  <span className="text-sm">{session.employeeName}</span>
-                </div>
+                <EmployeeAvatar 
+                  name={session.employeeName}
+                  avatar={getCurrentEmployeeAvatar(session.employeeId, session.employeeAvatar)}
+                  size="sm"
+                  showName={true}
+                  nameClassName="text-sm"
+                  updatedAt={getCurrentEmployeeUpdatedAt(session.employeeId)}
+                />
               </TableCell>
               <TableCell className="text-right">
                 <Button
@@ -446,14 +474,14 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                       )}
                     </TableCell>
                     <TableCell className="text-right">
-                      <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                        <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
-                          <span className="text-xs font-semibold">
-                            {invoice.employeeName.charAt(0)}
-                          </span>
-                        </div>
-                        <span className="text-sm">{invoice.employeeName}</span>
-                      </div>
+                      <EmployeeAvatar 
+                        name={invoice.employeeName}
+                        avatar={getCurrentEmployeeAvatar(invoice.employeeId, invoice.employeeAvatar)}
+                        size="sm"
+                        showName={true}
+                        nameClassName="text-sm"
+                        updatedAt={getCurrentEmployeeUpdatedAt(invoice.employeeId)}
+                      />
                     </TableCell>
                     <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
                       {isEditing ? (

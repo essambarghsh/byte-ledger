@@ -3,11 +3,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { getDictionary, t } from '@/lib/i18n'
+import { getDictionary } from '@/lib/i18n'
 import { formatDateCairo, formatDateTimeCairo } from '@/lib/date-utils'
 import { ArchiveData } from '@/types'
-import { ArrowLeft, FileText, User, Calendar, DollarSign, Package, TrendingUp } from 'lucide-react'
+import { ArrowLeft, FileText, Calendar, DollarSign, Package, TrendingUp } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { EmployeeAvatar } from '@/components/employee-avatar'
 
 interface ArchiveDetailPageProps {
   archiveData: ArchiveData
@@ -252,12 +253,13 @@ export function ArchiveDetailPage({ archiveData }: ArchiveDetailPageProps) {
                           </span>
                         </TableCell>
                         <TableCell className="text-right">
-                          <div className="flex items-center gap-2">
-                            <div className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center">
-                              <User className="h-3 w-3" />
-                            </div>
-                            <span className="text-sm">{invoice.employeeName}</span>
-                          </div>
+                          <EmployeeAvatar 
+                            name={invoice.employeeName}
+                            avatar={invoice.employeeAvatar}
+                            size="sm"
+                            showName={true}
+                            nameClassName="text-sm"
+                          />
                         </TableCell>
                         <TableCell className="text-right">
                           {formatDateTimeCairo(invoice.createdAt)}

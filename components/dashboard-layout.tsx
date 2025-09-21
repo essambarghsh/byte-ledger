@@ -1,12 +1,13 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
 import { getDictionary, t } from '@/lib/i18n'
-import { SessionData } from '@/types'
+import { SessionData, Employee } from '@/types'
 import { LogOut, Settings, History } from 'lucide-react'
 import { toast } from 'sonner'
+import { EmployeeAvatar } from '@/components/employee-avatar'
 
 interface DashboardLayoutProps {
   children: React.ReactNode
@@ -16,6 +17,23 @@ interface DashboardLayoutProps {
 export function DashboardLayout({ children, session }: DashboardLayoutProps) {
   const router = useRouter()
   const dict = getDictionary()
+  const [currentEmployee, setCurrentEmployee] = useState<Employee | null>(null)
+
+  useEffect(() => {
+    fetchCurrentEmployee()
+  }, [session.employeeId])
+
+  const fetchCurrentEmployee = async () => {
+    try {
+      const response = await fetch(`/api/employees/${session.employeeId}`)
+      if (response.ok) {
+        const employee = await response.json()
+        setCurrentEmployee(employee)
+      }
+    } catch (error) {
+      console.error('Failed to fetch current employee:', error)
+    }
+  }
 
   const handleLogout = async () => {
     try {
@@ -48,16 +66,14 @@ export function DashboardLayout({ children, session }: DashboardLayoutProps) {
             </div>
             
             <div className="flex items-center space-x-4 rtl:space-x-reverse">
-              <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                  <span className="text-sm font-semibold">
-                    {session.employeeName.charAt(0)}
-                  </span>
-                </div>
-                <span className="text-sm font-medium text-gray-700">
-                  {session.employeeName}
-                </span>
-              </div>
+              <EmployeeAvatar 
+                name={session.employeeName}
+                avatar={currentEmployee ? currentEmployee.avatar : session.employeeAvatar}
+                size="md"
+                showName={true}
+                nameClassName="text-sm font-medium text-gray-700"
+                updatedAt={currentEmployee?.updatedAt}
+              />
               
               <div className="flex items-center space-x-2 rtl:space-x-reverse">
                 <Button

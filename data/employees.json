@@ -5,14 +5,14 @@
     "avatar": "/avatars/default-1.png",
     "isActive": true,
     "createdAt": "2025-09-20T20:00:00.000Z",
-    "updatedAt": "2025-09-20T20:00:00.000Z"
+    "updatedAt": "2025-09-21T02:31:51.087Z"
   },
   {
     "id": "emp-2",
     "name": "فاطمة علي",
-    "avatar": "/avatars/default-2.png",
+    "avatar": "/avatars/emp-2-6f1492e7-5e80-421e-9aa1-28e7235e2078.jpg",
     "isActive": true,
     "createdAt": "2025-09-20T20:00:00.000Z",
-    "updatedAt": "2025-09-20T20:00:00.000Z"
+    "updatedAt": "2025-09-21T02:26:53.370Z"
   }
 ]

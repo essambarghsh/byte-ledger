@@ -7,9 +7,10 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { EmployeeManagement } from '@/components/employee-management'
 import { getDictionary, t } from '@/lib/i18n'
 import { Employee, AppSettings } from '@/types'
-import { Plus, Edit, Trash2 } from 'lucide-react'
+import { Plus, Edit, Trash2, Users } from 'lucide-react'
 import { toast } from 'sonner'
 
 interface SettingsPageProps {
@@ -169,72 +170,8 @@ export function SettingsPage({
         <h1 className="text-2xl font-bold">{t('settings.title', dict)}</h1>
       </div>
 
-      {/* Employees Section */}
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle>{t('settings.employees', dict)}</CardTitle>
-          <Button onClick={handleAddEmployee}>
-            <Plus className="h-4 w-4 ml-2 rtl:ml-0 rtl:mr-2" />
-            {t('settings.addEmployee', dict)}
-          </Button>
-        </CardHeader>
-        <CardContent>
-          <div className="border rounded-lg">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="text-right">{t('settings.name', dict)}</TableHead>
-                  <TableHead className="text-right">{t('settings.avatar', dict)}</TableHead>
-                  <TableHead className="text-right">{t('settings.isActive', dict)}</TableHead>
-                  <TableHead className="text-right">{t('invoice.actions', dict)}</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {employees.map((employee) => (
-                  <TableRow key={employee.id}>
-                    <TableCell className="text-right font-medium">
-                      {employee.name}
-                      {employee.id === currentEmployeeId && (
-                        <span className="mr-2 text-xs text-blue-600">(أنت)</span>
-                      )}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                        <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                          <span className="text-sm font-semibold">
-                            {employee.name.charAt(0)}
-                          </span>
-                        </div>
-                        <span className="text-sm text-muted-foreground">
-                          {employee.avatar || 'افتراضي'}
-                        </span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        employee.isActive 
-                          ? 'bg-green-100 text-green-800' 
-                          : 'bg-red-100 text-red-800'
-                      }`}>
-                        {employee.isActive ? 'نشط' : 'غير نشط'}
-                      </span>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleEditEmployee(employee)}
-                      >
-                        <Edit className="h-4 w-4" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Employee Management Section */}
+      <EmployeeManagement />
 
       {/* Transaction Types Section */}
       <Card>
