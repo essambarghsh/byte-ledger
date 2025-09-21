@@ -2,39 +2,22 @@
 
 import { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { getDictionary, t } from '@/lib/i18n'
 import { formatDateCairo } from '@/lib/date-utils'
 import { Archive } from '@/types'
-import { FileText, Download } from 'lucide-react'
-import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 interface HistoryPageProps {
   archives: Archive[]
 }
 
 export function HistoryPage({ archives }: HistoryPageProps) {
-  const [loading, setLoading] = useState(false)
   const dict = getDictionary()
+  const router = useRouter()
 
-  const handleViewArchive = async (filename: string) => {
-    setLoading(true)
-    try {
-      const response = await fetch(`/api/archives/${encodeURIComponent(filename)}`)
-      if (response.ok) {
-        const archiveData = await response.json()
-        // For now, just show a toast. In a real app, you might open a modal or navigate to a detail page
-        toast.success(`تم تحميل أرشيف ${filename}`)
-        console.log('Archive data:', archiveData)
-      } else {
-        toast.error('خطأ في تحميل الأرشيف')
-      }
-    } catch (error) {
-      toast.error('خطأ في الاتصال بالخادم')
-    } finally {
-      setLoading(false)
-    }
+  const handleArchiveClick = (archiveId: string) => {
+    router.push(`/history/${archiveId}`)
   }
 
   // Calculate statistics from archives
@@ -137,14 +120,13 @@ export function HistoryPage({ archives }: HistoryPageProps) {
                   <TableHead className="text-right">{t('archive.totalSales', dict)}</TableHead>
                   <TableHead className="text-right">{t('archive.suppliedAmount', dict)}</TableHead>
                   <TableHead className="text-right">{t('archive.openingBalance', dict)}</TableHead>
-                  <TableHead className="text-right">{t('history.filename', dict)}</TableHead>
-                  <TableHead className="text-right">{t('invoice.actions', dict)}</TableHead>
+                  <TableHead className="text-right">عدد الفواتير</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {archives.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+                    <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
                       لا يوجد أرشيف
                     </TableCell>
                   </TableRow>
@@ -152,7 +134,11 @@ export function HistoryPage({ archives }: HistoryPageProps) {
                   archives
                     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
                     .map((archive) => (
-                      <TableRow key={archive.id}>
+                      <TableRow 
+                        key={archive.id} 
+                        className="cursor-pointer hover:bg-muted/50 transition-colors"
+                        onClick={() => handleArchiveClick(archive.id)}
+                      >
                         <TableCell className="text-right">
                           {formatDateCairo(archive.date)}
                         </TableCell>
@@ -165,18 +151,8 @@ export function HistoryPage({ archives }: HistoryPageProps) {
                         <TableCell className="text-right font-medium text-blue-600">
                           {archive.openingAmountForNextDay.toLocaleString('en-US')} جنيه
                         </TableCell>
-                        <TableCell className="text-right text-sm text-muted-foreground">
-                          {archive.filename}
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleViewArchive(archive.filename)}
-                            disabled={loading}
-                          >
-                            <FileText className="h-4 w-4" />
-                          </Button>
+                        <TableCell className="text-right text-muted-foreground">
+                          انقر للتفاصيل
                         </TableCell>
                       </TableRow>
                     ))
