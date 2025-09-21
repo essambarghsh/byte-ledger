@@ -1,6 +1,54 @@
 [
   {
     "transactionType": "بيع منتج",
+    "customerName": "تجربة",
+    "amount": 60,
+    "status": "canceled",
+    "employeeId": "emp-1",
+    "employeeName": "أحمد محمد",
+    "employeeAvatar": "/avatars/default-1.png",
+    "id": "ac74734c-c35b-464f-b592-206a0bc772ef",
+    "createdAt": "2025-09-21T01:24:07.582Z",
+    "updatedAt": "2025-09-21T01:24:50.846Z"
+  },
+  {
+    "transactionType": "بيع منتج",
+    "customerName": "على",
+    "amount": 70,
+    "status": "pending",
+    "employeeId": "emp-1",
+    "employeeName": "أحمد محمد",
+    "employeeAvatar": "/avatars/default-1.png",
+    "id": "062a57ad-c42e-4289-bf46-8fdd6fc8b7af",
+    "createdAt": "2025-09-21T01:23:27.760Z",
+    "updatedAt": "2025-09-21T01:24:43.920Z"
+  },
+  {
+    "transactionType": "كروت",
+    "customerName": "شبل",
+    "amount": 800,
+    "status": "paid",
+    "employeeId": "emp-1",
+    "employeeName": "أحمد محمد",
+    "employeeAvatar": "/avatars/default-1.png",
+    "id": "6ee54d8d-4f4d-4f15-a6ad-6788a24fcc43",
+    "createdAt": "2025-09-21T01:23:20.103Z",
+    "updatedAt": "2025-09-21T01:23:20.103Z"
+  },
+  {
+    "transactionType": "بيع منتج",
+    "customerName": "يوسف",
+    "amount": 90,
+    "status": "paid",
+    "employeeId": "emp-1",
+    "employeeName": "أحمد محمد",
+    "employeeAvatar": "/avatars/default-1.png",
+    "id": "d01d7338-79fc-40c2-92d2-e2bd992e1457",
+    "createdAt": "2025-09-21T01:23:03.479Z",
+    "updatedAt": "2025-09-21T01:23:03.479Z"
+  },
+  {
+    "transactionType": "بيع منتج",
     "customerName": "محمد",
     "amount": 500,
     "status": "paid",

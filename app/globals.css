@@ -51,6 +51,12 @@
   --font-noto-kufi-arabic: var(--font-noto-kufi-arabic);
 }
 
+@utility container {
+  padding-inline: 16px;
+  margin-inline: auto;
+  max-width: 110rem;
+}
+
 body {
   font-family: var(--font-noto-kufi-arabic);
 }
