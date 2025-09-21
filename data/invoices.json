@@ -1,5 +1,17 @@
 [
   {
+    "transactionType": "كروت",
+    "customerName": null,
+    "amount": 30,
+    "status": "paid",
+    "employeeId": "emp-2",
+    "employeeName": "فاطمة علي",
+    "employeeAvatar": "/avatars/default-2.png",
+    "id": "f007795e-d956-4bd9-b895-0416efb93810",
+    "createdAt": "2025-09-21T01:33:14.013Z",
+    "updatedAt": "2025-09-21T01:34:01.032Z"
+  },
+  {
     "transactionType": "بيع منتج",
     "customerName": "تجربة",
     "amount": 60,
