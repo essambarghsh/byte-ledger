@@ -51,11 +51,22 @@ export async function GET(
           break
       }
 
+      // Get file stats for better ETag generation
+      const stats = await fs.stat(filePath)
+      const etag = `"${filename}-${stats.mtime.getTime()}"`
+      
+      // Check if client has cached version
+      const ifNoneMatch = request.headers.get('if-none-match')
+      if (ifNoneMatch === etag) {
+        return new NextResponse(null, { status: 304 })
+      }
+
       return new NextResponse(new Uint8Array(fileBuffer), {
         headers: {
           'Content-Type': contentType,
-          'Cache-Control': 'public, max-age=3600, must-revalidate', // Cache for 1 hour, but check for updates
-          'ETag': `"${filename}-${Date.now()}"`, // Add ETag for better cache validation
+          'Cache-Control': 'public, max-age=0, must-revalidate', // Always revalidate to ensure fresh content
+          'ETag': etag,
+          'Last-Modified': stats.mtime.toUTCString(),
         },
       })
     } catch (error) {

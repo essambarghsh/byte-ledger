@@ -41,6 +41,18 @@ export async function POST(
       )
     }
 
+    // Get current employee to check for existing avatar
+    const { getEmployees } = await import('@/lib/data-access')
+    const employees = await getEmployees()
+    const currentEmployee = employees.find(emp => emp.id === employeeId)
+    
+    if (!currentEmployee) {
+      return NextResponse.json(
+        { error: 'Employee not found' },
+        { status: 404 }
+      )
+    }
+
     const formData = await request.formData()
     const file = formData.get('avatar') as File
 
@@ -91,6 +103,20 @@ export async function POST(
       )
     }
 
+    // Delete old avatar file if it exists and is not default
+    if (currentEmployee.avatar && 
+        currentEmployee.avatar.startsWith('/avatars/') && 
+        !currentEmployee.avatar.includes('default')) {
+      try {
+        const oldFileName = path.basename(currentEmployee.avatar)
+        const oldFilePath = path.join(AVATARS_DIR, oldFileName)
+        await fs.unlink(oldFilePath)
+      } catch (cleanupError) {
+        console.error('Failed to cleanup old avatar file:', cleanupError)
+        // Don't fail the request if cleanup fails
+      }
+    }
+
     return NextResponse.json({
       message: 'Profile picture uploaded successfully',
       employee: updatedEmployee,
@@ -120,6 +146,18 @@ export async function DELETE(
       )
     }
 
+    // Get current employee to check for existing avatar
+    const { getEmployees } = await import('@/lib/data-access')
+    const employees = await getEmployees()
+    const currentEmployee = employees.find(emp => emp.id === employeeId)
+    
+    if (!currentEmployee) {
+      return NextResponse.json(
+        { error: 'Employee not found' },
+        { status: 404 }
+      )
+    }
+
     // Reset employee avatar to default
     const updatedEmployee = await updateEmployee(employeeId, {
       avatar: '/avatars/default-1.png'
@@ -130,6 +168,20 @@ export async function DELETE(
         { error: 'Employee not found' },
         { status: 404 }
       )
+    }
+
+    // Delete the actual avatar file if it exists and is not default
+    if (currentEmployee.avatar && 
+        currentEmployee.avatar.startsWith('/avatars/') && 
+        !currentEmployee.avatar.includes('default')) {
+      try {
+        const fileName = path.basename(currentEmployee.avatar)
+        const filePath = path.join(AVATARS_DIR, fileName)
+        await fs.unlink(filePath)
+      } catch (cleanupError) {
+        console.error('Failed to delete avatar file:', cleanupError)
+        // Don't fail the request if file deletion fails
+      }
     }
 
     return NextResponse.json({

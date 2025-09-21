@@ -30,7 +30,9 @@ export function EmployeeCard({
   const getAvatarUrl = () => {
     if (previewUrl) return previewUrl
     if (employee.avatar.startsWith('/avatars/') && !employee.avatar.includes('default')) {
-      return `/api${employee.avatar}`
+      // Add timestamp to bust browser cache using updatedAt
+      const timestamp = new Date(employee.updatedAt).getTime()
+      return `/api${employee.avatar}?t=${timestamp}`
     }
     return null
   }

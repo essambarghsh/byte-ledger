@@ -2,17 +2,17 @@
   {
     "id": "emp-1",
     "name": "أحمد محمد",
-    "avatar": "/avatars/emp-1-fcc88ad3-9f4d-42af-a75d-682c32ac9b90.jpg",
+    "avatar": "/avatars/emp-1-943b4d88-09d9-42d5-a653-fe6423494563.jpeg",
     "isActive": true,
     "createdAt": "2025-09-20T20:00:00.000Z",
-    "updatedAt": "2025-09-21T02:37:15.632Z"
+    "updatedAt": "2025-09-21T02:45:25.499Z"
   },
   {
     "id": "emp-2",
     "name": "فاطمة علي",
-    "avatar": "/avatars/emp-2-6f1492e7-5e80-421e-9aa1-28e7235e2078.jpg",
+    "avatar": "/avatars/emp-2-87057b23-1da0-44c8-94ed-74d3ff92bc77.jpg",
     "isActive": true,
     "createdAt": "2025-09-20T20:00:00.000Z",
-    "updatedAt": "2025-09-21T02:26:53.370Z"
+    "updatedAt": "2025-09-21T02:46:10.902Z"
   }
 ]
