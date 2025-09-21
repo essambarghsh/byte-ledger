@@ -63,10 +63,9 @@ export function Dashboard({ invoices: initialInvoices, session, yesterdaySales, 
   }
 
   return (
-    <div className="space-y-6">
+    <div>
       {/* Statistics Cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mb-12">
         <div className="p-4 bg-primary border border-primary rounded-xl">
           <div className="flex">
             <span className='text-xs font-semibold text-white flex items-center leading-none flex-1'>
@@ -80,7 +79,7 @@ export function Dashboard({ invoices: initialInvoices, session, yesterdaySales, 
                 <SolarMoneyBagBold className='size-7 text-white' />
               </span>
               <div className="flex">
-                <span className='text-2xl font-bold text-white flex leading-none'>
+                <span className='text-3xl font-black text-white flex leading-none'>
                   <Counter
                     value={stats.salesToday}
                     duration={1800}
@@ -108,7 +107,7 @@ export function Dashboard({ invoices: initialInvoices, session, yesterdaySales, 
                 <MingcuteOpenDoorFill className='size-7 text-white' />
               </span>
               <div className="flex">
-                <span className='text-2xl font-bold text-white flex leading-none'>
+                <span className='text-3xl font-black text-white flex leading-none'>
                   <Counter
                     value={stats.openingBalance}
                     duration={1800}
@@ -136,7 +135,7 @@ export function Dashboard({ invoices: initialInvoices, session, yesterdaySales, 
                 <MynauiClockWavesSolid className='size-7 text-black' />
               </span>
               <div className="flex">
-                <span className='text-2xl font-bold text-black flex leading-none'>
+                <span className='text-3xl font-black text-black flex leading-none'>
                   <Counter
                     value={stats.salesYesterday}
                     duration={1800}
@@ -153,15 +152,16 @@ export function Dashboard({ invoices: initialInvoices, session, yesterdaySales, 
       </div>
 
       {/* Action Buttons */}
-      <div className="flex justify-between items-center">
-        <h2 className="text-xl font-semibold">الفواتير</h2>
-        <div className="flex space-x-2 rtl:space-x-reverse">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-base font-black">الفواتير</h2>
+        <div className="flex">
           <Button
             onClick={() => setShowArchiveModal(true)}
-            variant="outline"
+            variant="default"
             disabled={!stats.hasUnarchivedInvoicesToday}
+            className='flex px-6 py-1 h-14 rounded-xl border-none shadow-none cursor-pointer text-white text-xs font-bold'
           >
-            <Archive className="h-4 w-4 ml-2 rtl:ml-0 rtl:mr-2" />
+            <Archive className="size-6" />
             {t('dashboard.archiveData', dict)}
           </Button>
         </div>

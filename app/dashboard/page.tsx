@@ -3,7 +3,6 @@ import { getSession } from '@/lib/session'
 import { getUnarchivedInvoices, getYesterdaySales, getTodaysOpeningBalance } from '@/lib/data-access'
 import { Dashboard } from '@/components/dashboard'
 import { DashboardLayout } from '@/components/dashboard-layout'
-import { cookies } from 'next/headers'
 
 export default async function DashboardPage() {
   const session = await getSession()
@@ -18,11 +17,8 @@ export default async function DashboardPage() {
     getTodaysOpeningBalance()
   ])
 
-  const cookieStore = await cookies()
-  const sidebarState = cookieStore.get("sidebar:state")?.value === "true"
-
   return (
-    <DashboardLayout session={session} defaultOpen={sidebarState}>
+    <DashboardLayout session={session}>
       <Dashboard 
         invoices={invoices} 
         session={session} 

@@ -55,8 +55,8 @@ export function EmployeeAvatar({
 
   if (showName) {
     return (
-      <div className={`flex items-center space-x-2 rtl:space-x-reverse ${className}`}>
-        <div className={`rounded-full overflow-hidden bg-primary/10 border border-border flex items-center justify-center ${sizeClass}`}>
+      <div className={`flex items-center ${className}`}>
+        <div className={`rounded-full overflow-hidden bg-primary/15 flex items-center justify-center ${sizeClass}`}>
           {avatarUrl ? (
             <Image
               src={avatarUrl}
@@ -69,13 +69,13 @@ export function EmployeeAvatar({
             <User className={`text-muted-foreground ${iconSize}`} />
           )}
         </div>
-        <span className={`font-medium ${nameClassName}`}>{name}</span>
+        <span className={`font-medium mr-3 ${nameClassName}`}>{name}</span>
       </div>
     )
   }
 
   return (
-    <div className={`rounded-full overflow-hidden bg-primary/10 border border-border flex items-center justify-center ${sizeClass} ${className}`}>
+    <div className={`rounded-full overflow-hidden bg-primary/15 flex items-center justify-center ${sizeClass} ${className}`}>
       {avatarUrl ? (
         <Image
           src={avatarUrl}

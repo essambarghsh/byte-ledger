@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Combobox } from '@/components/ui/combobox'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { ClientOnly } from '@/components/ui/client-only'
 import { getDictionary, t } from '@/lib/i18n'
@@ -12,6 +12,8 @@ import { Invoice, SessionData, TransactionType, Employee } from '@/types'
 import { Edit, X, Check, Save, XCircle } from 'lucide-react'
 import { toast } from 'sonner'
 import { EmployeeAvatar } from '@/components/employee-avatar'
+import { Fa7SolidPlus } from './icons/Fa7SolidPlus'
+import { SolarTrashBinTrashOutline } from './icons/SolarTrashBinTrashOutline'
 
 interface InvoiceTableProps {
   invoices: Invoice[]
@@ -40,6 +42,9 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
   const [transactionTypes, setTransactionTypes] = useState<TransactionType[]>([])
   const [employees, setEmployees] = useState<{ [key: string]: Employee }>({})
   const [loading, setLoading] = useState(false)
+  const [loadingTransactionTypes, setLoadingTransactionTypes] = useState(true)
+  const [loadingPaymentStatus, setLoadingPaymentStatus] = useState(false)
+  const [loadingEditPaymentStatus, setLoadingEditPaymentStatus] = useState(false)
   const [newInvoiceData, setNewInvoiceData] = useState<NewInvoiceFormData>({
     transactionType: '',
     customerName: '',
@@ -87,6 +92,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
   }
 
   const fetchTransactionTypes = async () => {
+    setLoadingTransactionTypes(true)
     try {
       const response = await fetch('/api/settings')
       if (response.ok) {
@@ -95,6 +101,8 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
       }
     } catch (error) {
       console.error('Error fetching transaction types:', error)
+    } finally {
+      setLoadingTransactionTypes(false)
     }
   }
 
@@ -293,46 +301,41 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
   return (
     <>
       {/* Table */}
-      <div className='border rounded-xl border-gray-300 overflow-hidden'>
+      <div className='bg-white border rounded-xl border-gray-300 overflow-hidden'>
         <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="text-right h-14 px-4 text-sm font-bold">{t('invoice.createdAt', dict)}</TableHead>
-              <TableHead className="text-right h-14 px-4 text-sm font-bold">{t('invoice.transactionType', dict)}</TableHead>
-              <TableHead className="text-right h-14 px-4 text-sm font-bold">{t('invoice.customerName', dict)}</TableHead>
-              <TableHead className="text-right h-14 px-4 text-sm font-bold">{t('invoice.description', dict)}</TableHead>
-              <TableHead className="text-right h-14 px-4 text-sm font-bold">{t('invoice.amount', dict)}</TableHead>
-              <TableHead className="text-right h-14 px-4 text-sm font-bold">{t('invoice.status', dict)}</TableHead>
-              <TableHead className="text-right h-14 px-4 text-sm font-bold">{t('invoice.employee', dict)}</TableHead>
-              <TableHead className="text-right h-14 px-4 text-sm font-bold">{t('invoice.actions', dict)}</TableHead>
+          <TableHeader className='border-none'>
+            <TableRow className='border-gray-300 text-black'>
+              <TableHead className="text-right h-14 px-4 text-xs font-bold">{t('invoice.createdAt', dict)}</TableHead>
+              <TableHead className="text-right h-14 px-4 text-xs font-bold">{t('invoice.transactionType', dict)}</TableHead>
+              <TableHead className="text-right h-14 px-4 text-xs font-bold">{t('invoice.customerName', dict)}</TableHead>
+              <TableHead className="text-right h-14 px-4 text-xs font-bold">{t('invoice.description', dict)}</TableHead>
+              <TableHead className="text-right h-14 px-4 text-xs font-bold">{t('invoice.amount', dict)}</TableHead>
+              <TableHead className="text-right h-14 px-4 text-xs font-bold">{t('invoice.status', dict)}</TableHead>
+              <TableHead className="text-center h-14 px-4 text-xs font-bold">{t('invoice.employee', dict)}</TableHead>
+              <TableHead className="text-center h-14 px-4 text-xs font-bold">{t('invoice.actions', dict)}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {/* New Invoice Row */}
-            <TableRow className="bg-blue-50/30 border-blue-200">
-              <TableCell className="text-right h-14 px-4 text-sm font-normal">
-                <span className="text-sm text-gray-600">{t('invoice.new', dict)}</span>
+            <TableRow className="bg-primary/10 border-none relative after:right-0 after:top-0 after:bottom-0 after:w-1 after:h-full after:bg-primary after:absolute">
+              <TableCell className="text-right h-14 px-4 text-sm font-bold">
+                <span className="text-sm text-primary mr-5">{t('invoice.new', dict)}</span>
               </TableCell>
-              <TableCell className="text-right">
-                <ClientOnly fallback={<div className="h-9 w-full rounded-md border border-input bg-transparent" />}>
-                  <Select
+              <TableCell className="text-right min-w-[200px] p-4">
+                <ClientOnly fallback={<div className="h-14 w-full rounded-xl bg-white" />}>
+                  <Combobox
+                    options={transactionTypes.map((type) => ({ value: type.name, label: type.name }))}
                     value={newInvoiceData.transactionType}
                     onValueChange={(value) => setNewInvoiceData(prev => ({ ...prev, transactionType: value }))}
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder={t('invoice.transactionType', dict)} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {transactionTypes.map((type) => (
-                        <SelectItem key={type.id} value={type.name}>
-                          {type.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                    placeholder={t('invoice.transactionType', dict)}
+                    searchPlaceholder="البحث..."
+                    emptyText="لا توجد أنواع معاملات"
+                    className="w-full"
+                    loading={loadingTransactionTypes}
+                  />
                 </ClientOnly>
               </TableCell>
-              <TableCell className="text-right">
+              <TableCell className="text-right max-w-[160px] p-4">
                 <Input
                   value={newInvoiceData.customerName}
                   onChange={(e) => setNewInvoiceData(prev => ({ ...prev, customerName: e.target.value }))}
@@ -340,7 +343,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                   className="w-full"
                 />
               </TableCell>
-              <TableCell className="text-right">
+              <TableCell className="text-right max-w-[260px] p-4">
                 <Input
                   value={newInvoiceData.description}
                   onChange={(e) => setNewInvoiceData(prev => ({ ...prev, description: e.target.value }))}
@@ -348,10 +351,10 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                   className="w-full"
                 />
               </TableCell>
-              <TableCell className="text-right">
+              <TableCell className="text-right max-w-[170px] p-4">
                 <Input
                   type="number"
-                  step="0.01"
+                  step="1"
                   min="0"
                   value={newInvoiceData.amount}
                   onChange={(e) => setNewInvoiceData(prev => ({ ...prev, amount: e.target.value }))}
@@ -359,45 +362,50 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                   className="w-full"
                 />
               </TableCell>
-              <TableCell className="text-right">
-                <ClientOnly fallback={<div className="h-9 w-full rounded-md border border-input bg-transparent" />}>
-                  <Select
+              <TableCell className="text-right min-w-[140px] max-w-[140px] p-4">
+                <ClientOnly fallback={<div className="h-14 w-full rounded-xl bg-white" />}>
+                  <Combobox
+                    options={[
+                      { value: 'paid', label: t('invoice.paid', dict) },
+                      { value: 'pending', label: t('invoice.pending', dict) }
+                    ]}
                     value={newInvoiceData.status}
-                    onValueChange={(value: 'paid' | 'pending') => setNewInvoiceData(prev => ({ ...prev, status: value }))}
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="paid">{t('invoice.paid', dict)}</SelectItem>
-                      <SelectItem value="pending">{t('invoice.pending', dict)}</SelectItem>
-                    </SelectContent>
-                  </Select>
+                    onValueChange={(value) => {
+                      setLoadingPaymentStatus(true)
+                      setNewInvoiceData(prev => ({ ...prev, status: value as 'paid' | 'pending' }))
+                      setTimeout(() => setLoadingPaymentStatus(false), 300)
+                    }}
+                    placeholder="اختر الحالة"
+                    searchPlaceholder="البحث..."
+                    emptyText="لا توجد حالات"
+                    className="w-full"
+                    loading={loadingPaymentStatus}
+                  />
                 </ClientOnly>
               </TableCell>
-              <TableCell className="text-right">
+              <TableCell className="text-center flex justify-center p-4">
                 <EmployeeAvatar
                   name={session.employeeName}
                   avatar={getCurrentEmployeeAvatar(session.employeeId, session.employeeAvatar)}
-                  size="sm"
-                  showName={true}
+                  size="lg"
+                  showName={false}
                   nameClassName="text-sm"
                   updatedAt={getCurrentEmployeeUpdatedAt(session.employeeId)}
                 />
               </TableCell>
-              <TableCell className="text-right">
+              <TableCell className="text-left p-4">
                 <Button
                   size="sm"
                   onClick={handleAddInvoice}
                   disabled={!isAddButtonEnabled}
-                  className="bg-green-600 hover:bg-green-700 disabled:bg-gray-300"
+                  className="bg-primary hover:bg-primary/90 text-white disabled:bg-primary/15 disabled:text-primary/80 rounded-full size-10 border-none shadow-none cursor-pointer disabled:opacity-100"
                 >
                   {addingInvoice ? (
-                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
                   ) : (
-                    <Check className="h-4 w-4" />
+                    <Fa7SolidPlus className="h-4 w-4" />
                   )}
-                  <span className="mr-2 rtl:mr-0 rtl:ml-2">{t('invoice.addInvoice', dict)}</span>
+                  <span className="sr-only">{t('invoice.addInvoice', dict)}</span>
                 </Button>
               </TableCell>
             </TableRow>
@@ -415,36 +423,32 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                 return (
                   <TableRow
                     key={invoice.id}
-                    className={`${isEditing ? 'bg-yellow-50/30 border-yellow-200' : 'hover:bg-gray-50 cursor-pointer'}`}
+                    className={`border-gray-300 ${isEditing ? 'bg-yellow-100' : 'hover:bg-gray-50 cursor-pointer'}`}
                     onClick={() => !isEditing && handleEditInvoice(invoice)}
                   >
-                    <TableCell className="text-right">
+                    <TableCell className="text-right h-14 px-4 text-xs font-bold">
                       {formatDateTimeCairo(invoice.createdAt)}
                     </TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="text-right min-w-[200px] p-4 text-xs font-bold">
                       {isEditing ? (
-                        <ClientOnly fallback={<div className="h-9 w-full rounded-md border border-input bg-transparent" />}>
-                          <Select
+                        <ClientOnly fallback={<div className="h-14 w-full rounded-xl bg-white" />}>
+                          <Combobox
+                            options={transactionTypes.map((type) => ({ value: type.name, label: type.name }))}
                             value={editInvoiceData.transactionType}
                             onValueChange={(value) => setEditInvoiceData(prev => ({ ...prev, transactionType: value }))}
-                          >
-                            <SelectTrigger className="w-full" onClick={(e) => e.stopPropagation()}>
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {transactionTypes.map((type) => (
-                                <SelectItem key={type.id} value={type.name}>
-                                  {type.name}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
+                            placeholder={t('invoice.transactionType', dict)}
+                            searchPlaceholder="البحث..."
+                            emptyText="لا توجد أنواع معاملات"
+                            className="w-full"
+                            loading={loadingTransactionTypes}
+                            onClick={(e: React.MouseEvent) => e.stopPropagation()}
+                          />
                         </ClientOnly>
                       ) : (
                         invoice.transactionType
                       )}
                     </TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="text-right max-w-[160px] p-4 text-xs font-bold">
                       {isEditing ? (
                         <Input
                           value={editInvoiceData.customerName}
@@ -457,7 +461,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                         invoice.customerName || '-'
                       )}
                     </TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="text-right max-w-[260px] p-4 text-xs font-bold">
                       {isEditing ? (
                         <Input
                           value={editInvoiceData.description}
@@ -470,7 +474,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                         invoice.description || '-'
                       )}
                     </TableCell>
-                    <TableCell className="text-right font-medium">
+                    <TableCell className="text-right font-medium p-4">
                       {isEditing ? (
                         <Input
                           type="number"
@@ -486,44 +490,59 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                         `${invoice.amount.toLocaleString('en-US')} ${t('common.egp', dict)}`
                       )}
                     </TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="text-right min-w-[140px] max-w-[140px] p-4 text-xs font-bold">
                       {isEditing ? (
-                        <ClientOnly fallback={<div className="h-9 w-full rounded-md border border-input bg-transparent" />}>
-                          <Select
+                        <ClientOnly fallback={<div className="h-14 w-full rounded-xl bg-white" />}>
+                          <Combobox
+                            options={[
+                              { value: 'paid', label: t('invoice.paid', dict) },
+                              { value: 'pending', label: t('invoice.pending', dict) }
+                            ]}
                             value={editInvoiceData.status}
-                            onValueChange={(value: 'paid' | 'pending') => setEditInvoiceData(prev => ({ ...prev, status: value }))}
-                          >
-                            <SelectTrigger className="w-full" onClick={(e) => e.stopPropagation()}>
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="paid">{t('invoice.paid', dict)}</SelectItem>
-                              <SelectItem value="pending">{t('invoice.pending', dict)}</SelectItem>
-                            </SelectContent>
-                          </Select>
+                            onValueChange={(value) => {
+                              setLoadingEditPaymentStatus(true)
+                              setEditInvoiceData(prev => ({ ...prev, status: value as 'paid' | 'pending' }))
+                              setTimeout(() => setLoadingEditPaymentStatus(false), 300)
+                            }}
+                            placeholder="اختر الحالة"
+                            searchPlaceholder="البحث..."
+                            emptyText="لا توجد حالات"
+                            className="w-full"
+                            loading={loadingEditPaymentStatus}
+                            onClick={(e: React.MouseEvent) => e.stopPropagation()}
+                          />
                         </ClientOnly>
                       ) : (
                         getStatusBadge(invoice.status)
                       )}
                     </TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="text-center flex justify-center p-4">
                       <EmployeeAvatar
                         name={invoice.employeeName}
                         avatar={getCurrentEmployeeAvatar(invoice.employeeId, invoice.employeeAvatar)}
-                        size="sm"
-                        showName={true}
+                        size="lg"
+                        showName={false}
                         nameClassName="text-sm"
                         updatedAt={getCurrentEmployeeUpdatedAt(invoice.employeeId)}
                       />
                     </TableCell>
-                    <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
+                    <TableCell className="text-left p-4" onClick={(e) => e.stopPropagation()}>
                       {isEditing ? (
-                        <div className="flex space-x-2 rtl:space-x-reverse">
+                        <div className="flex justify-end">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={handleCancelEdit}
+                            disabled={savingInvoice}
+                            className="bg-black/15 hover:bg-black/20 text-black disabled:bg-primary/15 disabled:text-black/80 rounded-full size-10 border-none shadow-none cursor-pointer disabled:opacity-100"
+                          >
+                            <XCircle className="h-4 w-4" />
+                          </Button>
                           <Button
                             size="sm"
                             onClick={() => handleSaveInvoice(invoice.id)}
                             disabled={!editInvoiceData.transactionType || !editInvoiceData.amount || savingInvoice}
-                            className="bg-green-600 hover:bg-green-700 disabled:bg-gray-300"
+                            className="mr-2 bg-primary hover:bg-primary/90 text-white disabled:bg-primary/15 disabled:text-primary/80 rounded-full size-10 border-none shadow-none cursor-pointer disabled:opacity-100"
                           >
                             {savingInvoice ? (
                               <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
@@ -531,39 +550,21 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                               <Save className="h-4 w-4" />
                             )}
                           </Button>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={handleCancelEdit}
-                            disabled={savingInvoice}
-                          >
-                            <XCircle className="h-4 w-4" />
-                          </Button>
                         </div>
                       ) : (
-                        <div className="flex space-x-2 rtl:space-x-reverse">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              handleEditInvoice(invoice)
-                            }}
-                            disabled={invoice.status === 'canceled'}
-                          >
-                            <Edit className="h-4 w-4" />
-                          </Button>
+                        <div className="flex justify-end">
                           {invoice.status !== 'canceled' && (
                             <Button
-                              variant="ghost"
+                              variant="outline"
                               size="sm"
                               onClick={(e) => {
                                 e.stopPropagation()
                                 handleCancelInvoice(invoice)
                               }}
                               disabled={loading}
+                              className="bg-red-900/8 hover:bg-red-900/20 text-red-700 disabled:bg-red-900/30 disabled:text-red-900/80 rounded-full size-10 border-none shadow-none cursor-pointer"
                             >
-                              <X className="h-4 w-4" />
+                              <SolarTrashBinTrashOutline className="!size-5" />
                             </Button>
                           )}
                         </div>

@@ -9,27 +9,26 @@ import { AppFooter } from './app-footer'
 interface DashboardLayoutProps {
   children: React.ReactNode
   session: SessionData
-  defaultOpen: boolean
 }
 
-export function DashboardLayout({ children, session, defaultOpen }: DashboardLayoutProps) {
+export function DashboardLayout({ children, session }: DashboardLayoutProps) {
 
   return (
-      <SidebarProvider defaultOpen={defaultOpen}>
+    <SidebarProvider defaultOpen={true}>
       <AppSidebar session={session} />
       <SidebarInset className='bg-transparent overflow-hidden'>
         {/* Header */}
         <AppHeader session={session} />
 
         {/* Main Content */}
-        <div className='flex flex-1 flex-col h-16 max-h-[calc(100dvh-(4rem))] min-h-[calc(100dvh-(4rem))] overflow-y-auto overflow-x-hidden'>
+        <div className='bg-primary/10 flex flex-1 flex-col h-16 max-h-[calc(100dvh-(8rem))] min-h-[calc(100dvh-(8rem))] overflow-y-auto overflow-x-hidden'>
           <div className="container py-6 lg:py-14">
             {children}
           </div>
-          <div className="mt-auto">
-            <AppFooter />
-          </div>
         </div>
+
+        {/* Footer */}
+        <AppFooter />
       </SidebarInset>
     </SidebarProvider>
   )

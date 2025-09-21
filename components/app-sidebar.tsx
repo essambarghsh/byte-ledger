@@ -115,11 +115,9 @@ export function AppSidebar({ session }: AppSidebarProps) {
         </div>
       </SidebarHeader>
 
-
-
       <SidebarContent className="gap-0">
         <SidebarGroup className="px-0 pt-2">
-          <SidebarGroupLabel className={cn("px-4 text-xs font-normal h-7",)}>التنقل</SidebarGroupLabel>
+          <SidebarGroupLabel className={cn("px-4 text-xs font-normal h-7",)}>{t('common.basic', dict)}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {navigationItems.map((item) => {
@@ -159,7 +157,7 @@ export function AppSidebar({ session }: AppSidebarProps) {
 
       <SidebarFooter>
         <SidebarGroup className="px-0 pt-2">
-          <SidebarGroupLabel className={cn("px-4 text-xs font-normal h-7",)}>...</SidebarGroupLabel>
+          <SidebarGroupLabel className={cn("px-4 text-xs font-normal h-7",)}>{t('common.account', dict)}</SidebarGroupLabel>
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton

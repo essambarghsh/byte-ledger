@@ -1,8 +1,10 @@
 {
   "app": {
     "name": "ByteLedger",
-    "developer": "Essam Barghsh",
-    "developerWebsite": "https://www.ashwab.com"
+    "developer": "إحدي برمجيات عصام برغش",
+    "developerCompany": "أشواب تك",
+    "developerWebsite": "https://www.ashwab.com",
+    "version": "الإصدار"
   },
   "auth": {
     "selectEmployee": "اختر الموظف",
@@ -97,6 +99,8 @@
     "required": "مطلوب",
     "am": "صباحاً",
     "pm": "مساءً",
-    "egp": "جنيه"
+    "egp": "جنيه",
+    "basic": "أساسي",
+    "account": "الحساب"
   }
 }
