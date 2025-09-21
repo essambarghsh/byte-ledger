@@ -423,7 +423,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                           onClick={(e) => e.stopPropagation()}
                         />
                       ) : (
-                        `${invoice.amount.toLocaleString('ar-EG')} جنيه`
+                        `${invoice.amount.toLocaleString('en-US')} جنيه`
                       )}
                     </TableCell>
                     <TableCell className="text-right">

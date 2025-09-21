@@ -69,7 +69,7 @@ export function Dashboard({ invoices: initialInvoices, session, yesterdaySales, 
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {stats.salesToday.toLocaleString('ar-EG')} جنيه
+              {stats.salesToday.toLocaleString('en-US')} جنيه
             </div>
             <p className="text-xs text-muted-foreground">
               إجمالي المبيعات اليوم
@@ -86,7 +86,7 @@ export function Dashboard({ invoices: initialInvoices, session, yesterdaySales, 
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {stats.salesYesterday.toLocaleString('ar-EG')} جنيه
+              {stats.salesYesterday.toLocaleString('en-US')} جنيه
             </div>
             <p className="text-xs text-muted-foreground">
               إجمالي مبيعات أمس
@@ -103,7 +103,7 @@ export function Dashboard({ invoices: initialInvoices, session, yesterdaySales, 
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {stats.openingBalance.toLocaleString('ar-EG')} جنيه
+              {stats.openingBalance.toLocaleString('en-US')} جنيه
             </div>
             <p className="text-xs text-muted-foreground">
               الرصيد الافتتاحي لليوم

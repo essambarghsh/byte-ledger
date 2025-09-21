@@ -8,7 +8,7 @@ export function formatDateTimeCairo(date: Date | string): string {
   
   // Use a consistent format that works the same on server and client
   // Format to avoid hydration mismatch by using explicit formatting
-  const formatter = new Intl.DateTimeFormat('ar-EG', {
+  const formatter = new Intl.DateTimeFormat('en-US', {
     timeZone: CAIRO_TIMEZONE,
     year: 'numeric',
     month: '2-digit',
@@ -28,7 +28,7 @@ export function formatDateTimeCairo(date: Date | string): string {
 export function formatDateCairo(date: Date | string): string {
   const dateObj = typeof date === 'string' ? parseISO(date) : date
   
-  const formatter = new Intl.DateTimeFormat('ar-EG', {
+  const formatter = new Intl.DateTimeFormat('en-US', {
     timeZone: CAIRO_TIMEZONE,
     year: 'numeric',
     month: '2-digit',
@@ -45,7 +45,7 @@ export function formatDateCairo(date: Date | string): string {
 export function formatTimeCairo(date: Date | string): string {
   const dateObj = typeof date === 'string' ? parseISO(date) : date
   
-  const formatter = new Intl.DateTimeFormat('ar-EG', {
+  const formatter = new Intl.DateTimeFormat('en-US', {
     timeZone: CAIRO_TIMEZONE,
     hour: '2-digit',
     minute: '2-digit',

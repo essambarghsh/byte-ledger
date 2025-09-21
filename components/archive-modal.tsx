@@ -87,17 +87,17 @@ export function ArchiveModal({
           <div className="bg-gray-50 p-4 rounded-lg space-y-2">
             <div className="flex justify-between">
               <span className="font-medium">{t('archive.totalSales', dict)}:</span>
-              <span>{totalSales.toLocaleString('ar-EG')} جنيه</span>
+              <span>{totalSales.toLocaleString('en-US')} جنيه</span>
             </div>
             {openingBalance > 0 && (
               <>
                 <div className="flex justify-between text-sm text-gray-600">
                   <span>المبيعات الفعلية اليوم:</span>
-                  <span>{(totalSales - openingBalance).toLocaleString('ar-EG')} جنيه</span>
+                  <span>{(totalSales - openingBalance).toLocaleString('en-US')} جنيه</span>
                 </div>
                 <div className="flex justify-between text-sm text-gray-600">
                   <span>الرصيد الافتتاحي:</span>
-                  <span>{openingBalance.toLocaleString('ar-EG')} جنيه</span>
+                  <span>{openingBalance.toLocaleString('en-US')} جنيه</span>
                 </div>
               </>
             )}
@@ -126,7 +126,7 @@ export function ArchiveModal({
             <div className="flex justify-between">
               <span className="font-medium">{t('archive.openingBalance', dict)}:</span>
               <span className="font-bold text-blue-600">
-                {openingBalanceForNextDay.toLocaleString('ar-EG')} جنيه
+                {openingBalanceForNextDay.toLocaleString('en-US')} جنيه
               </span>
             </div>
           </div>

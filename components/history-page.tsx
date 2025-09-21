@@ -80,7 +80,7 @@ export function HistoryPage({ archives }: HistoryPageProps) {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {monthlyTotal.toLocaleString('ar-EG')} جنيه
+              {monthlyTotal.toLocaleString('en-US')} جنيه
             </div>
             <p className="text-xs text-muted-foreground">
               إجمالي مبيعات الشهر الحالي
@@ -97,7 +97,7 @@ export function HistoryPage({ archives }: HistoryPageProps) {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {yearlyTotal.toLocaleString('ar-EG')} جنيه
+              {yearlyTotal.toLocaleString('en-US')} جنيه
             </div>
             <p className="text-xs text-muted-foreground">
               إجمالي مبيعات السنة الحالية
@@ -114,7 +114,7 @@ export function HistoryPage({ archives }: HistoryPageProps) {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {yesterdayTotal.toLocaleString('ar-EG')} جنيه
+              {yesterdayTotal.toLocaleString('en-US')} جنيه
             </div>
             <p className="text-xs text-muted-foreground">
               مبيعات أمس من الأرشيف
@@ -157,13 +157,13 @@ export function HistoryPage({ archives }: HistoryPageProps) {
                           {formatDateCairo(archive.date)}
                         </TableCell>
                         <TableCell className="text-right font-medium">
-                          {archive.totalSales.toLocaleString('ar-EG')} جنيه
+                          {archive.totalSales.toLocaleString('en-US')} جنيه
                         </TableCell>
                         <TableCell className="text-right">
-                          {archive.suppliedAmount.toLocaleString('ar-EG')} جنيه
+                          {archive.suppliedAmount.toLocaleString('en-US')} جنيه
                         </TableCell>
                         <TableCell className="text-right font-medium text-blue-600">
-                          {archive.openingAmountForNextDay.toLocaleString('ar-EG')} جنيه
+                          {archive.openingAmountForNextDay.toLocaleString('en-US')} جنيه
                         </TableCell>
                         <TableCell className="text-right text-sm text-muted-foreground">
                           {archive.filename}
