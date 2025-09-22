@@ -72,13 +72,13 @@ export function AccountPage({ session }: AccountPageProps) {
       if (response.ok) {
         const updatedEmployee = await response.json()
         setEmployee(updatedEmployee)
-        
+
         // Update session data to reflect changes throughout the app
         try {
           const sessionResponse = await fetch('/api/auth/update-session', {
             method: 'POST',
           })
-          
+
           if (sessionResponse.ok) {
             toast.success('تم حفظ البيانات بنجاح')
             // Small delay to show the success message before reload
@@ -140,7 +140,7 @@ export function AccountPage({ session }: AccountPageProps) {
       if (response.ok) {
         const data = await response.json()
         setFormData(prev => ({ ...prev, avatar: data.avatarUrl }))
-        
+
         // Update session to reflect new avatar
         try {
           await fetch('/api/auth/update-session', {
@@ -149,9 +149,9 @@ export function AccountPage({ session }: AccountPageProps) {
         } catch {
           // Silent fail, avatar will still be updated locally
         }
-        
+
         toast.success('تم رفع الصورة الشخصية بنجاح')
-        
+
         // Refresh page after a short delay to update session data throughout the app
         setTimeout(() => {
           toast.loading('جاري تحديث البيانات...')
@@ -197,9 +197,6 @@ export function AccountPage({ session }: AccountPageProps) {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold">{t('account.title', dict)}</h1>
-          <p className="text-sm text-muted-foreground mt-1">
-            إدارة بيانات حسابك الشخصي
-          </p>
         </div>
       </div>
 
@@ -209,12 +206,13 @@ export function AccountPage({ session }: AccountPageProps) {
         </CardHeader>
         <CardContent className="space-y-6">
           {/* Avatar Section */}
-          <div className="flex items-center space-x-4 rtl:space-x-reverse">
+          <div className="flex items-center">
             <div className="relative">
               <EmployeeAvatar
                 name={employee.name}
                 avatar={formData.avatar}
                 size="lg"
+                className='w-16 h-16 min-w-16'
                 updatedAt={employee.updatedAt}
               />
               {uploadingAvatar && (
@@ -223,12 +221,8 @@ export function AccountPage({ session }: AccountPageProps) {
                 </div>
               )}
             </div>
-            <div className="flex-1">
-              <h3 className="font-medium">الصورة الشخصية</h3>
-              <p className="text-sm text-muted-foreground mb-2">
-                اختر صورة شخصية لحسابك (الحد الأقصى 5 ميجابايت)
-              </p>
-              <div className="flex space-x-2 rtl:space-x-reverse">
+            <div className="flex-1 mr-4">
+              <div className="flex">
                 <Button
                   variant="outline"
                   size="sm"
@@ -250,8 +244,8 @@ export function AccountPage({ session }: AccountPageProps) {
           </div>
 
           {/* Name Field */}
-          <div className="space-y-2">
-            <Label htmlFor="employeeName">الاسم *</Label>
+          <div>
+            <Label className='text-xs font-medium mb-2 flex' htmlFor="employeeName">الاسم *</Label>
             <Input
               id="employeeName"
               value={formData.name}
@@ -261,9 +255,9 @@ export function AccountPage({ session }: AccountPageProps) {
           </div>
 
           {/* Account Info */}
-          <div className="space-y-4 p-4 bg-muted rounded-lg">
+          <div className="sr-only">
             <h4 className="font-medium">معلومات الحساب</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div className="">
               <div>
                 <span className="text-muted-foreground">معرف الموظف:</span>
                 <p className="font-mono">{employee.id}</p>
@@ -278,11 +272,10 @@ export function AccountPage({ session }: AccountPageProps) {
               </div>
               <div>
                 <span className="text-muted-foreground">حالة الحساب:</span>
-                <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                  employee.isActive 
-                    ? 'bg-green-100 text-green-800' 
+                <span className={`px-2 py-1 rounded-full text-xs font-medium ${employee.isActive
+                    ? 'bg-green-100 text-green-800'
                     : 'bg-red-100 text-red-800'
-                }`}>
+                  }`}>
                   {employee.isActive ? 'نشط' : 'غير نشط'}
                 </span>
               </div>
@@ -291,11 +284,10 @@ export function AccountPage({ session }: AccountPageProps) {
 
           {/* Save Button */}
           <div className="flex justify-end">
-            <Button 
+            <Button
               onClick={handleSave}
               disabled={saving || !formData.name.trim()}
             >
-              <Save className="w-4 h-4 ml-2" />
               {saving ? 'جاري الحفظ...' : 'حفظ التغييرات'}
             </Button>
           </div>

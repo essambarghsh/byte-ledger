@@ -23,7 +23,7 @@ export function HistoryPage({ archives }: HistoryPageProps) {
   // Calculate statistics from archives
   const currentMonth = new Date().getMonth()
   const currentYear = new Date().getFullYear()
-  
+
   const monthlyTotal = archives
     .filter(archive => {
       const archiveDate = new Date(archive.date)
@@ -112,15 +112,14 @@ export function HistoryPage({ archives }: HistoryPageProps) {
           <CardTitle>{t('history.archives', dict)}</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="border rounded-lg">
+          <div className='bg-white border rounded-xl border-gray-300 overflow-hidden'>
             <Table>
               <TableHeader>
-                <TableRow>
-                  <TableHead className="text-right">{t('history.date', dict)}</TableHead>
-                  <TableHead className="text-right">{t('archive.totalSales', dict)}</TableHead>
-                  <TableHead className="text-right">{t('archive.suppliedAmount', dict)}</TableHead>
-                  <TableHead className="text-right">{t('archive.openingBalance', dict)}</TableHead>
-                  <TableHead className="text-right">عدد الفواتير</TableHead>
+                <TableRow className='border-gray-300 text-black'>
+                  <TableHead className="text-right h-16 px-4 text-xs font-bold">{t('history.date', dict)}</TableHead>
+                  <TableHead className="text-right h-16 px-4 text-xs font-bold">{t('archive.totalSales', dict)}</TableHead>
+                  <TableHead className="text-right h-16 px-4 text-xs font-bold">{t('archive.suppliedAmount', dict)}</TableHead>
+                  <TableHead className="text-right h-16 px-4 text-xs font-bold">{t('archive.openingBalance', dict)}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -134,25 +133,22 @@ export function HistoryPage({ archives }: HistoryPageProps) {
                   archives
                     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
                     .map((archive) => (
-                      <TableRow 
-                        key={archive.id} 
-                        className="cursor-pointer hover:bg-muted/50 transition-colors"
+                      <TableRow
+                        key={archive.id}
+                        className="cursor-pointer hover:bg-primary/10 transition-colors border-gray-300 hover:text-primary"
                         onClick={() => handleArchiveClick(archive.id)}
                       >
-                        <TableCell className="text-right">
+                        <TableCell className="text-right px-4 py-6 text-xs font-bold">
                           {formatDateCairo(archive.date)}
                         </TableCell>
-                        <TableCell className="text-right font-medium">
+                        <TableCell className="text-right px-4 py-6 text-xs font-bold">
                           {archive.totalSales.toLocaleString('en-US')} جنيه
                         </TableCell>
-                        <TableCell className="text-right">
+                        <TableCell className="text-right px-4 py-6 text-xs font-bold">
                           {archive.suppliedAmount.toLocaleString('en-US')} جنيه
                         </TableCell>
-                        <TableCell className="text-right font-medium text-blue-600">
+                        <TableCell className="text-right px-4 py-6 text-xs font-bold">
                           {archive.openingAmountForNextDay.toLocaleString('en-US')} جنيه
-                        </TableCell>
-                        <TableCell className="text-right text-muted-foreground">
-                          انقر للتفاصيل
                         </TableCell>
                       </TableRow>
                     ))

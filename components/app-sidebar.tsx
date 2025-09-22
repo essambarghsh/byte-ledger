@@ -15,13 +15,10 @@ import {
   SidebarRail,
 } from '@/components/ui/sidebar'
 import { Button } from '@/components/ui/button'
-
 import { getDictionary, t } from '@/lib/i18n'
 import { SessionData, Employee } from '@/types'
 import {
   LogOut,
-  User,
-  Users,
 } from 'lucide-react'
 import { toast } from 'sonner'
 import { useState, useEffect, useCallback } from 'react'
@@ -31,6 +28,7 @@ import { cn } from '@/lib/utils'
 import { MageDashboard2Fill } from './icons/MageDashboard2Fill'
 import { MageDashboardBarFill } from './icons/MageDashboardBarFill'
 import { SolarSettingsBold } from './icons/SolarSettingsBold'
+import { SolarUsersGroupRoundedBold } from './icons/SolarUsersGroupRoundedBold'
 
 interface AppSidebarProps {
   session: SessionData
@@ -90,7 +88,7 @@ export function AppSidebar({ session }: AppSidebarProps) {
     {
       title: 'المستخدمين',
       url: '/dashboard/users',
-      icon: Users,
+      icon: SolarUsersGroupRoundedBold,
     },
     {
       title: t('settings.title', dict),
@@ -165,28 +163,7 @@ export function AppSidebar({ session }: AppSidebarProps) {
 
       <SidebarFooter>
         <SidebarGroup className="px-0 pt-2">
-          <SidebarGroupLabel className={cn("px-4 text-xs font-normal h-7",)}>{t('common.account', dict)}</SidebarGroupLabel>
           <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton
-                asChild
-                isActive={pathname === '/dashboard/account'}
-                className={cn(
-                  "cursor-pointer data-[active=true]:bg-transparent data-[active=true]:text-primary data-[state=open]:text-primary data-[state=open]:hover:bg-transparent data-[state=open]:hover:text-primary px-4 py-0 h-11 rounded-none gap-0 hover:bg-transparent active:bg-transparent hover:text-primary active:text-primary text-gray-500 data-[active=true]:font-semibold font-semibold text-xs transition-colors",
-                )}
-                tooltip="إعدادات الحساب"
-              >
-                <Link
-                  href="/dashboard/account"
-                  className="flex items-center gap-3 w-full"
-                >
-                  <User className="h-4 w-4 shrink-0" />
-                  <span className="group-data-[collapsible=icon]:truncate">
-                    إعدادات الحساب
-                  </span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton
                 className={cn(

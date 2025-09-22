@@ -26,21 +26,21 @@ export function ArchiveDetailPage({ archiveData }: ArchiveDetailPageProps) {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center gap-4">
-        <Button 
-          variant="ghost" 
-          size="sm" 
-          onClick={() => router.back()}
-          className="flex items-center gap-2"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          العودة إلى السجل
-        </Button>
-        <div>
+        <div className="flex-1">
           <h1 className="text-2xl font-bold">تفاصيل الأرشيف</h1>
-          <p className="text-muted-foreground">
+          <p className="sr-only">
             {formatDateCairo(archiveData.date)} - {archiveData.filename}
           </p>
         </div>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => router.back()}
+          className="flex items-center gap-2"
+        >
+          <span>العودة لجميع الأرشيفات</span>
+          <ArrowLeft className="h-4 w-4" />
+        </Button>
       </div>
 
       {/* Summary Cards */}
@@ -125,20 +125,24 @@ export function ArchiveDetailPage({ archiveData }: ArchiveDetailPageProps) {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="text-sm font-medium text-muted-foreground">تاريخ الإنشاء</label>
-              <p className="text-lg">{formatDateTimeCairo(archiveData.createdAt)}</p>
+              <label className="text-sm font-medium text-gray-600">تاريخ الإنشاء</label>
+              <p className="text-sm">{formatDateTimeCairo(archiveData.createdAt)}</p>
             </div>
             <div>
-              <label className="text-sm font-medium text-muted-foreground">اسم الملف</label>
-              <p className="font-mono text-sm">{archiveData.filename}</p>
+              <label className="text-sm font-medium text-gray-500">اسم الملف</label>
+              <p className="font-mono text-sm">
+                <span dir='ltr'>{archiveData.filename}</span>
+              </p>
             </div>
             <div>
-              <label className="text-sm font-medium text-muted-foreground">الرصيد الافتتاحي</label>
-              <p className="text-lg">{openingBalance.toLocaleString('en-US')} جنيه</p>
+              <label className="text-sm font-medium text-gray-500">الرصيد الافتتاحي</label>
+              <p className="text-sm">{openingBalance.toLocaleString('en-US')} جنيه</p>
             </div>
             <div>
-              <label className="text-sm font-medium text-muted-foreground">معرف الموظف المسؤول</label>
-              <p className="text-lg">{archiveData.employeeIdWhoArchived}</p>
+              <label className="text-sm font-medium text-gray-500">معرف الموظف المسؤول</label>
+              <p className="text-sm">
+                <span dir='ltr'>{archiveData.employeeIdWhoArchived}</span>
+              </p>
             </div>
           </div>
         </CardContent>
@@ -243,19 +247,18 @@ export function ArchiveDetailPage({ archiveData }: ArchiveDetailPageProps) {
                           {invoice.amount.toLocaleString('en-US')} جنيه
                         </TableCell>
                         <TableCell className="text-right">
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                            invoice.status === 'paid' 
-                              ? 'bg-green-100 text-green-800' 
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${invoice.status === 'paid'
+                              ? 'bg-green-100 text-green-800'
                               : invoice.status === 'canceled'
-                              ? 'bg-red-100 text-red-800'
-                              : 'bg-yellow-100 text-yellow-800'
-                          }`}>
-                            {invoice.status === 'paid' ? 'مدفوع' : 
-                             invoice.status === 'canceled' ? 'ملغي' : 'معلق'}
+                                ? 'bg-red-100 text-red-800'
+                                : 'bg-yellow-100 text-yellow-800'
+                            }`}>
+                            {invoice.status === 'paid' ? 'مدفوع' :
+                              invoice.status === 'canceled' ? 'ملغي' : 'معلق'}
                           </span>
                         </TableCell>
                         <TableCell className="text-right">
-                          <EmployeeAvatar 
+                          <EmployeeAvatar
                             name={invoice.employeeName}
                             avatar={invoice.employeeAvatar}
                             size="sm"

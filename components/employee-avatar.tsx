@@ -1,5 +1,6 @@
 'use client'
 
+import { cn } from '@/lib/utils'
 import { User } from 'lucide-react'
 import Image from 'next/image'
 
@@ -55,14 +56,14 @@ export function EmployeeAvatar({
 
   if (showName) {
     return (
-      <div className={`flex items-center ${className}`}>
+      <div className={cn('flex items-center', className)}>
         <div className={`rounded-full overflow-hidden bg-primary/15 flex items-center justify-center ${sizeClass}`}>
           {avatarUrl ? (
             <Image
               src={avatarUrl}
               alt={`${name} avatar`}
-              width={48}
-              height={48}
+              width={64}
+              height={64}
               className="w-full h-full object-cover"
             />
           ) : (

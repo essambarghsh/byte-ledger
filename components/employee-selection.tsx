@@ -38,7 +38,7 @@ export function EmployeeSelection() {
 
   const selectEmployee = async (employee: Employee) => {
     if (selecting) return
-    
+
     setSelecting(true)
     try {
       const response = await fetch('/api/auth/login', {
@@ -69,7 +69,7 @@ export function EmployeeSelection() {
 
   if (loading) {
     return (
-      <Card className="w-full max-w-md">
+      <Card className="w-full max-w-md bg-white">
         <CardContent className="flex items-center justify-center py-8">
           <div className="text-center">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
@@ -81,7 +81,7 @@ export function EmployeeSelection() {
   }
 
   return (
-    <Card className="w-full max-w-md">
+    <Card className="w-full max-w-md bg-white">
       <CardHeader className="text-center">
         <CardTitle className="text-2xl font-bold">{t('app.name', dict)}</CardTitle>
         <CardDescription>
@@ -97,21 +97,23 @@ export function EmployeeSelection() {
           employees.map((employee) => (
             <Button
               key={employee.id}
-              variant="outline"
-              className="w-full h-auto p-4 justify-start"
+              variant="default"
+              className="w-full h-auto text-black rounded-xl hover:scale-105 transition-all p-3 justify-start bg-transparent shadow-none border-none cursor-pointer hover:bg-primary/10 hover:text-primary"
               onClick={() => selectEmployee(employee)}
               disabled={selecting}
             >
-              <div className="flex items-center space-x-3 rtl:space-x-reverse">
-                <EmployeeAvatar 
-                  name={employee.name}
-                  avatar={employee.avatar}
-                  size="lg"
-                  updatedAt={employee.updatedAt}
-                />
-                <div className="text-right rtl:text-right">
-                  <p className="font-medium">{employee.name}</p>
-                  <p className="text-sm text-muted-foreground">موظف</p>
+              <div className="flex items-center">
+                <span className='flex ml-4'>
+                  <EmployeeAvatar
+                    name={employee.name}
+                    avatar={employee.avatar}
+                    size="xl"
+                    updatedAt={employee.updatedAt}
+                  />
+                </span>
+                <div className="">
+                  <p className="text-base font-bold">{employee.name}</p>
+                  <p className="text-xs mt-1 opacity-50">موظف</p>
                 </div>
               </div>
             </Button>

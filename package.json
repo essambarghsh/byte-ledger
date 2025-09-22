@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
-    "setup": "mkdir -p data/archives && echo '[]' > data/archives.json && echo '[]' > data/invoices.json"
+    "setup": "mkdir -p data/archives && echo '[]' > data/archives.json && echo '[]' > data/invoices.json && echo '[]' > data/employees.json"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",

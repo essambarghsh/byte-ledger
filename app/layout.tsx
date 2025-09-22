@@ -9,7 +9,7 @@ const notoKufiArabic = Noto_Kufi_Arabic({
 });
 
 export const metadata: Metadata = {
-  title: "ByteLedger - إدارة الفواتير",
+  title: "المبيعات",
   description: "نظام إدارة الفواتير والمبيعات - بواسطة عصام برغش",
 };
 
@@ -24,7 +24,7 @@ export default function RootLayout({
         className={`${notoKufiArabic.variable} antialiased`}
       >
         {children}
-        <Toaster position="bottom-left" />
+        <Toaster position="bottom-left" theme="light" />
       </body>
     </html>
   );

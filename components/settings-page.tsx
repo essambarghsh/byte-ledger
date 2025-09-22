@@ -98,33 +98,32 @@ export function SettingsPage({
         <h1 className="text-2xl font-bold">{t('settings.title', dict)}</h1>
       </div>
 
-
       {/* Transaction Types Section */}
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle>{t('settings.transactionTypes', dict)}</CardTitle>
+          <CardTitle className='mb-0'>{t('settings.transactionTypes', dict)}</CardTitle>
           <Button onClick={handleAddTransactionType}>
             <Plus className="h-4 w-4 ml-2 rtl:ml-0 rtl:mr-2" />
             {t('settings.addTransactionType', dict)}
           </Button>
         </CardHeader>
         <CardContent>
-          <div className="border rounded-lg">
+        <div className='bg-white border rounded-xl border-gray-300 overflow-hidden'>
             <Table>
               <TableHeader>
-                <TableRow>
-                  <TableHead className="text-right">{t('settings.name', dict)}</TableHead>
-                  <TableHead className="text-right">{t('settings.isActive', dict)}</TableHead>
-                  <TableHead className="text-right">{t('invoice.actions', dict)}</TableHead>
+                <TableRow className='border-gray-300 text-black'>
+                  <TableHead className="text-right h-16 px-4 text-xs font-bold">{t('settings.name', dict)}</TableHead>
+                  <TableHead className="text-right h-16 px-4 text-xs font-bold">{t('settings.isActive', dict)}</TableHead>
+                  <TableHead className="text-right h-16 px-4 text-xs font-bold">{t('invoice.actions', dict)}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {settings.transactionTypes.map((type) => (
-                  <TableRow key={type.id}>
-                    <TableCell className="text-right font-medium">
+                  <TableRow key={type.id} className='border-gray-300 text-black'>
+                    <TableCell className="text-right px-4 py-6 text-xs font-bold">
                       {type.name}
                     </TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="text-right px-4 py-6 text-xs font-bold">
                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                         type.isActive 
                           ? 'bg-green-100 text-green-800' 
@@ -133,7 +132,7 @@ export function SettingsPage({
                         {type.isActive ? 'نشط' : 'غير نشط'}
                       </span>
                     </TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="text-right px-4 py-6 text-xs font-bold">
                       <Button
                         variant="ghost"
                         size="sm"

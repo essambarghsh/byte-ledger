@@ -79,7 +79,7 @@ export function getCurrentDateTimeCairo(): string {
 
 export function getDateStringCairo(date?: Date): string {
   const targetDate = date || getCurrentDate()
-  return new Intl.DateTimeFormat('ar-CA', {
+  return new Intl.DateTimeFormat('en-CA', {
     timeZone: CAIRO_TIMEZONE,
     year: 'numeric',
     month: '2-digit',

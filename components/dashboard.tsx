@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { InvoiceTable } from '@/components/invoice-table'
 import { ArchiveModal } from '@/components/archive-modal'
@@ -9,10 +8,8 @@ import { getDictionary, t } from '@/lib/i18n'
 import { Invoice, SessionData } from '@/types'
 import { isToday } from '@/lib/date-utils'
 import { Archive } from 'lucide-react'
-import { SolarMoneyBagBoldDuotone } from './icons/SolarMoneyBagBoldDuotone'
 import { Counter } from './ui/counter'
 import { SolarMoneyBagBold } from './icons/SolarMoneyBagBold'
-import { StreamlineFlexDollarIncreaseSolid } from './icons/StreamlineFlexDollarIncreaseSolid'
 import { MingcuteOpenDoorFill } from './icons/MingcuteOpenDoorFill'
 import { MynauiClockWavesSolid } from './icons/MynauiClockWavesSolid'
 
