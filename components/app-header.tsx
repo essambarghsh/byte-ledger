@@ -46,14 +46,14 @@ export function AppHeader({ session }: AppHeaderProps) {
                 </div>
                 <div className="flex items-center px-2">
                     <div className="flex items-center">
-                        <Link className="flex items-center text-xs font-bold text-black hover:text-primary hover:bg-primary/10 rounded-lg transition-all px-2 py-1.5" href="/dashboard/account">
+                        <Link className="flex items-center text-xs font-bold text-black hover:text-primary rounded-lg transition-all p-0" href="/dashboard/account">
                             <span className="flex ml-4 mr-2">
                                 {session.employeeName}
                             </span>
                             <EmployeeAvatar
                                 name={session.employeeName}
                                 avatar={currentEmployee ? currentEmployee.avatar : session.employeeAvatar}
-                                size="lg"
+                                size="sm"
                                 updatedAt={currentEmployee?.updatedAt}
                             />
                         </Link>

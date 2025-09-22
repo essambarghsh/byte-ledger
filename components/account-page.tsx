@@ -211,8 +211,7 @@ export function AccountPage({ session }: AccountPageProps) {
               <EmployeeAvatar
                 name={employee.name}
                 avatar={formData.avatar}
-                size="lg"
-                className='w-16 h-16 min-w-16'
+                size="xl"
                 updatedAt={employee.updatedAt}
               />
               {uploadingAvatar && (

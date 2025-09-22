@@ -29,6 +29,7 @@ import { MageDashboard2Fill } from './icons/MageDashboard2Fill'
 import { MageDashboardBarFill } from './icons/MageDashboardBarFill'
 import { SolarSettingsBold } from './icons/SolarSettingsBold'
 import { SolarUsersGroupRoundedBold } from './icons/SolarUsersGroupRoundedBold'
+import { Logo } from './logo'
 
 interface AppSidebarProps {
   session: SessionData
@@ -86,7 +87,7 @@ export function AppSidebar({ session }: AppSidebarProps) {
       icon: MageDashboardBarFill,
     },
     {
-      title: 'المستخدمين',
+      title: t('users.employees', dict),
       url: '/dashboard/users',
       icon: SolarUsersGroupRoundedBold,
     },
@@ -107,10 +108,7 @@ export function AppSidebar({ session }: AppSidebarProps) {
       <SidebarHeader className='h-16 py-0 px-4 border-b border-gray-300 flex-row items-center overflow-hidden'>
         <div className="flex items-center justify-between w-full">
           <Link href="/dashboard">
-            <span className="flex items-center">
-              <span className="hidden group-data-[collapsible=icon]:block !max-h-[2rem] !h-[2rem] lg:!h-[2rem] !min-w-[1.6rem] bg-amber-300" />
-              <span className="group-data-[collapsible=icon]:hidden !max-h-[2rem] !h-[2rem] lg:!h-[2rem] !min-w-[4.465rem] bg-amber-300" />
-            </span>
+            <Logo />
           </Link>
           <div className="flex items-center group-data-[collapsible=icon]:hidden">
             <span className="hidden md:block">

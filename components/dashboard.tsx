@@ -158,7 +158,6 @@ export function Dashboard({ invoices: initialInvoices, session, yesterdaySales, 
             disabled={!stats.hasUnarchivedInvoicesToday}
             className='flex px-6 py-1 h-14 rounded-xl border-none shadow-none cursor-pointer text-white text-xs font-bold'
           >
-            <Archive className="size-6" />
             {t('dashboard.archiveData', dict)}
           </Button>
         </div>

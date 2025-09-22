@@ -50,13 +50,13 @@ export function ArchiveDetailPage({ archiveData }: ArchiveDetailPageProps) {
             <CardTitle className="text-sm font-medium">
               إجمالي المبيعات
             </CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            <TrendingUp className="h-4 w-4 text-gray-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
+            <div className="text-2xl font-bold mb-3 mt-1">
               {archiveData.totalSales.toLocaleString('en-US')} جنيه
             </div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-gray-600">
               شامل الرصيد الافتتاحي
             </p>
           </CardContent>
@@ -67,13 +67,13 @@ export function ArchiveDetailPage({ archiveData }: ArchiveDetailPageProps) {
             <CardTitle className="text-sm font-medium">
               المبيعات الفعلية
             </CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
+            <DollarSign className="h-4 w-4 text-gray-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
+            <div className="text-2xl font-bold mb-3 mt-1">
               {actualSales.toLocaleString('en-US')} جنيه
             </div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-gray-600">
               من الفواتير المدفوعة فقط
             </p>
           </CardContent>
@@ -84,13 +84,13 @@ export function ArchiveDetailPage({ archiveData }: ArchiveDetailPageProps) {
             <CardTitle className="text-sm font-medium">
               المبلغ المورد
             </CardTitle>
-            <Package className="h-4 w-4 text-muted-foreground" />
+            <Package className="h-4 w-4 text-gray-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
+            <div className="text-2xl font-bold mb-3 mt-1">
               {archiveData.suppliedAmount.toLocaleString('en-US')} جنيه
             </div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-gray-600">
               المبلغ المسلم للإدارة
             </p>
           </CardContent>
@@ -101,13 +101,13 @@ export function ArchiveDetailPage({ archiveData }: ArchiveDetailPageProps) {
             <CardTitle className="text-sm font-medium">
               الرصيد للغد
             </CardTitle>
-            <Calendar className="h-4 w-4 text-muted-foreground" />
+            <Calendar className="h-4 w-4 text-gray-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-blue-600">
+            <div className="text-2xl font-bold mb-3 mt-1">
               {archiveData.openingAmountForNextDay.toLocaleString('en-US')} جنيه
             </div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-gray-600">
               الرصيد الافتتاحي لليوم التالي
             </p>
           </CardContent>
@@ -123,23 +123,23 @@ export function ArchiveDetailPage({ archiveData }: ArchiveDetailPageProps) {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="text-sm font-medium text-gray-600">تاريخ الإنشاء</label>
+              <label className="text-sm font-medium text-gray-600 mb-2.5 block">تاريخ الإنشاء</label>
               <p className="text-sm">{formatDateTimeCairo(archiveData.createdAt)}</p>
             </div>
-            <div>
-              <label className="text-sm font-medium text-gray-500">اسم الملف</label>
+            <div className='sr-only'>
+              <label className="text-sm font-medium text-gray-500 mb-2.5 block">اسم الملف</label>
               <p className="font-mono text-sm">
                 <span dir='ltr'>{archiveData.filename}</span>
               </p>
             </div>
             <div>
-              <label className="text-sm font-medium text-gray-500">الرصيد الافتتاحي</label>
+              <label className="text-sm font-medium text-gray-500 mb-2.5 block">الرصيد الافتتاحي</label>
               <p className="text-sm">{openingBalance.toLocaleString('en-US')} جنيه</p>
             </div>
             <div>
-              <label className="text-sm font-medium text-gray-500">معرف الموظف المسؤول</label>
+              <label className="text-sm font-medium text-gray-500 mb-2.5 block">معرف الموظف المسؤول</label>
               <p className="text-sm">
                 <span dir='ltr'>{archiveData.employeeIdWhoArchived}</span>
               </p>
@@ -160,7 +160,7 @@ export function ArchiveDetailPage({ archiveData }: ArchiveDetailPageProps) {
             <div className="text-2xl font-bold">
               {archiveData.invoices.length}
             </div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-gray-600 mt-2">
               جميع الفواتير في هذا الأرشيف
             </p>
           </CardContent>
@@ -168,15 +168,15 @@ export function ArchiveDetailPage({ archiveData }: ArchiveDetailPageProps) {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-sm font-medium text-green-600">
+            <CardTitle className="text-sm font-medium text-green-800">
               الفواتير المدفوعة
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-green-600">
+            <div className="text-2xl font-bold text-green-900">
               {paidInvoices.length}
             </div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-gray-600 mt-2">
               بقيمة {actualSales.toLocaleString('en-US')} جنيه
             </p>
           </CardContent>
@@ -184,15 +184,15 @@ export function ArchiveDetailPage({ archiveData }: ArchiveDetailPageProps) {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-sm font-medium text-red-600">
+            <CardTitle className="text-sm font-medium text-red-800">
               الفواتير الملغية
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-red-600">
+            <div className="text-2xl font-bold text-red-800">
               {canceledInvoices.length}
             </div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-gray-600 mt-2">
               بقيمة {canceledInvoices.reduce((sum, inv) => sum + inv.amount, 0).toLocaleString('en-US')} جنيه
             </p>
           </CardContent>
@@ -209,14 +209,14 @@ export function ArchiveDetailPage({ archiveData }: ArchiveDetailPageProps) {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="text-right">رقم الفاتورة</TableHead>
-                  <TableHead className="text-right">نوع المعاملة</TableHead>
-                  <TableHead className="text-right">اسم العميل</TableHead>
-                  <TableHead className="text-right">الوصف</TableHead>
-                  <TableHead className="text-right">المبلغ</TableHead>
-                  <TableHead className="text-right">الحالة</TableHead>
-                  <TableHead className="text-right">الموظف</TableHead>
-                  <TableHead className="text-right">تاريخ الإنشاء</TableHead>
+                  <TableHead className="text-right h-16 px-4 text-xs font-bold">رقم الفاتورة</TableHead>
+                  <TableHead className="text-right h-16 px-4 text-xs font-bold">نوع المعاملة</TableHead>
+                  <TableHead className="text-right h-16 px-4 text-xs font-bold">اسم العميل</TableHead>
+                  <TableHead className="text-right h-16 px-4 text-xs font-bold">الوصف</TableHead>
+                  <TableHead className="text-right h-16 px-4 text-xs font-bold">المبلغ</TableHead>
+                  <TableHead className="text-right h-16 px-4 text-xs font-bold">الحالة</TableHead>
+                  <TableHead className="text-right h-16 px-4 text-xs font-bold">الموظف</TableHead>
+                  <TableHead className="text-right h-16 px-4 text-xs font-bold">تاريخ الإنشاء</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -231,22 +231,22 @@ export function ArchiveDetailPage({ archiveData }: ArchiveDetailPageProps) {
                     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
                     .map((invoice) => (
                       <TableRow key={invoice.id}>
-                        <TableCell className="text-right font-mono text-sm">
+                        <TableCell className="text-right font-mono text-sm h-16 px-4">
                           {invoice.id.slice(-8)}
                         </TableCell>
-                        <TableCell className="text-right">
+                        <TableCell className="text-right h-16 px-4">
                           {invoice.transactionType}
                         </TableCell>
-                        <TableCell className="text-right">
+                        <TableCell className="text-right h-16 px-4">
                           {invoice.customerName || 'غير محدد'}
                         </TableCell>
                         <TableCell className="text-right">
                           {invoice.description || '-'}
                         </TableCell>
-                        <TableCell className="text-right font-medium">
+                        <TableCell className="text-right font-medium h-16 px-4">
                           {invoice.amount.toLocaleString('en-US')} جنيه
                         </TableCell>
-                        <TableCell className="text-right">
+                        <TableCell className="text-right h-16 px-4">
                           <span className={`px-2 py-1 rounded-full text-xs font-medium ${invoice.status === 'paid'
                               ? 'bg-green-100 text-green-800'
                               : invoice.status === 'canceled'
@@ -257,7 +257,7 @@ export function ArchiveDetailPage({ archiveData }: ArchiveDetailPageProps) {
                               invoice.status === 'canceled' ? 'ملغي' : 'معلق'}
                           </span>
                         </TableCell>
-                        <TableCell className="text-right">
+                        <TableCell className="text-right h-16 px-4">
                           <EmployeeAvatar
                             name={invoice.employeeName}
                             avatar={invoice.employeeAvatar}
@@ -266,7 +266,7 @@ export function ArchiveDetailPage({ archiveData }: ArchiveDetailPageProps) {
                             nameClassName="text-sm"
                           />
                         </TableCell>
-                        <TableCell className="text-right">
+                        <TableCell className="text-right h-16 px-4">
                           {formatDateTimeCairo(invoice.createdAt)}
                         </TableCell>
                       </TableRow>

@@ -13,11 +13,11 @@
   },
   "dashboard": {
     "title": "لوحة التحكم",
-    "salesToday": "مبيعات اليوم",
-    "salesYesterday": "مبيعات أمس",
+    "salesToday": "مبيعات النهاردة",
+    "salesYesterday": "مبيعات امبارح",
     "openingBalance": "الرصيد الافتتاحي",
     "addInvoice": "إضافة فاتورة",
-    "archiveData": "أرشفة البيانات"
+    "archiveData": "أرشفة مبيعات اليوم"
   },
   "invoice": {
     "id": "رقم الفاتورة",
@@ -69,7 +69,7 @@
     "editEmployee": "تعديل موظف",
     "name": "الاسم",
     "avatar": "الصورة الشخصية",
-    "isActive": "نشط",
+    "isActive": "فعال",
     "save": "حفظ",
     "delete": "حذف",
     "addTransactionType": "إضافة نوع معاملة",
@@ -96,7 +96,7 @@
     "accountStatus": "حالة الحساب"
   },
   "users": {
-    "title": "إدارة المستخدمين",
+    "title": "جميع الموظفين",
     "name": "الاسم",
     "viewAll": "عرض جميع الموظفين",
     "addNew": "إضافة موظف جديد",
@@ -112,12 +112,13 @@
     "error": "خطأ",
     "success": "نجح",
     "confirm": "تأكيد",
-    "active": "نشط",
-    "inactive": "غير نشط",
+    "active": "فعال",
+    "inactive": "غير فعال",
     "joinDate": "تاريخ الإنضمام",
     "lastUpdate": "آخر تحديث",
     "note": "ملاحظة",
-    "noteDescription": "سيتمكن الموظف الجديد من تسجيل الدخول باستخدام اسمه وإضافة صورة شخصية أو تعديل بياناته لاحقاً."
+    "noteDescription": "سيتمكن الموظف الجديد من تسجيل الدخول باستخدام اسمه وإضافة صورة شخصية أو تعديل بياناته لاحقاً.",
+    "employees": "الموظفين"
   },
   "common": {
     "loading": "جاري التحميل...",

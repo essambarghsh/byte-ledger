@@ -7,6 +7,8 @@ import { getDictionary, t } from '@/lib/i18n'
 import { formatDateCairo } from '@/lib/date-utils'
 import { Archive } from '@/types'
 import { useRouter } from 'next/navigation'
+import { Counter } from './ui/counter'
+import { MynauiClockWavesSolid } from './icons/MynauiClockWavesSolid'
 
 interface HistoryPageProps {
   archives: Archive[]
@@ -49,61 +51,93 @@ export function HistoryPage({ archives }: HistoryPageProps) {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">{t('history.title', dict)}</h1>
+        <h1 className="text-base font-black">{t('history.title', dict)}</h1>
       </div>
 
       {/* Statistics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mb-12">
+        <div className="p-4 bg-white border border-gray-300 rounded-xl">
+          <div className="flex">
+            <span className='text-xs font-semibold text-gray-600 flex items-center leading-none flex-1'>
               {t('history.totalSalesMonth', dict)}
-            </CardTitle>
-            <div className="h-4 w-4 text-muted-foreground">📊</div>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {monthlyTotal.toLocaleString('en-US')} جنيه
+            </span>
+            <div className="flex h-1.5 w-12 bg-black rounded-full"></div>
+          </div>
+          <div className="mt-6 flex items-center">
+            <div className="flex items-center flex-1">
+              <span className='size-13 bg-black/10 rounded-full flex items-center justify-center border border-black/15 ml-4 ltr:ml-0 ltr:mr-4'>
+                <MynauiClockWavesSolid className='size-7 text-black' />
+              </span>
+              <div className="flex">
+                <span className='text-3xl font-black text-black flex leading-none'>
+                  <Counter
+                    value={monthlyTotal}
+                    duration={1800}
+                    className="text-black"
+                  />
+                </span>
+                <span className='text-base font-bold text-gray-600/80 flex items-center leading-none mr-2 ltr:mr-0 ltr:ml-2'>
+                  {t('common.egp')}
+                </span>
+              </div>
             </div>
-            <p className="text-xs text-muted-foreground">
-              إجمالي مبيعات الشهر الحالي
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
+          </div>
+        </div>
+        <div className="p-4 bg-white border border-gray-300 rounded-xl">
+          <div className="flex">
+            <span className='text-xs font-semibold text-gray-600 flex items-center leading-none flex-1'>
               {t('history.totalSalesYear', dict)}
-            </CardTitle>
-            <div className="h-4 w-4 text-muted-foreground">📈</div>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {yearlyTotal.toLocaleString('en-US')} جنيه
+            </span>
+            <div className="flex h-1.5 w-12 bg-black rounded-full"></div>
+          </div>
+          <div className="mt-6 flex items-center">
+            <div className="flex items-center flex-1">
+              <span className='size-13 bg-black/10 rounded-full flex items-center justify-center border border-black/15 ml-4 ltr:ml-0 ltr:mr-4'>
+                <MynauiClockWavesSolid className='size-7 text-black' />
+              </span>
+              <div className="flex">
+                <span className='text-3xl font-black text-black flex leading-none'>
+                  <Counter
+                    value={yearlyTotal}
+                    duration={1800}
+                    className="text-black"
+                  />
+                </span>
+                <span className='text-base font-bold text-gray-600/80 flex items-center leading-none mr-2 ltr:mr-0 ltr:ml-2'>
+                  {t('common.egp')}
+                </span>
+              </div>
             </div>
-            <p className="text-xs text-muted-foreground">
-              إجمالي مبيعات السنة الحالية
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
+          </div>
+        </div>
+        <div className="p-4 bg-white border border-gray-300 rounded-xl">
+          <div className="flex">
+            <span className='text-xs font-semibold text-gray-600 flex items-center leading-none flex-1'>
               {t('dashboard.salesYesterday', dict)}
-            </CardTitle>
-            <div className="h-4 w-4 text-muted-foreground">⏮️</div>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {yesterdayTotal.toLocaleString('en-US')} جنيه
+            </span>
+            <div className="flex h-1.5 w-12 bg-black rounded-full"></div>
+          </div>
+          <div className="mt-6 flex items-center">
+            <div className="flex items-center flex-1">
+              <span className='size-13 bg-black/10 rounded-full flex items-center justify-center border border-black/15 ml-4 ltr:ml-0 ltr:mr-4'>
+                <MynauiClockWavesSolid className='size-7 text-black' />
+              </span>
+              <div className="flex">
+                <span className='text-3xl font-black text-black flex leading-none'>
+                  <Counter
+                    value={yesterdayTotal}
+                    duration={1800}
+                    className="text-black"
+                  />
+                </span>
+                <span className='text-base font-bold text-gray-600/80 flex items-center leading-none mr-2 ltr:mr-0 ltr:ml-2'>
+                  {t('common.egp')}
+                </span>
+              </div>
             </div>
-            <p className="text-xs text-muted-foreground">
-              مبيعات أمس من الأرشيف
-            </p>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
 
       {/* Archives Table */}

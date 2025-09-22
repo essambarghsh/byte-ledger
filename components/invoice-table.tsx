@@ -388,7 +388,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                   <EmployeeAvatar
                     name={session.employeeName}
                     avatar={getCurrentEmployeeAvatar(session.employeeId, session.employeeAvatar)}
-                    size="lg"
+                    size="sm"
                     showName={false}
                     nameClassName="text-sm"
                     updatedAt={getCurrentEmployeeUpdatedAt(session.employeeId)}
@@ -523,7 +523,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                         <EmployeeAvatar
                           name={invoice.employeeName}
                           avatar={getCurrentEmployeeAvatar(invoice.employeeId, invoice.employeeAvatar)}
-                          size="lg"
+                          size="sm"
                           showName={false}
                           nameClassName="text-sm"
                           updatedAt={getCurrentEmployeeUpdatedAt(invoice.employeeId)}

@@ -15,17 +15,17 @@ interface EmployeeAvatarProps {
 }
 
 const sizeClasses = {
-  sm: 'w-6 h-6 text-xs',
-  md: 'w-8 h-8 text-sm',
-  lg: 'w-10 h-10 text-base',
-  xl: 'w-12 h-12 text-lg'
+  sm: 'size-12 text-xs',
+  md: 'size-16 text-sm',
+  lg: 'size-20 text-base',
+  xl: 'size-24 text-lg'
 }
 
 const iconSizes = {
-  sm: 'w-3 h-3',
-  md: 'w-4 h-4',
-  lg: 'w-5 h-5',
-  xl: 'w-6 h-6'
+  sm: 'size-12',
+  md: 'size-16',
+  lg: 'size-20',
+  xl: 'size-24'
 }
 
 export function EmployeeAvatar({ 
@@ -62,8 +62,8 @@ export function EmployeeAvatar({
             <Image
               src={avatarUrl}
               alt={`${name} avatar`}
-              width={64}
-              height={64}
+              width={250}
+              height={250}
               className="w-full h-full object-cover"
             />
           ) : (
@@ -81,8 +81,8 @@ export function EmployeeAvatar({
         <Image
           src={avatarUrl}
           alt={`${name} avatar`}
-          width={48}
-          height={48}
+          width={250}
+          height={250}
           className="w-full h-full object-cover"
         />
       ) : (

@@ -31,9 +31,9 @@ export function ArchiveModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     const amount = suppliedAmount === '' ? 0 : parseFloat(suppliedAmount)
-    
+
     if (isNaN(amount) || amount < 0) {
       toast.error('يرجى إدخال مبلغ صحيح')
       return
@@ -82,20 +82,20 @@ export function ArchiveModal({
         <DialogHeader>
           <DialogTitle>{t('archive.title', dict)}</DialogTitle>
         </DialogHeader>
-        
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="bg-gray-50 p-4 rounded-lg space-y-2">
-            <div className="flex justify-between">
-              <span className="font-medium">{t('archive.totalSales', dict)}:</span>
+
+        <form onSubmit={handleSubmit}>
+          <div className="bg-gray-100 p-8 mb-8 mt-4 rounded-2xl">
+            <div className="flex justify-between mb-4 font-bold text-sm">
+              <span>{t('archive.totalSales', dict)}:</span>
               <span>{totalSales.toLocaleString('en-US')} جنيه</span>
             </div>
             {openingBalance > 0 && (
               <>
-                <div className="flex justify-between text-sm text-gray-600">
+                <div className="flex justify-between text-xs font-bold text-gray-600 mb-4">
                   <span>المبيعات الفعلية اليوم:</span>
                   <span>{(totalSales - openingBalance).toLocaleString('en-US')} جنيه</span>
                 </div>
-                <div className="flex justify-between text-sm text-gray-600">
+                <div className="flex justify-between text-xs font-bold text-gray-600">
                   <span>الرصيد الافتتاحي:</span>
                   <span>{openingBalance.toLocaleString('en-US')} جنيه</span>
                 </div>
@@ -104,7 +104,7 @@ export function ArchiveModal({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="suppliedAmount">
+            <Label className='flex mb-3 text-xs font-bold text-gray-600' htmlFor="suppliedAmount">
               {t('archive.suppliedAmount', dict)} ({t('common.optional', dict)})
             </Label>
             <Input
@@ -117,21 +117,21 @@ export function ArchiveModal({
               onChange={(e) => setSuppliedAmount(e.target.value)}
               placeholder="0.00"
             />
-            <p className="text-sm text-muted-foreground">
+            <p className="text-xs text-gray-600 mt-3">
               إذا تُرك فارغاً، سيكون الرصيد الافتتاحي للغد هو إجمالي المبيعات
             </p>
           </div>
 
-          <div className="bg-blue-50 p-4 rounded-lg space-y-2">
-            <div className="flex justify-between">
-              <span className="font-medium">{t('archive.openingBalance', dict)}:</span>
-              <span className="font-bold text-blue-600">
+          <div className="bg-blue-50 p-5 rounded-lg mt-8 mb-4">
+            <div className="flex justify-between items-center text-xs font-black">
+              <span>{t('archive.openingBalance', dict)}:</span>
+              <span className="text-primary text-lg">
                 {openingBalanceForNextDay.toLocaleString('en-US')} جنيه
               </span>
             </div>
           </div>
 
-          <div className="flex justify-end space-x-2 rtl:space-x-reverse pt-4">
+          <div className="flex justify-end pt-4">
             <Button
               type="button"
               variant="outline"
@@ -140,7 +140,7 @@ export function ArchiveModal({
             >
               {t('archive.cancel', dict)}
             </Button>
-            <Button type="submit" disabled={loading}>
+            <Button className='mr-4' type="submit" disabled={loading}>
               {loading ? t('common.loading', dict) : t('archive.confirm', dict)}
             </Button>
           </div>
