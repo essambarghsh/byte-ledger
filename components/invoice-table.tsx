@@ -283,14 +283,14 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
 
   const getStatusBadge = (status: Invoice['status']) => {
     const statusConfig = {
-      paid: { label: t('invoice.paid', dict), className: 'bg-green-100 text-green-800' },
-      pending: { label: t('invoice.pending', dict), className: 'bg-yellow-100 text-yellow-800' },
+      paid: { label: t('invoice.paid', dict), className: 'bg-emerald-600/10 text-emerald-900' },
+      pending: { label: t('invoice.pending', dict), className: 'bg-yellow-600/10 text-yellow-900' },
       canceled: { label: t('invoice.canceled', dict), className: 'bg-red-100 text-red-800' }
     }
 
     const config = statusConfig[status]
     return (
-      <span className={`px-2 py-1 rounded-full text-xs font-medium ${config.className}`}>
+      <span className={`px-4 py-1 rounded-xl text-xs font-bold w-full flex items-center justify-center h-14 ${config.className}`}>
         {config.label}
       </span>
     )
@@ -383,17 +383,19 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                   />
                 </ClientOnly>
               </TableCell>
-              <TableCell className="text-center flex justify-center p-4">
-                <EmployeeAvatar
-                  name={session.employeeName}
-                  avatar={getCurrentEmployeeAvatar(session.employeeId, session.employeeAvatar)}
-                  size="lg"
-                  showName={false}
-                  nameClassName="text-sm"
-                  updatedAt={getCurrentEmployeeUpdatedAt(session.employeeId)}
-                />
+              <TableCell className="text-center p-4">
+                <div className="flex justify-center items-center h-14">
+                  <EmployeeAvatar
+                    name={session.employeeName}
+                    avatar={getCurrentEmployeeAvatar(session.employeeId, session.employeeAvatar)}
+                    size="lg"
+                    showName={false}
+                    nameClassName="text-sm"
+                    updatedAt={getCurrentEmployeeUpdatedAt(session.employeeId)}
+                  />
+                </div>
               </TableCell>
-              <TableCell className="text-left p-4">
+              <TableCell className="text-left p-4 min-w-[140px]">
                 <Button
                   size="sm"
                   onClick={handleAddInvoice}
@@ -474,7 +476,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                         invoice.description || '-'
                       )}
                     </TableCell>
-                    <TableCell className="text-right font-medium p-4">
+                    <TableCell className="text-right font-medium p-4 max-w-[170px]">
                       {isEditing ? (
                         <Input
                           type="number"
@@ -517,16 +519,18 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                       )}
                     </TableCell>
                     <TableCell className="text-center flex justify-center p-4">
-                      <EmployeeAvatar
-                        name={invoice.employeeName}
-                        avatar={getCurrentEmployeeAvatar(invoice.employeeId, invoice.employeeAvatar)}
-                        size="lg"
-                        showName={false}
-                        nameClassName="text-sm"
-                        updatedAt={getCurrentEmployeeUpdatedAt(invoice.employeeId)}
-                      />
+                      <div className="flex justify-center items-center h-14">
+                        <EmployeeAvatar
+                          name={invoice.employeeName}
+                          avatar={getCurrentEmployeeAvatar(invoice.employeeId, invoice.employeeAvatar)}
+                          size="lg"
+                          showName={false}
+                          nameClassName="text-sm"
+                          updatedAt={getCurrentEmployeeUpdatedAt(invoice.employeeId)}
+                        />
+                      </div>
                     </TableCell>
-                    <TableCell className="text-left p-4" onClick={(e) => e.stopPropagation()}>
+                    <TableCell className="text-left p-4 min-w-[140px]" onClick={(e) => e.stopPropagation()}>
                       {isEditing ? (
                         <div className="flex justify-end">
                           <Button

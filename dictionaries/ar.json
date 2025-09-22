@@ -84,6 +84,24 @@
     "to": "إلى",
     "all": "الكل"
   },
+  "account": {
+    "title": "إعدادات الحساب",
+    "personalInfo": "المعلومات الشخصية",
+    "profilePicture": "الصورة الشخصية",
+    "uploadPhoto": "رفع صورة",
+    "accountInfo": "معلومات الحساب",
+    "employeeId": "معرف الموظف",
+    "joinDate": "تاريخ الإنضمام",
+    "lastUpdate": "آخر تحديث",
+    "accountStatus": "حالة الحساب"
+  },
+  "users": {
+    "title": "إدارة المستخدمين",
+    "viewAll": "عرض جميع الموظفين",
+    "addNew": "إضافة موظف جديد",
+    "noUsers": "لا يوجد موظفون حالياً",
+    "addFirst": "ابدأ بإضافة أول موظف في النظام"
+  },
   "common": {
     "loading": "جاري التحميل...",
     "error": "خطأ",

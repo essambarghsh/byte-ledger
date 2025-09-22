@@ -5,9 +5,11 @@ import { useState, useEffect } from "react"
 import { EmployeeAvatar } from "@/components/employee-avatar"
 import { getDictionary, t } from "@/lib/i18n"
 import { SessionData, Employee } from "@/types"
+import Link from "next/link"
+import Clock from "./clock"
 
 interface AppHeaderProps {
-  session: SessionData
+    session: SessionData
 }
 
 export function AppHeader({ session }: AppHeaderProps) {
@@ -37,24 +39,24 @@ export function AppHeader({ session }: AppHeaderProps) {
             <div className="flex items-center justify-between w-full">
                 <div className="flex items-center px-4">
                     <CustomSidebarTrigger className="md:hidden hover:bg-transparent active:bg-transparent text-gray-500 border-none p-0 [&>svg]:!size-8" icon={<Menu strokeWidth={1.5} />} />
-                    <CustomSidebarTrigger className="-mr-2 ltr:mr-0 ltr:-ml-2 hidden group-has-[[data-collapsible=icon]]/sidebar-wrapper:md:flex text-gray-500" />
+                    <CustomSidebarTrigger className="ml-4 -mr-2 ltr:mr-0 ltr:-ml-2 hidden group-has-[[data-collapsible=icon]]/sidebar-wrapper:md:flex text-gray-500" />
+                    <div className="flex">
+                        <Clock />
+                    </div>
                 </div>
-                <div className="flex items-center px-4 gap-4">
-                    <div className="flex items-center gap-3 flex-row-reverse">
-                        <div className="flex-1 text-right">
-                            <p className="text-sm font-medium text-sidebar-foreground">
+                <div className="flex items-center px-2">
+                    <div className="flex items-center">
+                        <Link className="flex items-center text-xs font-bold text-black hover:text-primary hover:bg-primary/10 rounded-lg transition-all px-2 py-1.5" href="/dashboard/account">
+                            <span className="flex ml-4 mr-2">
                                 {session.employeeName}
-                            </p>
-                            <p className="text-xs text-sidebar-foreground/70">
-                                {t('app.name', dict)}
-                            </p>
-                        </div>
-                        <EmployeeAvatar
-                            name={session.employeeName}
-                            avatar={currentEmployee ? currentEmployee.avatar : session.employeeAvatar}
-                            size="md"
-                            updatedAt={currentEmployee?.updatedAt}
-                        />
+                            </span>
+                            <EmployeeAvatar
+                                name={session.employeeName}
+                                avatar={currentEmployee ? currentEmployee.avatar : session.employeeAvatar}
+                                size="lg"
+                                updatedAt={currentEmployee?.updatedAt}
+                            />
+                        </Link>
                     </div>
                 </div>
             </div>

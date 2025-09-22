@@ -7,7 +7,6 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { EmployeeManagement } from '@/components/employee-management'
 import { getDictionary, t } from '@/lib/i18n'
 import { AppSettings } from '@/types'
 import { Plus, Edit } from 'lucide-react'
@@ -99,9 +98,6 @@ export function SettingsPage({
         <h1 className="text-2xl font-bold">{t('settings.title', dict)}</h1>
       </div>
 
-
-      {/* Employee Management Section */}
-      <EmployeeManagement />
 
       {/* Transaction Types Section */}
       <Card>

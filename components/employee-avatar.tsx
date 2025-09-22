@@ -5,7 +5,7 @@ import Image from 'next/image'
 
 interface EmployeeAvatarProps {
   name: string
-  avatar: string
+  avatar: string | null | undefined
   size?: 'sm' | 'md' | 'lg' | 'xl'
   className?: string
   showName?: boolean
@@ -37,7 +37,7 @@ export function EmployeeAvatar({
   updatedAt
 }: EmployeeAvatarProps) {
   const getAvatarUrl = () => {
-    if (avatar.startsWith('/avatars/') && !avatar.includes('default')) {
+    if (avatar && avatar.startsWith('/avatars/') && !avatar.includes('default')) {
       // Add timestamp to bust browser cache using updatedAt only (avoid Date.now() for SSR)
       if (updatedAt) {
         const timestamp = new Date(updatedAt).getTime()
