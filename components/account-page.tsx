@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label'
 import { EmployeeAvatar } from '@/components/employee-avatar'
 import { SessionData, Employee } from '@/types'
 import { toast } from 'sonner'
-import { Save, Upload, User } from 'lucide-react'
+import { Upload, User } from 'lucide-react'
 import { getDictionary, t } from '@/lib/i18n'
 
 interface AccountPageProps {
