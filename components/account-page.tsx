@@ -8,8 +8,9 @@ import { Label } from '@/components/ui/label'
 import { EmployeeAvatar } from '@/components/employee-avatar'
 import { SessionData, Employee } from '@/types'
 import { toast } from 'sonner'
-import { Upload, User } from 'lucide-react'
+import { Upload, User, Eye, EyeOff, Lock, Trash2 } from 'lucide-react'
 import { getDictionary, t } from '@/lib/i18n'
+import { Separator } from '@/components/ui/separator'
 
 interface AccountPageProps {
   session: SessionData
@@ -23,6 +24,16 @@ export function AccountPage({ session }: AccountPageProps) {
   const [formData, setFormData] = useState({
     name: '',
     avatar: ''
+  })
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: ''
+  })
+  const [showPasswords, setShowPasswords] = useState({
+    current: false,
+    new: false,
+    confirm: false
   })
   const dict = getDictionary()
 
@@ -168,6 +179,86 @@ export function AccountPage({ session }: AccountPageProps) {
     }
   }
 
+  const handlePasswordChange = async () => {
+    if (passwordData.newPassword !== passwordData.confirmPassword) {
+      toast.error('كلمتا المرور غير متطابقتين')
+      return
+    }
+
+    if (passwordData.newPassword.length < 6) {
+      toast.error('يجب أن تكون كلمة المرور 6 أحرف على الأقل')
+      return
+    }
+
+    setSaving(true)
+    try {
+      const response = await fetch(`/api/employees/${session.employeeId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          password: passwordData.newPassword,
+          currentPassword: employee?.passwordHash ? passwordData.currentPassword : undefined,
+        }),
+      })
+
+      if (response.ok) {
+        const updatedEmployee = await response.json()
+        setEmployee(updatedEmployee)
+        setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' })
+        toast.success('تم تغيير كلمة المرور بنجاح')
+      } else {
+        const data = await response.json()
+        toast.error(data.error || 'خطأ في تغيير كلمة المرور')
+      }
+    } catch {
+      toast.error('خطأ في الاتصال بالخادم')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const handleRemovePassword = async () => {
+    if (!employee?.passwordHash) {
+      toast.error('لا توجد كلمة مرور لحذفها')
+      return
+    }
+
+    if (!passwordData.currentPassword) {
+      toast.error('يرجى إدخال كلمة المرور الحالية')
+      return
+    }
+
+    setSaving(true)
+    try {
+      const response = await fetch(`/api/employees/${session.employeeId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          password: '', // Empty string to remove password
+          currentPassword: passwordData.currentPassword,
+        }),
+      })
+
+      if (response.ok) {
+        const updatedEmployee = await response.json()
+        setEmployee(updatedEmployee)
+        setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' })
+        toast.success('تم حذف كلمة المرور بنجاح')
+      } else {
+        const data = await response.json()
+        toast.error(data.error || 'خطأ في حذف كلمة المرور')
+      }
+    } catch {
+      toast.error('خطأ في الاتصال بالخادم')
+    } finally {
+      setSaving(false)
+    }
+  }
+
   if (loading) {
     return (
       <Card>
@@ -200,6 +291,7 @@ export function AccountPage({ session }: AccountPageProps) {
         </div>
       </div>
 
+      {/* Profile Information Card */}
       <Card>
         <CardHeader>
           <CardTitle>المعلومات الشخصية</CardTitle>
@@ -281,7 +373,7 @@ export function AccountPage({ session }: AccountPageProps) {
             </div>
           </div>
 
-          {/* Save Button */}
+          {/* Save Profile Button */}
           <div className="flex justify-end">
             <Button
               onClick={handleSave}
@@ -289,6 +381,131 @@ export function AccountPage({ session }: AccountPageProps) {
             >
               {saving ? 'جاري الحفظ...' : 'حفظ التغييرات'}
             </Button>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Password Settings Card */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Lock className="w-5 h-5" />
+            إعدادات كلمة المرور
+          </CardTitle>
+          <div className="flex items-center">
+            {employee?.passwordHash ? (
+              <span className="text-xs text-green-600 bg-green-100 px-2 py-1 rounded-full">
+                محمي بكلمة مرور
+              </span>
+            ) : (
+              <span className="text-xs text-orange-600 bg-orange-100 px-2 py-1 rounded-full">
+                غير محمي بكلمة مرور
+              </span>
+            )}
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {/* Current Password (if exists) */}
+          {employee?.passwordHash && (
+            <div>
+              <Label className='text-xs font-medium mb-2 flex' htmlFor="currentPassword">
+                كلمة المرور الحالية *
+              </Label>
+              <div className="relative">
+                <Input
+                  id="currentPassword"
+                  type={showPasswords.current ? 'text' : 'password'}
+                  value={passwordData.currentPassword}
+                  onChange={(e) => setPasswordData(prev => ({ ...prev, currentPassword: e.target.value }))}
+                  placeholder="أدخل كلمة المرور الحالية"
+                  disabled={saving}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPasswords(prev => ({ ...prev, current: !prev.current }))}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  disabled={saving}
+                >
+                  {showPasswords.current ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* New Password */}
+          <div>
+            <Label className='text-xs font-medium mb-2 flex' htmlFor="newPassword">
+              كلمة المرور الجديدة *
+            </Label>
+            <div className="relative">
+              <Input
+                id="newPassword"
+                type={showPasswords.new ? 'text' : 'password'}
+                value={passwordData.newPassword}
+                onChange={(e) => setPasswordData(prev => ({ ...prev, newPassword: e.target.value }))}
+                placeholder="أدخل كلمة المرور الجديدة (6 أحرف على الأقل)"
+                disabled={saving}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPasswords(prev => ({ ...prev, new: !prev.new }))}
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                disabled={saving}
+              >
+                {showPasswords.new ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
+            </div>
+          </div>
+
+          {/* Confirm Password */}
+          <div>
+            <Label className='text-xs font-medium mb-2 flex' htmlFor="confirmPassword">
+              تأكيد كلمة المرور *
+            </Label>
+            <div className="relative">
+              <Input
+                id="confirmPassword"
+                type={showPasswords.confirm ? 'text' : 'password'}
+                value={passwordData.confirmPassword}
+                onChange={(e) => setPasswordData(prev => ({ ...prev, confirmPassword: e.target.value }))}
+                placeholder="أكد كلمة المرور الجديدة"
+                disabled={saving}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPasswords(prev => ({ ...prev, confirm: !prev.confirm }))}
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                disabled={saving}
+              >
+                {showPasswords.confirm ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
+            </div>
+          </div>
+
+          {/* Password Actions */}
+          <div className="flex gap-2 pt-2">
+            <Button
+              onClick={handlePasswordChange}
+              disabled={
+                saving || 
+                !passwordData.newPassword || 
+                !passwordData.confirmPassword || 
+                (!!employee?.passwordHash && !passwordData.currentPassword)
+              }
+            >
+              {saving ? 'جاري الحفظ...' : (employee?.passwordHash ? 'تغيير كلمة المرور' : 'تعيين كلمة المرور')}
+            </Button>
+            
+            {employee?.passwordHash && (
+              <Button
+                variant="destructive"
+                onClick={handleRemovePassword}
+                disabled={saving || !passwordData.currentPassword}
+              >
+                <Trash2 className="w-4 h-4 ml-1" />
+                حذف كلمة المرور
+              </Button>
+            )}
           </div>
         </CardContent>
       </Card>

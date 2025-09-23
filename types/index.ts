@@ -5,6 +5,7 @@ export interface Employee {
   isActive: boolean
   createdAt: string
   updatedAt: string
+  passwordHash?: string // Optional for backward compatibility
 }
 
 export interface Invoice {

@@ -8,11 +8,14 @@ import { getDictionary, t } from '@/lib/i18n'
 import { Employee } from '@/types'
 import { toast } from 'sonner'
 import { EmployeeAvatar } from '@/components/employee-avatar'
+import { PasswordModal } from '@/components/password-modal'
 
 export function EmployeeSelection() {
   const [employees, setEmployees] = useState<Employee[]>([])
   const [loading, setLoading] = useState(true)
   const [selecting, setSelecting] = useState(false)
+  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null)
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false)
   const router = useRouter()
   const dict = getDictionary()
 
@@ -36,7 +39,20 @@ export function EmployeeSelection() {
     }
   }
 
-  const selectEmployee = async (employee: Employee) => {
+  const selectEmployee = (employee: Employee) => {
+    if (selecting) return
+
+    // Check if employee has password protection
+    if (employee.passwordHash) {
+      setSelectedEmployee(employee)
+      setIsPasswordModalOpen(true)
+    } else {
+      // Direct login for employees without password
+      performLogin(employee)
+    }
+  }
+
+  const performLogin = async (employee: Employee, password?: string) => {
     if (selecting) return
 
     setSelecting(true)
@@ -50,21 +66,42 @@ export function EmployeeSelection() {
           employeeId: employee.id,
           employeeName: employee.name,
           employeeAvatar: employee.avatar,
+          password: password,
         }),
       })
 
+      const data = await response.json()
+
       if (response.ok) {
         toast.success(`${t('auth.welcome', dict)} ${employee.name}`)
+        setIsPasswordModalOpen(false)
+        setSelectedEmployee(null)
         router.push('/dashboard')
         router.refresh()
       } else {
+        throw new Error(data.error || 'Login failed')
+      }
+    } catch (error) {
+      if (password) {
+        // Password-protected login failed
+        throw error // Let the modal handle the error
+      } else {
         toast.error('خطأ في تسجيل الدخول')
       }
-    } catch {
-      toast.error('خطأ في الاتصال بالخادم')
     } finally {
       setSelecting(false)
     }
+  }
+
+  const handlePasswordSubmit = async (password: string) => {
+    if (selectedEmployee) {
+      await performLogin(selectedEmployee, password)
+    }
+  }
+
+  const closePasswordModal = () => {
+    setIsPasswordModalOpen(false)
+    setSelectedEmployee(null)
   }
 
   if (loading) {
@@ -120,6 +157,14 @@ export function EmployeeSelection() {
           ))
         )}
       </CardContent>
+      
+      <PasswordModal
+        employee={selectedEmployee}
+        isOpen={isPasswordModalOpen}
+        onClose={closePasswordModal}
+        onSubmit={handlePasswordSubmit}
+        isLoading={selecting}
+      />
     </Card>
   )
 }

@@ -2,8 +2,6 @@
 
 <div align="center">
 
-![ByteLedger Logo](https://via.placeholder.com/200x80/4F46E5/FFFFFF?text=ByteLedger)
-
 **A powerful, modern invoice and sales management application built with Next.js 15 and TypeScript**
 
 [![Next.js](https://img.shields.io/badge/Next.js-15.5.3-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)

@@ -19,6 +19,11 @@ const eslintConfig = [
       "build/**",
       "next-env.d.ts",
     ],
+    rules: {
+      // off | warn | error
+      "@typescript-eslint/no-unused-vars": "off",
+      "@next/next/no-img-element": "off",
+    },
   },
 ];
 

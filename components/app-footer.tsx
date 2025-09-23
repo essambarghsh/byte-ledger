@@ -22,7 +22,7 @@ export function AppFooter() {
                         </Link>
                     </div>
                     <div className="">
-                        {`${t('app.version', dict)} ${process.env.NEXT_PUBLIC_VERSION}`}
+                        {`${t('app.version', dict)} ${process.env.NEXT_PUBLIC_VERSION || '2.0.0'}`}
                     </div>
                 </div>
             </div>
