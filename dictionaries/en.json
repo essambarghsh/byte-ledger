@@ -15,6 +15,13 @@
     "salesYesterday": "Sales Yesterday",
     "openingBalance": "Opening Balance",
     "addInvoice": "Add Invoice",
-    "archiveData": "Archive Data"
+    "archiveData": "Archive Data",
+    "printInvoices": "Print Invoices"
+  },
+  "print": {
+    "title": "Today's Invoices",
+    "todayInvoices": "Today's Invoices",
+    "totalSales": "Total Sales",
+    "openingBalance": "Opening Balance"
   }
 }
