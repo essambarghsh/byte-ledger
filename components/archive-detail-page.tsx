@@ -18,8 +18,9 @@ export function ArchiveDetailPage({ archiveData }: ArchiveDetailPageProps) {
 
   // Calculate statistics from the archive data
   const paidInvoices = archiveData.invoices.filter(invoice => invoice.status === 'paid')
+  const withdrawnInvoices = archiveData.invoices.filter(invoice => invoice.status === 'مسحوب')
   const canceledInvoices = archiveData.invoices.filter(invoice => invoice.status === 'canceled')
-  const actualSales = paidInvoices.reduce((sum, invoice) => sum + invoice.amount, 0)
+  const actualSales = [...paidInvoices, ...withdrawnInvoices].reduce((sum, invoice) => sum + invoice.amount, 0)
   const openingBalance = archiveData.totalSales - actualSales
 
   return (
@@ -74,7 +75,7 @@ export function ArchiveDetailPage({ archiveData }: ArchiveDetailPageProps) {
               {actualSales.toLocaleString('en-US')} جنيه
             </div>
             <p className="text-xs text-gray-600">
-              من الفواتير المدفوعة فقط
+              من الفواتير المدفوعة والمسحوبة
             </p>
           </CardContent>
         </Card>
@@ -149,7 +150,7 @@ export function ArchiveDetailPage({ archiveData }: ArchiveDetailPageProps) {
       </Card>
 
       {/* Invoices Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <Card>
           <CardHeader>
             <CardTitle className="text-sm font-medium">
@@ -177,7 +178,23 @@ export function ArchiveDetailPage({ archiveData }: ArchiveDetailPageProps) {
               {paidInvoices.length}
             </div>
             <p className="text-xs text-gray-600 mt-2">
-              بقيمة {actualSales.toLocaleString('en-US')} جنيه
+              بقيمة {paidInvoices.reduce((sum, inv) => sum + inv.amount, 0).toLocaleString('en-US')} جنيه
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-sm font-medium text-orange-800">
+              الفواتير المسحوبة
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-orange-900">
+              {withdrawnInvoices.length}
+            </div>
+            <p className="text-xs text-gray-600 mt-2">
+              بقيمة {withdrawnInvoices.reduce((sum, inv) => sum + inv.amount, 0).toLocaleString('en-US')} جنيه
             </p>
           </CardContent>
         </Card>
@@ -254,7 +271,8 @@ export function ArchiveDetailPage({ archiveData }: ArchiveDetailPageProps) {
                                 : 'bg-yellow-100 text-yellow-800'
                             }`}>
                             {invoice.status === 'paid' ? 'مدفوع' :
-                              invoice.status === 'canceled' ? 'ملغي' : 'معلق'}
+                              invoice.status === 'canceled' ? 'ملغي' :
+                                invoice.status === 'مسحوب' ? 'مسحوب' : 'معلق'}
                           </span>
                         </TableCell>
                         <TableCell className="text-right h-16 px-4">

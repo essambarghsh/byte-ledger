@@ -30,6 +30,12 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // For "مسحوب" status, convert positive amount to negative
+    let finalAmount = amount
+    if (status === 'مسحوب') {
+      finalAmount = Math.abs(amount) * -1 // Ensure it's negative
+    }
+
     if (typeof amount !== 'number' || amount <= 0) {
       return NextResponse.json(
         { error: 'Invalid amount' },
@@ -41,7 +47,7 @@ export async function POST(request: NextRequest) {
       transactionType,
       customerName,
       description,
-      amount,
+      amount: finalAmount,
       status,
       employeeId,
       employeeName,

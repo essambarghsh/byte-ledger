@@ -80,7 +80,7 @@ Create a `.env.local` file in the root directory:
 ```env
 # Application settings
 NEXT_PUBLIC_APP_NAME=ByteLedger
-NEXT_PUBLIC_DEFAULT_LOCALE=en
+NEXT_PUBLIC_DEFAULT_LOCALE=ar
 
 # Development settings
 NODE_ENV=development

@@ -28,12 +28,12 @@ export function Dashboard({ invoices: initialInvoices, session, yesterdaySales, 
   // Calculate statistics
   const stats = useMemo(() => {
     const todayInvoices = invoices.filter(invoice =>
-      invoice.status === 'paid' && isToday(invoice.createdAt) && !invoice.isArchived
+      (invoice.status === 'paid' || invoice.status === 'مسحوب') && isToday(invoice.createdAt) && !invoice.isArchived
     )
 
-    // Check if there are any unarchived invoices from today (paid or canceled) for archiving
+    // Check if there are any unarchived invoices from today (paid, canceled, or withdrawn) for archiving
     const todayUnarchivedInvoices = invoices.filter(invoice =>
-      (invoice.status === 'paid' || invoice.status === 'canceled') &&
+      (invoice.status === 'paid' || invoice.status === 'canceled' || invoice.status === 'مسحوب') &&
       isToday(invoice.createdAt) &&
       !invoice.isArchived
     )

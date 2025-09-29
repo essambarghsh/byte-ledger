@@ -14,7 +14,7 @@ export interface Invoice {
   customerName: string | null
   description: string | null
   amount: number
-  status: 'paid' | 'pending' | 'canceled'
+  status: 'paid' | 'pending' | 'canceled' | 'مسحوب'
   employeeId: string
   employeeName: string
   employeeAvatar: string

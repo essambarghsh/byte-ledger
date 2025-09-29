@@ -44,16 +44,16 @@ export async function POST(request: NextRequest) {
     // Get all invoices
     const allInvoices = await getInvoices()
     
-    // Find today's paid and canceled invoices that are not archived
+    // Find today's paid, canceled, and withdrawn invoices that are not archived
     const todayInvoices = allInvoices.filter(invoice => 
-      (invoice.status === 'paid' || invoice.status === 'canceled') && 
+      (invoice.status === 'paid' || invoice.status === 'canceled' || invoice.status === 'مسحوب') && 
       isToday(invoice.createdAt) && 
       !invoice.isArchived
     )
     
-    // Calculate actual sales from today's paid invoices
+    // Calculate actual sales from today's paid and withdrawn invoices
     const actualSales = todayInvoices
-      .filter(invoice => invoice.status === 'paid')
+      .filter(invoice => invoice.status === 'paid' || invoice.status === 'مسحوب')
       .reduce((sum, invoice) => sum + invoice.amount, 0)
     
     // Total sales includes opening balance

@@ -187,9 +187,9 @@ export async function getYesterdaySales(): Promise<number> {
   if (yesterdayArchive) {
     const archiveData = await getArchiveData(yesterdayArchive.filename)
     if (archiveData) {
-      // Calculate total sales from paid invoices in the archive
+      // Calculate total sales from paid and withdrawn invoices in the archive
       return archiveData.invoices
-        .filter(invoice => invoice.status === 'paid')
+        .filter(invoice => invoice.status === 'paid' || invoice.status === 'مسحوب')
         .reduce((sum, invoice) => sum + invoice.amount, 0)
     }
   }
@@ -248,7 +248,7 @@ export async function getUnarchivedInvoicesFromPastDates(): Promise<Invoice[]> {
   const allInvoices = await getInvoices()
   return allInvoices.filter(invoice => 
     !invoice.isArchived && 
-    (invoice.status === 'paid' || invoice.status === 'canceled') &&
+    (invoice.status === 'paid' || invoice.status === 'canceled' || invoice.status === 'مسحوب') &&
     isPastDate(invoice.createdAt)
   )
 }
@@ -273,8 +273,8 @@ export async function autoArchivePastInvoices(): Promise<Archive[]> {
   
   // Create archives for each date
   for (const [dateStr, dateInvoices] of invoicesByDate) {
-    const paidInvoices = dateInvoices.filter(invoice => invoice.status === 'paid')
-    const totalSales = paidInvoices.reduce((sum, invoice) => sum + invoice.amount, 0)
+    const paidAndWithdrawnInvoices = dateInvoices.filter(invoice => invoice.status === 'paid' || invoice.status === 'مسحوب')
+    const totalSales = paidAndWithdrawnInvoices.reduce((sum, invoice) => sum + invoice.amount, 0)
     
     // For auto-archiving, we set supplied amount to 0 and carry forward the full amount
     const archive = await createAutoArchive(

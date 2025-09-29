@@ -26,7 +26,7 @@ interface NewInvoiceFormData {
   customerName: string
   description: string
   amount: string
-  status: 'paid' | 'pending'
+  status: 'paid' | 'pending' | 'مسحوب'
 }
 
 interface EditInvoiceFormData {
@@ -34,7 +34,7 @@ interface EditInvoiceFormData {
   customerName: string
   description: string
   amount: string
-  status: 'paid' | 'pending'
+  status: 'paid' | 'pending' | 'مسحوب'
 }
 
 export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpdate }: InvoiceTableProps) {
@@ -183,7 +183,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
       customerName: invoice.customerName || '',
       description: invoice.description || '',
       amount: invoice.amount.toString(),
-      status: invoice.status as 'paid' | 'pending'
+      status: invoice.status as 'paid' | 'pending' | 'مسحوب'
     })
   }
 
@@ -285,7 +285,8 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
     const statusConfig = {
       paid: { label: t('invoice.paid', dict), className: 'bg-emerald-600/10 text-emerald-900' },
       pending: { label: t('invoice.pending', dict), className: 'bg-yellow-600/10 text-yellow-900' },
-      canceled: { label: t('invoice.canceled', dict), className: 'bg-red-100 text-red-800' }
+      canceled: { label: t('invoice.canceled', dict), className: 'bg-red-100 text-red-800' },
+      'مسحوب': { label: t('invoice.withdrawn', dict), className: 'bg-orange-600/10 text-orange-900' }
     }
 
     const config = statusConfig[status]
@@ -321,7 +322,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
               <TableCell className="text-right h-14 px-4 text-sm font-bold">
                 <span className="text-sm text-primary mr-5">{t('invoice.new', dict)}</span>
               </TableCell>
-              <TableCell className="text-right min-w-[200px] p-4">
+              <TableCell className="text-right min-w-[250px] p-4">
                 <ClientOnly fallback={<div className="h-14 w-full rounded-xl bg-white" />}>
                   <Combobox
                     options={transactionTypes.map((type) => ({ value: type.name, label: type.name }))}
@@ -343,7 +344,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                   className="w-full"
                 />
               </TableCell>
-              <TableCell className="text-right max-w-[260px] p-4">
+              <TableCell className="text-right max-w-[190px] p-4">
                 <Input
                   value={newInvoiceData.description}
                   onChange={(e) => setNewInvoiceData(prev => ({ ...prev, description: e.target.value }))}
@@ -351,7 +352,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                   className="w-full"
                 />
               </TableCell>
-              <TableCell className="text-right max-w-[170px] p-4">
+              <TableCell className="text-right max-w-[120px] p-4">
                 <Input
                   type="number"
                   step="1"
@@ -367,12 +368,13 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                   <Combobox
                     options={[
                       { value: 'paid', label: t('invoice.paid', dict) },
-                      { value: 'pending', label: t('invoice.pending', dict) }
+                      { value: 'pending', label: t('invoice.pending', dict) },
+                      { value: 'مسحوب', label: t('invoice.withdrawn', dict) }
                     ]}
                     value={newInvoiceData.status}
                     onValueChange={(value) => {
                       setLoadingPaymentStatus(true)
-                      setNewInvoiceData(prev => ({ ...prev, status: value as 'paid' | 'pending' }))
+                      setNewInvoiceData(prev => ({ ...prev, status: value as 'paid' | 'pending' | 'مسحوب' }))
                       setTimeout(() => setLoadingPaymentStatus(false), 300)
                     }}
                     placeholder="اختر الحالة"
@@ -395,7 +397,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                   />
                 </div>
               </TableCell>
-              <TableCell className="text-left p-4 min-w-[140px]">
+              <TableCell className="text-left p-4 min-w-[122px]">
                 <Button
                   size="sm"
                   onClick={handleAddInvoice}
@@ -431,7 +433,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                     <TableCell className="text-right h-14 px-4 text-xs font-bold">
                       {formatDateTimeCairo(invoice.createdAt)}
                     </TableCell>
-                    <TableCell className="text-right min-w-[200px] p-4 text-xs font-bold">
+                    <TableCell className="text-right min-w-[250px] p-4 text-xs font-bold">
                       {isEditing ? (
                         <ClientOnly fallback={<div className="h-14 w-full rounded-xl bg-white" />}>
                           <Combobox
@@ -463,7 +465,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                         invoice.customerName || '-'
                       )}
                     </TableCell>
-                    <TableCell className="text-right max-w-[260px] p-4 text-xs font-bold">
+                    <TableCell className="text-right max-w-[190px] p-4 text-xs font-bold">
                       {isEditing ? (
                         <Input
                           value={editInvoiceData.description}
@@ -476,7 +478,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                         invoice.description || '-'
                       )}
                     </TableCell>
-                    <TableCell className="text-right font-medium p-4 max-w-[170px]">
+                    <TableCell className="text-right font-medium p-4 max-w-[120px]">
                       {isEditing ? (
                         <Input
                           type="number"
@@ -498,12 +500,13 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                           <Combobox
                             options={[
                               { value: 'paid', label: t('invoice.paid', dict) },
-                              { value: 'pending', label: t('invoice.pending', dict) }
+                              { value: 'pending', label: t('invoice.pending', dict) },
+                              { value: 'مسحوب', label: t('invoice.withdrawn', dict) }
                             ]}
                             value={editInvoiceData.status}
                             onValueChange={(value) => {
                               setLoadingEditPaymentStatus(true)
-                              setEditInvoiceData(prev => ({ ...prev, status: value as 'paid' | 'pending' }))
+                              setEditInvoiceData(prev => ({ ...prev, status: value as 'paid' | 'pending' | 'مسحوب' }))
                               setTimeout(() => setLoadingEditPaymentStatus(false), 300)
                             }}
                             placeholder="اختر الحالة"
@@ -530,7 +533,7 @@ export function InvoiceTable({ invoices: initialInvoices, session, onInvoicesUpd
                         />
                       </div>
                     </TableCell>
-                    <TableCell className="text-left p-4 min-w-[140px]" onClick={(e) => e.stopPropagation()}>
+                    <TableCell className="text-left p-4 min-w-[122px]" onClick={(e) => e.stopPropagation()}>
                       {isEditing ? (
                         <div className="flex justify-end">
                           <Button

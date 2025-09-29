@@ -35,6 +35,7 @@
     "paid": "مدفوع",
     "pending": "معلق",
     "canceled": "ملغي",
+    "withdrawn": "مسحوب",
     "description": "الوصف",
     "addInvoice": "إضافة فاتورة",
     "noInvoices": "لا توجد فواتير",
