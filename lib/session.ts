@@ -23,7 +23,7 @@ export async function setSession(sessionData: SessionData): Promise<void> {
   cookieStore.set(SESSION_COOKIE_NAME, JSON.stringify(sessionData), {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
+    sameSite: 'lax',
     maxAge: 60 * 60 * 24 * 30 // 30 days
   })
 }

@@ -6,7 +6,7 @@ import { DashboardLayout } from '@/components/dashboard-layout'
 
 export default async function DashboardPage() {
   const session = await getSession()
-  
+
   if (!session) {
     redirect('/')
   }
@@ -22,9 +22,9 @@ export default async function DashboardPage() {
 
   return (
     <DashboardLayout session={session}>
-      <Dashboard 
-        invoices={invoices} 
-        session={session} 
+      <Dashboard
+        invoices={invoices}
+        session={session}
         yesterdaySales={yesterdaySales}
         openingBalance={openingBalance}
       />
